@@ -1,0 +1,52 @@
+#CenterWrapper
+{
+position:absolute;
+left:50%;
+margin-left:-250px;
+width:500px;
+height:auto;
+}
+
+#Logo{
+position:relative;
+	width: 100%;
+	margin-top:5px;
+	margin-bottom:5px;
+	text-align:center;
+	-webkit-border-radius: 10px;
+    -moz-border-radius: 10px;
+	background:-moz-linear-gradient(top, #ffae00, #ffc038, #ffae00);
+	background:-webkit-gradient(linear,center bottom,center top, from(#ffae00), color-stop(0.5,#ffc038), to(#ffae00));
+	-webkit-box-shadow: 1px 1px 3px #222;
+    -moz-box-shadow: 1px 1px 4px #222;
+}
+#FooterWrapper{
+	margin-top:5px;
+	margin-bottom:5px;
+	position:relative;
+	width: 100%;
+	margin-top:10px;
+	height: 22px;
+	text-align:center;
+	-webkit-border-radius: 10px;
+    -moz-border-radius: 10px;
+	background:-moz-linear-gradient(top, #ffae00, #ffc038, #ffae00);
+	background:-webkit-gradient(linear,center bottom,center top, from(#ffae00), color-stop(0.5,#ffc038), to(#ffae00));
+	-webkit-box-shadow: 1px 1px 3px #222;
+    -moz-box-shadow: 1px 1px 4px #222;
+}
+#Main{
+position:relative;
+		margin-top:5px;
+	margin-bottom:5px;
+	border: 1px #888 solid;
+	background-color: #000;
+	width: 100%;
+text-align:center;
+	-webkit-border-radius: 4px;
+    -moz-border-radius: 4px;
+	background:-moz-linear-gradient(top, #fffaf0, #fffbf2); 
+	background:-webkit-gradient(linear, left top, left bottom, from(#fffaf0), to(#fffbf2));
+    -webkit-box-shadow: 1px 1px 3px #222;
+    -moz-box-shadow: 1px 1px 4px #222;
+}
