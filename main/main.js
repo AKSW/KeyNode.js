@@ -11,7 +11,7 @@ var main={
 	*
 	*/
 	init:function(){
-		$('#singleDeck').click(function(){main.singleDeck();});
+		$('#singleDeck').click(function(){main.OpenDeck();});
 		$('#OpenPresenter').click(function(){main.OpenPresenter();});
 	},
 	OpenDeck:function(){
