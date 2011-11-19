@@ -1,24 +1,8 @@
-body {
-	font-size: 12px;
-	margin: 0;
-	background: url(./images/BG.png);overflow:hidden;
-}
-
-
 #btnTimer{height:100%;width:100%;text-align:center;font-size:150%;	font-weight:bold;}
 #slideData{display:none;}
 #options{background:black;color:white;position:absolute;display:  bottom:-40px; height:40px; left:40px; right:40px;}
 
-div#center_container {
-	/*margin: 0 auto;*/
-	height: 100%;
-	width: 1024px;
-	left: 50%;
-	margin-left: -512px;
-	position: absolute;
 
-
-}
 #note_container_edit{height: 89%; width:90%;margin-left:5%;margin-top:5%;}
 #note_container_save{height: 5%; width:90%; margin-left:5%;}
 div#slide_container {

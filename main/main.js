@@ -11,20 +11,28 @@ var main={
 	*
 	*/
 	init:function(){
-		$('#singleDeck').click(function(){main.OpenDeck();});
-		$('#OpenPresenter').click(function(){main.OpenPresenter();});
+		main.addLog('Init Main.');
+		main.loadPresenter();
+		main.presenter.GetPresenterHTML();
+		setTimeout(function(){
+		alert($('#temp').contents().find('#center_container').html());
+		$('#Logo').hide();
+		$('#Main').hide();
+		main.presenter.ShowPresenter();},2000);
 	},
-	OpenDeck:function(){
-	this.watch = window.open('./watch/index.html', "watch", "status=0,scrollbars=0,fullscreen=1");
-	this.watch.focus();	
-	
+	addLog:function(message){
+		var d=new Date();
+		$('#Main').append("<div class='LogEntry'>["+d.getDate()+"."+d.getMonth()+"."+d.getFullYear()+"."+d.getHours()+":"+d.getMinutes()+":"+d.getSeconds()+"]: "+message+" </div>");
 	},
-	OpenPresenter:function(){
-	this.presenter = window.open('./presenter/index.html', "presenter", "status=0,scrollbars=0,fullscreen=1");
-	this.presenter.focus();	
+	addError:function(message){
+		var d=new Date();
+		$('#Main').append("<div class='LogEntry Error'>["+d.getDate()+"."+d.getMonth()+"."+d.getFullYear()+"."+d.getHours()+":"+d.getMinutes()+":"+d.getSeconds()+"]: "+message+" </div>");
+	},
+	loadPresenter:function(){
+		this.presenter=new Presenter();
 	
 	}
-
+	
 
 }
 
