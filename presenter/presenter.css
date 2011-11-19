@@ -1,8 +1,17 @@
 #btnTimer{height:100%;width:100%;text-align:center;font-size:150%;	font-weight:bold;}
 #slideData{display:none;}
-#options{background:black;color:white;position:absolute;display:  bottom:-40px; height:40px; left:40px; right:40px;}
-
-
+#PresenterWrapper{display:none;}
+#PresenterFooterWrapper{
+	clear: both;
+	height: 18px;
+	margin: 18px;
+	text-align:center;
+	-webkit-border-radius: 10px;
+    -moz-border-radius: 10px;
+	background:#555;
+	-webkit-box-shadow: 1px 1px 3px #222;
+    -moz-box-shadow: 1px 1px 4px #222;
+}
 #note_container_edit{height: 89%; width:90%;margin-left:5%;margin-top:5%;}
 #note_container_save{height: 5%; width:90%; margin-left:5%;}
 div#slide_container {

@@ -31,6 +31,17 @@ div#Logo{
 div#Logo>img{
 margin-top:10px;
 }
+div#switchDisplay{
+	position:absolute;
+	left:5px;
+	top:5px;
+	-webkit-border-radius: 10px;
+    -moz-border-radius: 10px;
+	background:#555;
+	-webkit-box-shadow: 1px 1px 3px #222;
+    -moz-box-shadow: 1px 1px 4px #222;
+	cursor: pointer;
+}
 div#FooterWrapper{
 	margin-bottom:5px;
 	position:relative;

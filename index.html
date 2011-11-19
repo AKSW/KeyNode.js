@@ -24,17 +24,38 @@
 </head>
 
 <body>
+<div id="switchDisplay">Show Presenter</div>
 <div id="CenterWrapper">
-<div id="Logo"><img id="logo" src="./main/graphics/logo.png"></div>
-<div id="Main">
+<div id="MainWrapper">
+	<div id="Logo"><img id="logo" src="./main/graphics/logo.png"></div>
+	<div id="Main"></div>
+	<div id="FooterWrapper">Design and Coding &copy; 
+		2011-2012 by Alrik Hausdorf 
+		(for <a href="http://AKSW.org/">AKSW.org</a>)
+	</div>
 
+</div>
+<div id="PresenterWrapper">
+	<div id="slideData"></div>     
+	<div id="slide_container">
+		<div id="slide_current_cont"><div id="slide_current"></div></div>
+		<div id="slide_before_cont"><div id="slide_before_title">&lt;</div><div id="slide_before"></div></div>
+		<div id="slide_after_cont"><div id="slide_after_title">&gt;</div><div id="slide_after"></div></div>
+	</div>
+	<div id="stuff_container">
+		<div id="note_container"></div>
+		<div id="timer_container">
+			<img id="timer_control_pic" src="./presenter/images/play.png" />
+			<div id="timer_text">00:00:00</div>
+		</div>
+	</div>
+	<div id="PresenterFooterWrapper">Design and Coding &copy; 
+		2011-2012 by Alrik Hausdorf 
+		(for <a href="http://AKSW.org/">AKSW.org</a>)
+	</div>
 </div>
 
 
-
-
-<div id="FooterWrapper">Design and Coding &copy; 2011-2012 by Alrik Hausdorf (for <a href="http://AKSW.org/">AKSW.org</a>)
-</div>
 </div>
 
 </body>

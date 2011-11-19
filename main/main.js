@@ -13,12 +13,7 @@ var main={
 	init:function(){
 		main.addLog('Init Main.');
 		main.loadPresenter();
-		main.presenter.GetPresenterHTML();
-		setTimeout(function(){
-		alert($('#temp').contents().find('#center_container').html());
-		$('#Logo').hide();
-		$('#Main').hide();
-		main.presenter.ShowPresenter();},2000);
+		main.loadHandler();
 	},
 	addLog:function(message){
 		var d=new Date();
@@ -30,6 +25,19 @@ var main={
 	},
 	loadPresenter:function(){
 		this.presenter=new Presenter();
+	
+	},
+	loadHandler:function(){
+	$('#switchDisplay').unbind('click').click(function(){
+		if($(this).html().trim()=="Show Presenter") {
+			main.presenter.ShowPresenter();
+			$(this).html('Show Main');
+			}else{
+			main.presenter.HidePresenter();
+			$(this).html('Show Presenter');
+			
+			}
+	})
 	
 	}
 	
