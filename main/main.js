@@ -25,7 +25,7 @@ var main={
 	},
 	loadPresenter:function(){
 		this.presenter=new Presenter();
-	
+		this.presenter.startPres();
 	},
 	loadHandler:function(){
 	$('#switchDisplay').unbind('click').click(function(){
