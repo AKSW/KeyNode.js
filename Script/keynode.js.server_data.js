@@ -10,8 +10,8 @@ this.addUser2Pres=function(name){
 }
 this.getPres=function(name){
 return this.Presentations[name];
-}
-function Pres(){
+} 
+function Pres(){ 
 	//Listener
 	this.anzahlListener=0;
 	this.getListener=function(){return this.anzahlListener;}

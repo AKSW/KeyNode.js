@@ -27,7 +27,7 @@ var watch = {
 	test4SocketIO : function () {}
 }
 
-watch.initServerSocket();
+watch.initServerSocket(); 
 
 watch.socket.on('connect', function () {
 	watch.socket.emit('ConnectToPres', watch.PresentationString);
