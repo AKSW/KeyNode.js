@@ -54,6 +54,7 @@ watch.socket.on('connect', function () {
 				"z-index" : "100000",
 				"text-align" : "center"
 			})
+			.find('#needAdminCode')
 			.click(function () {
 				watch.socket.emit('giveMeAnAdminKeyFor', watch.PresentationString)
 				watch.socket.on('hereIsYourAdminKey', function (data) {
