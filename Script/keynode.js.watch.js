@@ -43,13 +43,13 @@ watch.socket.on('connect', function () {
 			.html("Diese Presentation ist noch frisch und es wurde kein AdminCode hinterlegt.<br><button id='needAdminCode'>CodeAnfordern</button>")
 			.css({
 				"position" : "absolute",
-				
 				"top" : "50%",
+				"left":"50%",
 				"background" : '#FF0000',
-				
+				"margin-left":"-400px",
 				"margin-top" : "-100px",
 				"height" : "200px",
-				"width" : "100%",
+				"width" : "800px",
 				
 				"z-index" : "100000",
 				"text-align" : "center"

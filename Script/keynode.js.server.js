@@ -26,14 +26,14 @@ io.sockets.on('connection', function (socket) {
 			
 		} else {
 			Server_data.addUser2Pres(name);
-			if (!Server_data.getPres(name).HasAdmin())
+			if (!Server_data.HasAdmin(name))
 				socket.emit('NewPresentation', "Jenau");
 			
 		}
 	});
 	socket.on('giveMeAnAdminKeyFor', function (beNice) {
 		var t = socket;
-		socket.emit('hereIsYourAdminKey', Server_data.getPres(beNice).getAdminCode(t));
+		socket.emit('hereIsYourAdminKey', Server_data.getAdminCode(t,beNice));
 	})
 	socket.on('msg', function () {
 		socket.get('nickname', function (err, name) {
