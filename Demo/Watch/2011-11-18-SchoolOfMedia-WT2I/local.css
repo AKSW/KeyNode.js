@@ -1,0 +1,35 @@
+/* big phat blockquote */
+blockquote {
+    font-size: 130% !important;
+}
+
+/* subtitle enhancements */
+h1 > span.subtitle {
+    font-size: 50% !important;
+    line-height: 1.2 !important;
+}
+
+/* link colors same as non links */
+.deck-container.on-slide-0 #lsom-logo > a,
+.subtitle > a,
+h1 > a,
+#lsom-logo > a,
+.deck-container.on-slide-0 .deck-meta-author > a {
+    color: white !important;
+    text-decoration: none !important;
+}
+
+/* same for hover (but underlined) */
+.deck-container.on-slide-0 #lsom-logo > a:hover,
+.subtitle > a:hover,
+h1 > a:hover,
+#lsom-logo > a:hover,
+.deck-container.on-slide-0 .deck-meta-author > a:hover {
+    color: white !important;
+    text-decoration: underline !important;
+}
+
+/* I need a little bit more vertical space */
+.slide li {
+    margin: 0 0 0.1em 0;
+}

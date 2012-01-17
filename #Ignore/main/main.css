@@ -1,0 +1,92 @@
+body {
+	font-size: 12px;
+	margin: 0;
+	background: url(../main/graphics/BG.png);
+	overflow:hidden;
+}
+div#CenterWrapper
+{
+	height: 100%;
+	width: 1024px;
+	left: 50%;
+	margin-left: -512px;
+	position: absolute;
+}
+
+div#Logo{
+	left:50%;
+	margin-left:-250px;
+	position:relative;
+	width: 500px;
+	height: 100px;
+	margin-top:5px;
+	margin-bottom:5px;
+	text-align:center;
+	-webkit-border-radius: 10px;
+    -moz-border-radius: 10px;
+	background:#555;
+	-webkit-box-shadow: 1px 1px 3px #222;
+    -moz-box-shadow: 1px 1px 4px #222;
+}
+div#Logo>img{
+margin-top:10px;
+}
+div#switchDisplay{
+	position:absolute;
+	left:5px;
+	top:5px;
+	-webkit-border-radius: 10px;
+    -moz-border-radius: 10px;
+	background:#555;
+	-webkit-box-shadow: 1px 1px 3px #222;
+    -moz-box-shadow: 1px 1px 4px #222;
+	cursor: pointer;
+}
+div#FooterWrapper{
+	margin-bottom:5px;
+	position:relative;
+	width: 100%;
+	margin-top:10px;
+	height: 18px;
+	text-align:center;
+	-webkit-border-radius: 10px;
+    -moz-border-radius: 10px;
+	background:#555;
+	-webkit-box-shadow: 1px 1px 3px #222;
+    -moz-box-shadow: 1px 1px 4px #222;
+}
+div#Main{
+	
+	margin-top:5px;
+	padding-top:20px;
+	margin-bottom:5px;
+	position:relative;
+	min-height:300px;
+	
+	width: 100%;
+	text-align:left;
+	-webkit-border-radius: 10px;
+    -moz-border-radius: 10px;
+	background:#555;
+    -webkit-box-shadow: 1px 1px 3px #222;
+    -moz-box-shadow: 1px 1px 4px #222;
+	overflow:auto;
+}
+.LogEntry{
+	font-weight:bold;
+	font-size: 16px;
+	position:relative;
+	left:20px; 
+	right:20px;
+	color:green;
+	width:984px;
+}
+.Error{
+	font-weight:bold;
+	font-size: 16px;
+	position:relative;
+	left:20px; 
+	right:20px;
+	color:red;
+	width:984px;
+}

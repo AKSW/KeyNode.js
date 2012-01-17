@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<!--[if lt IE 7]> <html class="no-js ie6" lang="en"> <![endif]-->
+<!--[if IE 7]>    <html class="no-js ie7" lang="en"> <![endif]-->
+<!--[if IE 8]>    <html class="no-js ie8" lang="en"> <![endif]-->
+<!--[if gt IE 8]><!-->  <html class="no-js" lang="en"> <!--<![endif]-->
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=1024, user-scalable=no">
+    <script data-main="../scripts/main" src="../scripts/require-jquery.js"></script>
+
+    <link rel="stylesheet" href="../scripts/deckjs.css">
+    <link rel="stylesheet" href="../deck.js/themes/style/web-2.0.css" id="style-theme-link">
+    <link rel="stylesheet" href="../deck.js/themes/transition/vertical-slide.css" id="transition-theme-link">
+    <link rel="stylesheet" href="local.css">
+
+    <meta name="author" content="Sebastian Tramp">
+    <title>Sebastian Tramp: Triple Store Hardware Examples</title>
+</head>
+
+<body class="deck-container">
+
+
+<div class="slide" id="title">
+    <h1>Triple Store Hardware<span class="subtitle">( OpenLink Virtuoso based )</span></h1>
+    <figure>
+        <p></p>
+        <!--This is a hack ... :(-->
+        <figcaption>
+            <a href="http://sebastian.tramp.name">Sebastian Tramp</a> / <a href="http://aksw.org">AKSW</a>
+            - 04.01.2012
+        </figcaption>
+    </figure>
+</div>
+
+<div class="slide" id="dbpedia-data">
+    <h2>DBpedia</h2>
+    <h3>Data</h3>
+    <ul>
+        <li>1 BT (v3.7)</li>
+        <li>320 ontology classes</li>
+        <li>750 object properties</li>
+        <li>893 datatype properties</li>
+    </ul>
+    <h3>Access</h3>
+    <ul>
+        <li><a href="http://DBpedia.org/sparql">http://DBpedia.org/sparql</a>
+    </ul>
+</div>
+
+<div class="slide" id="dbpedia-hardware">
+    <h2>DBpedia</h2>
+    <blockquote>
+    DBpedia is a 8 core box with 96GB memory and 8 x 500GB HD in raid 1
+    (mirroring) to give 4 virtual partitions. Database is striped over
+    these four channels.
+    </blockquote>
+</div>
+
+<div class="slide" id="lgd-data">
+    <h2>Linked Geo Data</h2>
+    <h3>Data</h3>
+    <ul>
+        <li>10 BT
+            <ul>
+                <li>+/- 3 BT</li>
+                <li>We still cleanup and map the raw data</li>
+            </ul>
+        </li>
+        <li>1300 classes
+            <ul>
+                <li>around 400 heavily in use</li>
+            </ul>
+        </li>
+    </ul>
+    <h3>Access</h3>
+    <ul>
+        <li><a href="http://live.linkedgeodata.org/sparql">http://live.linkedgeodata.org/sparql</a></li>
+        <li>Currently 250MT online</li> 
+    </ul>
+</div>
+
+<div class="slide" id="lgd-hardware">
+    <h2>Linked Geo Data</h2>
+    <h3>Hardware</h3>
+    <ul>
+        <li>12 core Intel i7 5600</li>
+        <li>144 GB RAM</li>
+        <li>1.2 TB SSD (in a RAID e.g. Adaptec 1400)</li>
+    </ul>
+    <ul>
+        <li>We want to have this machine online within 2 months.</li>
+    </ul>
+</div>
+
+
+
+<div class="slide" id="thanks">
+    <h2>Thank you for your Attention!</h2>
+    <h3>My WebID:</h3>
+    <ul><li><a href="http://sebastian.tramp.name">http://sebastian.tramp.name</a></li></ul>
+    <h3>This slide deck:</h3>
+    <ul><li><a href="http://seebi.github.com/deck.js/2012-01-04-VirtuosoHardware/">http://seebi.github.com/deck.js/2012-01-04-VirtuosoHardware/</a></li></ul>
+    </ul>
+</div>
+
+<!-- DECKJS STUFF - NO SLIDES FROM HERE -->
+<a href="#" class="deck-prev-link" title="Previous">&#8592;</a>
+<a href="#" class="deck-next-link" title="Next">&#8594;</a>
+<p class="deck-status">
+    <span class="deck-status-current"></span>
+    /
+    <span class="deck-status-total"></span>
+</p>
+
+</body>
+</html>

@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<!--[if lt IE 7]> <html class="no-js ie6" lang="en"> <![endif]-->
+<!--[if IE 7]>    <html class="no-js ie7" lang="en"> <![endif]-->
+<!--[if IE 8]>    <html class="no-js ie8" lang="en"> <![endif]-->
+<!--[if gt IE 8]><!-->  <html class="no-js" lang="en"> <!--<![endif]-->
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=1024, user-scalable=no">
+    <script data-main="../scripts/main" src="../scripts/require-jquery.js"></script>
+    <link rel="stylesheet" href="../scripts/deckjs.css">
+
+    <title>Sebastian Tramp: Projektvorstellungen SWP2012</title>
+
+    <meta name="author" content="Sebastian Tramp">
+
+    <!-- Core and extension CSS files -->
+    <link rel="stylesheet" href="../deck.js/core/deck.core.css">
+    <link rel="stylesheet" href="../deck.js/extensions/goto/deck.goto.css">
+    <link rel="stylesheet" href="../deck.js/extensions/menu/deck.menu.css">
+    <link rel="stylesheet" href="../deck.js/extensions/navigation/deck.navigation.css">
+    <link rel="stylesheet" href="../deck.js/extensions/status/deck.status.css">
+    <link rel="stylesheet" href="../deck.js/extensions/hash/deck.hash.css">
+
+    <!-- Theme CSS files (menu swaps these out) -->
+    <link rel="stylesheet" id="style-theme-link" href="../deck.js/themes/style/neon.css">
+    <link rel="stylesheet" id="transition-theme-link" href="../deck.js/themes/transition/vertical-slide.css">
+
+    <!-- Custom CSS just for this page -->
+    <link rel="stylesheet" href="local.css">
+</head>
+
+<body class="deck-container">
+
+<div class="slide" id="title" lang="de">
+        <h1>Softwaretechnik Praktikum 2012<span class="subtitle">( Projektausschreibungen )</span></h1>
+    <figure>
+        <p></p>
+        <!--This is a hack ... :(-->
+        <figcaption><a href="http://sebastian.tramp.name">Sebastian Tramp</a> und <a href="http://people.comiles.eu/natanael">Natanael Arndt</a> / <a href="http://aksw.org">AKSW</a> @ IfI 24.11.2011</figcaption>
+    </figure>
+</div>
+
+<div class="slide" id="toc">
+    <h2>Outline</h2>
+    <ul>
+        <li><a href="#sna-title">Social Network Aggregation</a>
+            <ul>
+                <li>State of play and problem description</li>
+                <li>Two possible solutions</li>
+                <li>Mockup and Technical considerations</li>
+            </ul>
+        </li>
+        <li><a href="#sfs-title">Semantic File Sharing</a>
+            <ul>
+                <li>Problem of the Social Web as we know it</li>
+                <li>Goals of a Distributed Semantic Social Network</li>
+                <li>Feature Requests and Technical considerations</li>
+            </ul>
+        </li>
+    </ul>
+</div>
+
+<div class="slide" id="sna-title">
+        <h1>Social Network Aggregation<span class="subtitle">a SWP12 project proposal</span></h1>
+</div>
+
+<div class="slide" id="sna-state">
+    <p></p>
+    <figure>
+    <img src="http://www.avc.com/.a/6a00d83451b2c969e20133eca71e90970b-pi">
+    <figcaption>Via: <a href="http://linkback.morganstanley.com/web/sendlink/webapp/BMServlet?file=5ap1ldi3-3nq6-g000-a6b4-837482e192d8&user=81t2wwjjvzf-990&__gda__=1365681493_016222e0c5bc8775a0a8ce70b5a20450">Morgan Stanley Internet Trends Report April 12, 2010</a></figcaption>
+    </figure>
+</div>
+
+<div class="slide" id="sna-problem">
+    <h2>Social Network Aggregation: Problem Description</h2>
+    <ul>
+        <li><h3>Social Networks overtook email as No.1 communication in 2009.</h3></li>
+        <li><h3>email is still No.1 in business communication.</h3></li>
+        <li><h3>There is no integration between these two communication paradigms.</h3></li>
+    </ul>
+</div>
+
+<div class="slide" id="sna-integrate-mail">
+    <h2>Integrate email into Social Networks</h2>
+    <ul>
+        <li><h3>Solution I</h3>
+            <ul>
+                <li>Send and receive all mails with your Social Network client.</li>
+                <li>Integrate existing email addresses by allowing Social Network providers to access your mail accounts.</li>
+            </ul>
+        </li>
+        <li><h3>Drawbacks</h3>
+            <ul>
+                <li>There is more than one Social Network your contacts use.</li>
+                <li>Do you really want to give your mail pass to <a href="www.studivz.net/">StudiVZ</a>?</li>
+            </ul>
+        </li>
+    </ul>
+</div>
+
+<div class="slide" id="sna-integrate-sns">
+    <h2>Integrate Social Networks into email</h2>
+    <ul>
+        <li><h3>Solution II (preferred)</h3>
+            <ul>
+                <li>Allow for aggregation of Social Network activities of your friends</li>
+                <li>Access activity streams with different Social Network APIs</li>
+                <li>Save your Social Network credentials in your mail client</li>
+                <li>Render activity stream right beside your mail documents</li>
+            </ul>
+        </li>
+        <li><h3>Drawbacks</h3>
+            <ul>
+                <li>There is more than one Social Network your contacts use.</li>
+                <li>There exists more than one mail client</li>
+            </ul>
+        </li>
+    </ul>
+</div>
+
+<div class="slide" id="sna-mockup">
+    <h2>Mockup</h2>
+    <figure>
+    <img src="images/GoogleMailMockup.png">
+    <figcaption>Mockup using <a href="http://mail.google.com">Google Mail</a> and <a href="http://christianv.github.com/jquery-lifestream/example.html">jQuery Lifestream Example</a></figcaption>
+    </figure>
+</div>
+
+<div class="slide" id="sna-technical">
+    <h2>Technical Considerations</h2>
+    <ul>
+        <li><a href="http://en.wikipedia.org/wiki/Greasemonkey">Greasemonkey</a> / <a href="http://code.google.com/p/tampermonkey/">Tampermonkey</a> is state of the art for integrating <a href="http://userscripts.org">user scripts</a> into web pages</li>
+        <li><a href="http://www.getthunderbird.com">Thunderbird</a> extensions are JavaScript too (?)</li>
+        <li><a href="http://christianv.github.com/jquery-lifestream/">jQuery Lifestream</a> is a good starter for a JavaScript-based Social Network activity stream client</li>
+        <li><a href="http://www.w3.org/TR/webstorage/">HTML5 Webstorage</a> could be used to store social network credentials on the client</li>
+    </ul>
+</div>
+
+<div class="slide" id="sfs-title">
+        <h1>Semantic Filesharing<span class="subtitle">a SWP12 project proposal</span></h1>
+</div>
+
+
+<div class="slide" id="sw-soa">
+    <h2>The Social Web as we know it</h2>
+    <ul>
+        <li><h3>Social Network Sites / Social Platforms</h3></li>
+        <ul>
+            <li>Identity of a user and their data can easily be entered</li>
+            <li>Accessed and Manipulation via proprietary interfaces only</li>
+            <li><strong>Walled Gardens</strong> for the users profile</li>
+        </ul>
+</div>
+
+<div class="slide" id="walled-gardens">
+    <h2></h2>
+    <figure>
+        <img src="../2011-09-14-ISSLOD-DSSN/images/walled-gardens.jpg">
+        <figcaption>Illustration by David Simonds, via <a href="http://www.w3.org/DesignIssues/CloudStorage.html">Design Issues: Socially Aware Cloud Storage</a> (by Tim Berners-Lee - August 2009)</figcaption>
+    </figure>
+</div>
+
+<div class="slide" id="xkcd">
+    <h2></h2>
+    <figure>
+        <img src="../2011-09-14-ISSLOD-DSSN/images/xkcd.jpg" />
+        <figcaption>Illustration by <a href="http://xkcd.com/802/">Randall Munroe</a> (Oktober 2009)</figcaption>
+    </figure>
+</div>
+
+<div class="slide" id="facebook-graph">
+    <h2>The Social Web as we know it</h2>
+    <figure>
+        <img src="../2011-09-14-ISSLOD-DSSN/images/facebook-graph.jpg" />
+        <figcaption>In: <a href="http://www.facebook.com/note.php?note_id=469716398919">Visualizing Friendships</a> (by Paul Butler - December 2010)</figcaption>
+    </figure>
+</div>
+
+<div class="slide" id="SemanticWeb">
+    <h2>The Semantic Web</h2>
+    <p>... in one slide.</p>
+    <blockquote>a web of data that can be processed directly and indirectly by machines</blockquote>
+    <ul>
+        <li>An <strong>extension</strong> to the existing World Wide Web</li>
+        <li>Adds a layer of meaning by using <strong>shared vocabularies</strong></li>
+        <li><a href="">Linked Data</a> instead of linked documents</li>
+        <li>Can be seen as a distributed database of global scale</li>
+    </ul>
+</div>
+
+<div class="slide" id="dssn-goals">
+    <h2>Goals</h2>
+    <h3>With Semantic Web / Linked Data Technologies, we&nbsp;can&nbsp;achieve&nbsp;&hellip;</h3>
+    <ol>
+        <li><strong>Portability</strong> through de-centrally shared open vocabularies.</li>
+        <li><strong>Identity</strong> though Uniform Resource Identifier (URI/IRI) and the architecture of the WWW.</li>
+        <li><strong>Linkability</strong> as a consequence of 2) as well as 1).</li>
+        <li><strong>Privacy</strong> though transport layer security and de-centralization.</li>
+    </ol>
+    <h3>a Distributed Semantic Social Network</h3>
+</div>
+
+<div class="slide" id="sfs-features">
+    <h2>Semantic Filesharing</h2>
+    <p>an (incomplete) feature list:</p>
+    <ul>
+        <li>Allow users to upload files and share it with DSSN users</li>
+        <li>Allow users to talk / discuss files</li>
+        <li>Provide activity streams of these discussions based on atom feeds</li>
+        <li>Provide a semantic pingback service to allow back-linking</li>
+        <li>Integrate all these components very well</li>
+    </ul>
+</div>
+
+<div class="slide" id="sfs-tc">
+    <h2>Technical Considerations</h2>
+    <p>Comprehensive preliminary (PHP) projects:</p>
+    <ul>
+        <li><a href="https://github.com/presbrey/data.fm">data.fm</a> - a data hub with <a href="http://www.w3.org/wiki/WebID">WebID</a> support</li>
+        <li><a href="https://github.com/AKSW/OntoWiki">OntoWiki</a> - a Semantic Data wiki incl. extensive API <a href="https://github.com/AKSW/Erfurt">Erfurt</a></li>
+        <li><a href="https://github.com/seebi/lib-dssn-php">lib-dssn</a> - an API for creating and consuming activity streams</li>
+    </ul>
+    <p>There are similar projects available for other technology stacks, so PHP is not mandatory.</p>
+</div>
+
+
+<div class="slide" id="thanks" lang="de">
+    <h2>Danke für eure Aufmerksamkeit</h2>
+    <h3>Betreuer:</h3>
+    <ul>
+        <li><a href="http://sebastian.tramp.name">Sebastian Tramp</a></li>
+    </ul>
+    <h3>Tutor:</h3>
+    <ul>
+        <li><a href="http://sebastian.tramp.name">Natanael Arndt</a></li>
+    </ul>
+    <h3>Diese Präsentation:</h3>
+    <ul><li><a href="http://seebi.github.com/deck.js/2011-11-24-IfI-SWP-Projects/">http://seebi.github.com/deck.js/2011-11-24-IfI-SWP-Projects/</a></li></ul>
+    </ul>
+</div>
+
+
+    <a href="#" class="deck-prev-link" title="Previous">&#8592;</a>
+    <a href="#" class="deck-next-link" title="Next">&#8594;</a>
+
+    <p class="deck-status">
+        <span class="deck-status-current"></span>
+        /
+        <span class="deck-status-total"></span>
+    </p>
+
+    <form action="." method="get" class="goto-form">
+        <label for="goto-slide">Go to slide:</label>
+        <input type="number" name="slidenum" id="goto-slide">
+        <input type="submit" value="Go">
+    </form>
+
+    <a href="." title="Permalink to this slide" class="deck-permalink">#</a>
+
+</body>
+</html>
