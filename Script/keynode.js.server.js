@@ -4,13 +4,11 @@ var Server_data = require('./keynode.js.server_data');
  *	Init Server on Server_Port
  *
  */
+
 var io = require('socket.io').listen(Server_settings.Server_Port);
 console.log('[Info] Server lauscht auf Port ' + Server_settings.Server_Port + '.');
+ Server_data.loadPresData();
 
-/**
- *	Config Server for Different Transports
- *
- */
 io.configure(function () {
 	io.set('transports', ['websocket', 'flashsocket', 'xhr-polling']);
 	io.enable('log');

@@ -1,0 +1,8 @@
+
+
+needed: curl
+
+Download node.JS and npm and install it:
+https://gist.github.com/579814
+
+npm install socket.io
