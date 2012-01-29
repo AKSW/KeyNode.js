@@ -5,7 +5,7 @@ var watch = {
 	 *
 	 */
 	socket : null,
-	
+	diff:0,
 	PresentationString : $("meta[name='X-KeyNodeToken']").attr("value"),
 	ConnectString : $("meta[name='X-KeyNodeListenServer']").attr("value"),
 	
@@ -15,7 +15,7 @@ var watch = {
 	 *
 	 **/
 	initServerSocket : function () {
-		
+
 		watch.socket = io.connect(watch.ConnectString);
 	},
 	
@@ -35,8 +35,12 @@ watch.socket.on('connect', function () {
 		console.log('Connected to ' + watch.ConnectString + '.');
 		
 	});
-	watch.socket.on('NewPresentation', function (data) {
-		if (data == "Jenau")
+	watch.socket.on('GoToFolie', function (data) {
+		$.deck('go', (data+watch.diff));
+		
+	});
+	watch.socket.on('Ready', function (data) {
+		if ((data == "NeuOhneAdmin")||(data == "OhneAdmin"))
 			$('body')
 			.append('<div class="KeynodeJSInform" ></div>')
 			.find('.KeynodeJSInform')

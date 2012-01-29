@@ -16,7 +16,7 @@ this.initPres = function () {
 this.addPres = function (name) {
 	if (this.Presentations == null)
 		this.loadPresData();
-	this.Presentations[name] = new Object();
+	if(this.Presentations[name]	== null)	this.Presentations[name]=new Object();
 	this.initListener(name);
 	this.initAdmin(name);
 	this.initAdminCodes(name);
@@ -68,8 +68,8 @@ this.loadPresData = function () {
 				GlobalthisThing.savePresData();
 				console.log('[Server_data] Presentationsdata erfolgreich neu erstellt!');
 			} else {
-				console.log('[INPUT:' + data);
 				GlobalthisThing.Presentations = JSON.parse(data);
+				//TODO: Anzahl listener zurücksetzen
 				console.log('[Server_data] Presentationsdata erfolgreich geladen!');
 			}
 			return true;
@@ -148,6 +148,28 @@ this.initAdminCodes=function(name){
 this.Presentations[name].adminCodes = null;
 }
 /**
+* Ident the User as Admin by testing the AdminCode
+*
+*/
+this.setAdminByKey=function(name,key,socket){
+	var i =0;
+	while (true) {
+	
+		if (this.Presentations[name].adminCodes[i] == key) {
+			this.Presentations[name].admin = socket.id;
+			GlobalthisThing.savePresData();
+			return true;
+			}else{
+				if(typeof(this.Presentations[name].adminCodes[i]) == undefined)return false;
+				i++;
+				}
+		}
+				
+}
+
+
+
+/**
 * get an AdminCode
 *
 */
@@ -158,17 +180,17 @@ this.getAdminCode = function (socket,name) {
 		GlobalthisThing.savePresData();
 		return this.Presentations[name].adminCodes[0];
 	} else {
-		if (socket.sid == this.Presentations[name].admin)
+		if (socket.id == this.Presentations[name].admin){
 			i = 0;
-		while (true) {
-			if (this.Presentations[name].adminCodes[i] == null) {
-				this.Presentations[name].adminCodes[i] = (Math.floor(Math.random() * 4257671236709));
-				GlobalthisThing.savePresData();
-				return this.Presentations[name].adminCodes[0];
+			while (true) {
+				if (typeof(this.Presentations[name].adminCodes[i]) == undefined) {
+					this.Presentations[name].adminCodes[i] = (Math.floor(Math.random() * 4257671236709));
+					GlobalthisThing.savePresData();
+					return this.Presentations[name].adminCodes[i];
+				}
+				i++;
 			}
-			i++;
 		}
-		
 	}
 	
 }
