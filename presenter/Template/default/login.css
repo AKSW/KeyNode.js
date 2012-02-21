@@ -1,0 +1,43 @@
+
+#CenterBox{font-size:12px;font-family:Verdana;position:absolute;width:400px;margin-left:-215px;padding:15px;left:50%;border:thin solid black;background:white; 
+color:black;background-color: rgba(255, 255, 255, 0.2);-border-radius:10px;-moz-border-radius:10px;-khtml-border-radius:10px;}
+
+#CenterBox>h1{font-size:24px;color:#FFF;text-shadow: 1px 1px 3px #222;}
+
+#CanonicalURL {margin-top:20px;}
+#CanonicalURL .myInput{padding:3px;-border-radius:5px;-moz-border-radius:5px;-khtml-border-radius:5px;-webkit-box-shadow: inset 0px 4px 8px 2px , 0.4);-moz-box-shadow: inset 0px 4px 8px 2px , 0.4);
+box-shadow: inset 0px 4px 8px 2px , 0.4);width:350px;height: 20px;}
+#CanonicalURL .myButton{-border-radius:5px;-moz-border-radius:5px;-khtml-border-radius:5px;height: 30px;width: 35px;}
+
+
+#Password {margin-top:20px;}
+#Password .myPasswordInput{padding:3px;-border-radius:5px;-moz-border-radius:5px;-khtml-border-radius:5px;
+	-webkit-box-shadow: inset 0px 4px 8px 2px , 0.4);-moz-box-shadow: inset 0px 4px 8px 2px , 0.4);box-shadow: inset 0px 4px 8px 2px , 0.4);
+	width:291px;height: 20px;}
+#Password .myButton{-border-radius:5px;-moz-border-radius:5px;-khtml-border-radius:5px;height: 30px;width: 35px;}
+#Password .myResetButton{-border-radius:5px;-moz-border-radius:5px;-khtml-border-radius:5px;height: 30px;width: 55px;}
+
+#presentationURL {margin-top:20px;}
+#presentationURL .myURLInput{padding:3px;-border-radius:5px;-moz-border-radius:5px;-khtml-border-radius:5px;
+	-webkit-box-shadow: inset 0px 4px 8px 2px , 0.4);-moz-box-shadow: inset 0px 4px 8px 2px , 0.4);box-shadow: inset 0px 4px 8px 2px , 0.4);
+	width:350px; height: 20px;}
+#presentationURL .myButton{-border-radius:5px;-moz-border-radius:5px;-khtml-border-radius:5px;height: 30px;width: 35px;}
+
+
+
+#NodeServerURL {margin-top:20px;}
+#NodeServerURL .myURLInput{padding:3px;-border-radius:5px;-moz-border-radius:5px;-khtml-border-radius:5px;
+	-webkit-box-shadow: inset 0px 4px 8px 2px , 0.4);-moz-box-shadow: inset 0px 4px 8px 2px , 0.4);box-shadow: inset 0px 4px 8px 2px , 0.4);
+	width:350px; height: 20px;}
+#NodeServerURL .myButton{-border-radius:5px;-moz-border-radius:5px;-khtml-border-radius:5px;height: 30px;width: 35px;}
+
+#NodeServerURL  #NodeServerURLsaved{margin-top:20px;background-color:rgba(255, 255, 255, 0.2);padding: 5px;
+-border-radius:5px;-moz-border-radius:5px;-khtml-border-radius:5px; width:388px;}
+#NodeServerURLsaved .myRemButton{position:relative;right: auto;height: 20px;width: 20px;border-style:none;
+background: rgba(255, 255, 255, 0.2);-border-radius:5px;-moz-border-radius:5px;-khtml-border-radius:5px;}
+
+
+#presenterStartButton {margin-top:20px;
+padding:3px;-border-radius:5px;-moz-border-radius:5px;-khtml-border-radius:5px;
+	-webkit-box-shadow: inset 0px 4px 8px 2px , 0.4);-moz-box-shadow: inset 0px 4px 8px 2px , 0.4);box-shadow: inset 0px 4px 8px 2px , 0.4);
+	width:400px; height: 35px;}
