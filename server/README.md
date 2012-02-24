@@ -13,7 +13,7 @@ start it with:
 
 all configurations where make in the `keynode.js.server_settings.js`
 
-- `preTag<type>` - this is written before each <type> of the Server
+- `preTag<type>` - this is written before each "<type>" of the Server
 
 - `standardPassword` - the dafault Password for the presentations
 
