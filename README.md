@@ -22,7 +22,7 @@ Dependencies:
 	
 ## Watcher-Addon for Deck.js 
 	
-[read more](./watcher)
+[read more](watcher)
 	
 Dependencies:
 
