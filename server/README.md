@@ -1,6 +1,6 @@
 # KeyNode.js - Node.js Server
 
-broadcast the events send by the presenter tu each client watching the Presentation.
+broadcast the events send by the presenter to each client watching the Presentation.
 
 ## Start the Server
 
