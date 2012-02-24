@@ -11,11 +11,12 @@ console.log(Server_settings.preTagInfo+' Server lauscht auf Port ' + Server_sett
 Server_data.loadPresData();
 
 io.configure(function () {
- //io.set("origins","*");
-  //io.set("origins = *");
+
 //	io.set('transports', ['websocket', 'flashsocket', 'xhr-polling']);
-	//io.set('log level', 1);
+	if(Server_settings.debug){
+	io.set('log level', 1);
 	io.enable('log');
+	}
 });
 
 io.sockets.on('connection', function (socket) {
