@@ -1,4 +1,3 @@
-#btnTimer{height:100%;width:100%;text-align:center;font-size:150%;	font-weight:bold;}
 #slideData{display:none;}
 #PresenterWrapper{display:none;}
 
@@ -28,8 +27,6 @@ margin-top: -5px;
 	-webkit-box-shadow: 1px 1px 3px #222;
     -moz-box-shadow: 1px 1px 4px #222; 
 }
-#note_container_edit{height: 89%; width:90%;margin-left:5%;margin-top:5%;}
-#note_container_save{height: 5%; width:90%; margin-left:5%;}
 div#slide_container {
 	position:absolute;
 	left:0px;
@@ -76,7 +73,8 @@ left:2068px;
 
 }
 .slide_header{
-background-color: #555;
+	text-align:center;
+	background-color: #555;
 	padding-top:5px;
 	position:absolute;
 	border-radius: 10px;
@@ -119,70 +117,3 @@ div#slide_after {
 	background-color: #fff;
 	overflow: hidden;
 }
-
-div#slide_before_title, div#slide_after_title {
-	position:absolute;
-	vertical-align: middle;
-	opacity: 0.6;
-	text-align: center;
-	margin-top: 40px;
-	font-size: 80px;
-	width: 290px;
-
-}
-
-div#stuff_container {
-	float: left;
-	min-height: 100%;
-	width: 330px;
-	padding-top: 18px;
-	padding-bottom: 19px;
-	padding-right: 18px;
-}
-
-div#note_container {
-	border-radius: 10px;
-	width: 320px;
-	box-shadow: 0px 0px 15px #000;
-	background-color: #555;
-	height: 653px;
-	margin-bottom: 18px;
-	padding: 5px;
-}
-
-
-div#timer_container {
-	border-radius: 10px;
-	box-shadow: 0px 0px 15px #000;
-	width: 330px;
-	height: 50px;
-	background-color: #222;
-
-}
-
-#timer_control_pic {
-	/*margin-left: 10px;
-	margin-top: 5px;
-	margin-right: 5px;*/
-	margin-top: 5px;
-	margin-left: 5px;
-	float: left;
-	width: 45px;
-	height: 40px;
-	cursor: pointer;
-}
-
-#timer_text {
-	padding-left: 5px;
-	padding-right: 10px;
-	height: 50px;
-	text-align: center;
-	font-size: 40px;
-	width: 275px;
-	border-top-right-radius:10px;
-	border-bottom-right-radius:10px;
-	display: table-cell;
-	background-color: #555;
-	vertical-align: middle;
-}
- 

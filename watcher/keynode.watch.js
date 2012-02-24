@@ -1,4 +1,4 @@
-
+var diff=0;
 (function($, deck, undefined) {
 	var $d = $(document);
 	var myTimer=null;
@@ -49,7 +49,6 @@
 	
 	var LastTry=5;
 	
-	var diff=0;
 	
 	var CanonicalURL = $("link[rel='http://ns.aksw.org/keynode/canocical']")[0]?$("link[rel='http://ns.aksw.org/keynode/canocical']").attr("href"):null;
 	var NodeServer = $("link[rel='http://ns.aksw.org/keynode/server']")[0]?$("link[rel='http://ns.aksw.org/keynode/server']").attr("href"):null;
@@ -65,7 +64,8 @@
 		myTimer=window.setTimeout(bindSocketEvents,LastTry*1000);
 		LastTry=LastTry*2;
 		return -1;
-		}		console.log('try2connect');	
+		}		
+			console.log('try2connect');	
 			mysocket.getSocket().on('connect', function () {
 				console.log('connected');
 				mysocket.getSocket().emit('ConnectToPres', CanonicalURL);
@@ -85,13 +85,5 @@
 	
 	
 	}
-	
-	
- 	
-	/**
-	 *
-	 * tests, if the socket.IO is loaded
-	 *
-	 **/
 	 $d.bind('deck.init', bindSocketEvents)
 })(jQuery, 'deck');

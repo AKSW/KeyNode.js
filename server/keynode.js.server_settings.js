@@ -10,6 +10,10 @@ this.preTagServerData='\x1B[32m\x1B[1m[Server_data]\x1B[0m';
 this.preTagServer='\x1B[32m\x1B[1m[Server]\x1B[0m'; 
 this.preTagPres='\x1B[32m\x1B[1m[Presentation]\x1B[0m';
 
+this.standardPassword='rootKannAlles';
+//this.standardPassword=(Math.floor(Math.random() * 4257671236709));
+
+
 this.Server_Port = 4123;
 
 this.allow_new_presentations = true;

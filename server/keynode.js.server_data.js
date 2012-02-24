@@ -103,7 +103,9 @@ this.getAdmin = function (name) {
 *
 */
 this.initAdminCodes=function(name){
-this.Presentations[name].adminCodes = 'rootKannAlles';
+this.Presentations[name].adminCodes = new Array();
+this.Presentations[name].adminCodes[0] =Server_settings.standardPassword;
+
 }
 /**
 * Ident the User as Admin by testing the AdminCode
@@ -118,7 +120,7 @@ this.setAdminByKey=function(name,key,socket){
 			GlobalthisThing.savePresData();
 			return true;
 			}else{
-				if(typeof(this.Presentations[name].adminCodes[i]) == undefined)return false;
+				if(typeof(this.Presentations[name].adminCodes[i]) == 'undefined')return false;
 				i++;
 				}
 		}

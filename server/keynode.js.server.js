@@ -11,9 +11,11 @@ console.log(Server_settings.preTagInfo+' Server lauscht auf Port ' + Server_sett
 Server_data.loadPresData();
 
 io.configure(function () {
+ //io.set("origins","*");
+  //io.set("origins = *");
 //	io.set('transports', ['websocket', 'flashsocket', 'xhr-polling']);
-	io.set('log level', 1);
-	//io.enable('log');
+	//io.set('log level', 1);
+	io.enable('log');
 });
 
 io.sockets.on('connection', function (socket) {
@@ -63,7 +65,7 @@ io.sockets.on('connection', function (socket) {
 	Client.on('controlSync', function (data) {
 	if(Server_data.getAdmin(data.name)==socket.id)
 		 {
-		 console.log(preTagPres+ 'Goto :' +data.folie)
+		 console.log(Server_settings.preTagPres+ 'Goto :' +data.folie)
 		 io.sockets.in(data.name).emit('GoTo',data.folie);
 		}
 		else{console.log('Kontrolle der Folien von nonAdmin')}
