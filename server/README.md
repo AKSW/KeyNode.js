@@ -19,6 +19,6 @@ all configurations where make in the `keynode.js.server_settings.js`
 
 - `Server_Port` - the port the server listen on
 
-- `allow_new_presentations` - does the server accept ne Presentations
+- `allow_new_presentations` - does the server accept new Presentations
 
 - `debug` - if it runs in debug mode (more logging)
