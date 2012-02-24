@@ -16,6 +16,7 @@ To start the Presenter open the index.html in the presenter folder
 	
 Dependencies:	
 - [jQuery](http://jquery.com) 
+
 - [jQuery Tools](http://jquerytools.org) 
 	
 ## Watcher-Addon for Deck.js 
