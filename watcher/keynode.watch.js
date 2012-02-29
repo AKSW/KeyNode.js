@@ -49,7 +49,7 @@ var diff=0;
 	
 	var LastTry=5;
 	function init(){
-		if((CanonicalURL==null)&&(!$("link[rel='http://ns.aksw.org/keynode/canocical']")[0]))
+		if((CanonicalURL==null)&&(!$("link[rel='http://ns.aksw.org/keynode/canonical']")[0]))
 			setTimeout(init,200);
 		else
 		if((NodeServer==null)&&(!$("link[rel='http://ns.aksw.org/keynode/server']")[0]))
@@ -61,7 +61,7 @@ var diff=0;
 		
 	}
 	
-	var CanonicalURL = $("link[rel='http://ns.aksw.org/keynode/canocical']")[0]?$("link[rel='http://ns.aksw.org/keynode/canocical']").attr("href"):null;
+	var CanonicalURL = $("link[rel='http://ns.aksw.org/keynode/canonical']")[0]?$("link[rel='http://ns.aksw.org/keynode/canonical']").attr("href"):null;
 	var NodeServer = $("link[rel='http://ns.aksw.org/keynode/server']")[0]?$("link[rel='http://ns.aksw.org/keynode/server']").attr("href"):null;
 	var Mail = $("link[rel='http://ns.aksw.org/keynode/mailto']")[0]?$("link[rel='http://ns.aksw.org/keynode/mailto']").attr("href"): null;
 	/**
