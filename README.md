@@ -7,12 +7,12 @@ It consists of a Node.JS Server, a Presenter and a Watcher-Addon for Deck.js.
 ## Node.JS Server 
 
 To start the Server run `node ./server/keynode.js.server.js`
-[read more](server)
+[read more](https://github.com/AKSW/KeyNode.js/blob/master/server)
 
 ## Presenter 
 	
 To start the Presenter open the index.html in the presenter folder
-[read more](presenter)
+[read more](https://github.com/AKSW/KeyNode.js/blob/master/presenter)
 	
 Dependencies:	
 
@@ -22,7 +22,7 @@ Dependencies:
 	
 ## Watcher-Addon for Deck.js 
 	
-[read more](./watcher)
+[read more](https://github.com/AKSW/KeyNode.js/blob/master/watcher)
 	
 Dependencies:
 
