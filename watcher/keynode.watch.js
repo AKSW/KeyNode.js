@@ -45,7 +45,7 @@ var diff=0;
 			}
 		}
 	
-	};
+	}; 
 	
 	var LastTry=5;
 	function init(){
