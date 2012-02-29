@@ -41,7 +41,7 @@ this.savePresData = function () {
 	this.FHandler.writeFile('./serverData.save', String(str), function (err) { {
 			if (err)
 				return false;
-			console.log(Server_settings.preTagServerData+' Presentationsdata erfolgreich gespeichert!');
+			console.log(Server_settings.preTagServerData+' presentation data saved!');
 			return true;
 		}
 	});
@@ -57,11 +57,11 @@ this.loadPresData = function () {
 			if (err) {
 				GlobalthisThing.initPres();
 				GlobalthisThing.savePresData();
-				console.log(Server_settings.preTagServerData+' Presentationsdata erfolgreich neu erstellt!');
+				console.log(Server_settings.preTagServerData+' presentation data created');
 			} else {
 				GlobalthisThing.Presentations = JSON.parse(data);
 				//TODO: Anzahl listener zurücksetzen
-				console.log(Server_settings.preTagServerData+' Presentationsdata erfolgreich geladen!');
+				console.log(Server_settings.preTagServerData+' presentation data loaded');
 			}
 			return true;
 			

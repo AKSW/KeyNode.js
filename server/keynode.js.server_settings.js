@@ -1,9 +1,9 @@
 /*
-Config-datei für Server
+Config-file for Server
 
 
  */
- /* set Pretags für einzelne Consolenlogs */
+ /* set Pretags for console logs */
 this.preTagInfo='\x1B[32m\x1B[1m[Info]\x1B[0m';
 this.preTagSettings='\x1B[32m\x1B[1m[Settings]\x1B[0m';
 this.preTagServerData='\x1B[32m\x1B[1m[Server_data]\x1B[0m';

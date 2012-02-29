@@ -14,7 +14,7 @@ gives you the possibility to Present your deck.js presentations in a presentatio
 
 5. start your presentation.
 
-
+ 
 ## Known Bugs
 
 - Tooltips be not refreshed 
