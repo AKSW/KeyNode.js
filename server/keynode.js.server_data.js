@@ -3,156 +3,153 @@ var GlobalthisThing = this;
 var Server_settings = require('./keynode.js.server_settings');
 this.FHandler = require('fs');
 /**
-* init The Presentations object
-*
-*/
+ * init The Presentations object
+ *
+ */
 this.initPres = function () {
-	this.Presentations = new Object();
-}
+	this.Presentations = {};
+};
 /**
-* add new Pres to The Presentations object
-*
-*/
+ * add new Pres to The Presentations object
+ *
+ */
 this.addPres = function (name) {
-	if (this.Presentations == null)
+	if (this.Presentations === null) {
 		this.loadPresData();
-	if(this.Presentations[name]	== null)	this.Presentations[name]=new Object();
+	}
+	if (this.Presentations[name] === null) {
+		this.Presentations[name] = {};
+	}
 	this.initAdmin(name);
 	this.initAdminCodes(name);
 	GlobalthisThing.savePresData();
-	console.log(Server_settings.preTagServerData+' New Presentation: ' + name);
-}
+	console.log(Server_settings.preTagServerData + ' New Presentation: ' + name);
+};
 /**
-* get the Presentation
-*
-*/
+ * get the Presentation
+ *
+ */
 this.getPres = function (name) {
-	if (this.Presentations == null)
+	if (this.Presentations === null) {
 		return null;
-	else
+	} else {
 		return this.Presentations[name];
-}
+	}
+};
 /**
-* save the Presentationdata to file
-*
-*/
+ * save the Presentationdata to file
+ *
+ */
 this.savePresData = function () {
 	var str = JSON.stringify(this.Presentations);
-	this.FHandler.writeFile('./serverData.save', String(str), function (err) { {
-			if (err)
-				return false;
-			console.log(Server_settings.preTagServerData+' presentation data saved!');
+	this.FHandler.writeFile('./serverData.save', String(str), function (err) {
+		if (err) {
+			console.log(Server_settings.preTagServerData + ' error when saving the presentation data.');
+			return false;
+		} else {
+			console.log(Server_settings.preTagServerData + ' presentation data saved!');
 			return true;
 		}
 	});
-	
-}
+};
 /**
-* load Presentationdata from file
-*
-*/
+ * load Presentationdata from file
+ *
+ */
 this.loadPresData = function () {
-	if (this.Presentations == null) {
+	if (this.Presentations === null) {
 		this.FHandler.readFile('./serverData.save', function (err, data) {
 			if (err) {
 				GlobalthisThing.initPres();
 				GlobalthisThing.savePresData();
-				console.log(Server_settings.preTagServerData+' presentation data created');
+				console.log(Server_settings.preTagServerData + ' presentation data created');
 			} else {
 				GlobalthisThing.Presentations = JSON.parse(data);
 				//TODO: Anzahl listener zurücksetzen
-				console.log(Server_settings.preTagServerData+' presentation data loaded');
+				console.log(Server_settings.preTagServerData + ' presentation data loaded');
 			}
 			return true;
-			
 		});
-		
 	}
-	
-}
-
-
+};
 
 //Admins
 /**
-* Init the List of Admins
-*
-*/
+ * Init the List of Admins
+ *
+ */
 this.initAdmin = function (name) {
-	return this.Presentations[name].admin=null;
-}
+	this.Presentations[name].admin = null;
+	return true;
+};
 /**
-* Did the Presentation have an registered Admin?
-*
-*/
+ * Did the Presentation have an registered Admin?
+ *
+ */
 this.HasAdmin = function (name) {
-	return this.Presentations[name].admin == null ? false : true;
-}
+	return this.Presentations[name].admin === null ? false : true;
+};
 /**
-* get the Registered Admin
-*
-*/
+ * get the Registered Admin
+ *
+ */
 this.getAdmin = function (name) {
-	if (this.Presentations[name].admin != null)
+	if (this.Presentations[name].admin !== null) {
 		return this.Presentations[name].admin;
-	else
+	} else {
 		return "getTESTERAdminCode";
-}
+	}
+};
 /**
-* Init the List of AdminCodes
-*
-*/
-this.initAdminCodes=function(name){
-this.Presentations[name].adminCodes = new Array();
-this.Presentations[name].adminCodes[0] =Server_settings.standardPassword;
-
-}
+ * Init the List of AdminCodes
+ *
+ */
+this.initAdminCodes = function (name) {
+	this.Presentations[name].adminCodes = [];
+	this.Presentations[name].adminCodes[0] = Server_settings.standardPassword;
+};
 /**
-* Ident the User as Admin by testing the AdminCode
-*
-*/
-this.setAdminByKey=function(name,key,socket){
-	var i =0;
+ * Ident the User as Admin by testing the AdminCode
+ *
+ */
+this.setAdminByKey = function (name, key, socket) {
+	var i = 0;
 	while (true) {
-	
-		if (this.Presentations[name].adminCodes[i] == key) {
+		if (this.Presentations[name].adminCodes[i] === key) {
 			this.Presentations[name].admin = socket.id;
 			GlobalthisThing.savePresData();
 			return true;
-			}else{
-				if(typeof(this.Presentations[name].adminCodes[i]) == 'undefined')return false;
-				i++;
-				}
+		} else {
+			if (typeof (this.Presentations[name].adminCodes[i]) === 'undefined') {
+				return false;
+			}
+			i += 1;
 		}
-				
-}
-
-
+	}
+};
 
 /**
-* get an AdminCode
-*
-*/
-this.getAdminCode = function (socket,name) {
-	if (this.Presentations[name].adminCodes == null) {
-		this.Presentations[name].adminCodes = new Array();
+ * get an AdminCode
+ *
+ */
+this.getAdminCode = function (socket, name) {
+	if (this.Presentations[name].adminCodes === null) {
+		this.Presentations[name].adminCodes = [];
 		this.Presentations[name].adminCodes[0] = (Math.floor(Math.random() * 4257671236709));
 		GlobalthisThing.savePresData();
 		return this.Presentations[name].adminCodes[0];
 	} else {
-		if (socket.id == this.Presentations[name].admin){
-			i = 0;
+		if (socket.id === this.Presentations[name].admin) {
+			var i = 0;
 			while (true) {
-				if (typeof(this.Presentations[name].adminCodes[i]) == undefined) {
+				if (typeof (this.Presentations[name].adminCodes[i]) === undefined) {
 					this.Presentations[name].adminCodes[i] = (Math.floor(Math.random() * 4257671236709));
 					GlobalthisThing.savePresData();
 					return this.Presentations[name].adminCodes[i];
 				}
-				i++;
+				i += 1;
 			}
 		}
 	}
-	
-}
-console.log(Server_settings.preTagInfo+' Server_Data.js loaded.');
-
+};
+console.log(Server_settings.preTagInfo + ' Server_Data.js loaded.');
