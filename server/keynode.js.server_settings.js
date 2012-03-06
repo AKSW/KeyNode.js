@@ -13,11 +13,33 @@ this.preTagPres = '\x1B[32m\x1B[1m[Presentation]\x1B[0m';
 this.standardPassword = 'rootKannAlles';
 //this.standardPassword=(Math.floor(Math.random() * 4257671236709));
 
-
 this.Server_Port = 4123;
 
 this.allow_new_presentations = true;
 
 this.debug = true;
+
+/**
+*	Use the Nodemailer to send you the Passwort for your presentation
+*
+*
+*/
+
+
+this.useMail = true;
+
+this.mailProto = "SMTP";
+
+this.mailPort = "";
+
+this.mailUsername = "";
+
+this.mailHost = "";
+
+this.mailPasswort = "";
+
+this.mailFrom = "";
+
+
 
 console.log(this.preTagSettings + ' Server_settings loaded.');
