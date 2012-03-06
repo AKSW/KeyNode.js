@@ -22,3 +22,9 @@ all configurations where make in the `keynode.js.server_settings.js`
 - `allow_new_presentations` - does the server accept new Presentations
 
 - `debug` - if it runs in debug mode (more logging)
+
+## Requirements
+
+- `fs` file functions for node
+
+- `nodemailer` Mailerfunctions (only for public use)	 
