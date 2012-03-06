@@ -140,7 +140,7 @@ this.resetPassword = function (data) {
 	} else {
 		if ((!Server_settings.localInstallation) && (typeof data !== 'undefined')) {
 			GlobalthisThing.Presentations[data.name].adminCodes = [Server_settings.standardPassword];
-			
+			if(typeof nodemailer === 'undefined') var nodemailer = require("nodemailer");
 			
 			
 			console.log(Server_settings.preTagServerData + ' Passwort reset to: "' + GlobalthisThing.Presentations[data.name].adminCodes[0] + '"');
