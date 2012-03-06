@@ -35,6 +35,18 @@ io.sockets.on('connection', function (socket) {
 			console.log(Server_settings.preTagServer + " Client  " + Client.id + ' ACCESS DENIED');
 		}
 	});
+	Client.on('resetPassword', function (data) {
+		var result = Server_data.resetPassword(data);
+		if ( result ===  'local') {
+			socket.emit('resetedPassword', {
+				"name" : data.name,
+				"type" : 'localReset'
+			});
+		} else {
+		
+		
+		}
+	});
 	Client.on('ConnectToPres', function (name) {
 		if (!Server_data.getPres(name)) {
 			//Server neue Presentation anlernen

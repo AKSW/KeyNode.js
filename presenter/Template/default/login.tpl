@@ -11,7 +11,7 @@
 	</div>
 
 	<div id="NodeServerURL" >
-		<input id="NodeURLinput" class="myURLInput tooltipEnable" title="Type here an Alternative NodeServer"  placeholder="Type your Alternative NodeServer here (optional)"> 
+		<input id="NodeURLinput" class="myURLInput tooltipEnable" title="Type here an Alternative NodeServer beginning with 'http://'"  placeholder="Type your NodeServer here beginning with 'http://'"> 
 		<input id="NodeURLsubmit" class="myButton" type="button" value="Ok">
 		
 	</div>
@@ -23,7 +23,7 @@
 
 
 </div>
-<div id="NodeServerURLsaved" style="display:none;" class="tooltipEnable" title="This one of your NodeServers">
+<div id="NodeServerURLsaved" style="display:none;" class="tooltipEnable" title="This is one of your NodeServers">
 			<input id="NodeServerURLsavedRemove" class="myRemButton" type="button" value="X">
 			<div id="serverValue">NodeServer-1: http://irgendwas.net/:1337</div>	
 			<div id="Password">

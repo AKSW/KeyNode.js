@@ -116,6 +116,12 @@ var mysocket = {
 			$('#presenterStartButton').css({'width' : '100%'}).unbind('click').click(mysocket.ident);
 			$('#presenterStartButton').attr('value', 'retest Inputs');
 		}
+		$('body').find('#Password').unbind('keydown');
+		$('.myPasswordInput').unbind('keydown').keydown( function(e) {
+			if (e.keyCode === 13) {
+				mysocket.ident();
+			}
+		})
 	},
 	ident : function () {
 		$('#NodeServerURL').find('#NodeServerURLsaved').each(function () {
@@ -125,6 +131,22 @@ var mysocket = {
 				globThis = $(this),
 				pw = $(this).find('#Passwordinput').val(),
 				server = $(this).find('#serverValue').html();
+			$(this).find('.myResetButton').removeAttr('disabled').unbind('click').click(function () {
+				mysocket.s[t].emit('resetPassword', {
+					"name" : login.canoURL
+				});
+				mysocket.s[t].on('resetedPassword', function (data) {
+					if (data.type === 'localReset') {
+						console.log('localReset');	
+					} else {
+						if (data.type === 'mailReset') {
+						console.log('mailReset');	
+						}
+					}
+				});
+			});
+		
+				
 			if (mysocket.test4SocketIO()) {
 				for (i in mysocket.NodeServer) {
 					if (mysocket.NodeServer[i] === server) {
@@ -139,6 +161,7 @@ var mysocket = {
 					"admin" : pw,
 					"name" : login.canoURL
 				});
+				
 				mysocket.s[t].removeAllListeners('identAsAdmin');
 				mysocket.s[t].on('identAsAdmin', function (data) {
 					if (data.ident === 'ADMIN') {
@@ -160,7 +183,6 @@ var mysocket = {
 		mysocket.ident();
 	},
 	oNconnect : function (i) {
-		console.log('onConnect');
 		mysocket.s[i].emit('ConnectToPres', login.canoURL);
 		mysocket.s[i].removeAllListeners('Ready');
 		mysocket.s[i].on('Ready', mysocket.oNReady(i));

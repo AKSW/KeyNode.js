@@ -17,7 +17,7 @@ this.addPres = function (name) {
 	if (this.Presentations === null) {
 		this.loadPresData();
 	}
-	if (this.Presentations[name] === null) {
+	if (typeof this.Presentations[name] === 'undefined') {
 		this.Presentations[name] = {};
 	}
 	this.initAdmin(name);
@@ -25,17 +25,7 @@ this.addPres = function (name) {
 	GlobalthisThing.savePresData();
 	console.log(Server_settings.preTagServerData + ' New Presentation: ' + name);
 };
-/**
- * get the Presentation
- *
- */
-this.getPres = function (name) {
-	if (this.Presentations === null) {
-		return null;
-	} else {
-		return this.Presentations[name];
-	}
-};
+
 /**
  * save the Presentationdata to file
  *
@@ -72,7 +62,17 @@ this.loadPresData = function () {
 		});
 	}
 };
-
+/**
+ * get the Presentation
+ *
+ */
+this.getPres = function (name) {
+	if (this.Presentations === null) {
+		return null;
+	} else {
+		return this.Presentations[name];
+	}
+};
 //Admins
 /**
  * Init the List of Admins
@@ -115,15 +115,35 @@ this.initAdminCodes = function (name) {
 this.setAdminByKey = function (name, key, socket) {
 	var i = 0;
 	while (true) {
-		if (this.Presentations[name].adminCodes[i] === key) {
-			this.Presentations[name].admin = socket.id;
+		if (GlobalthisThing.Presentations[name].adminCodes[i] === key) {
+			GlobalthisThing.Presentations[name].admin = socket.id;
 			GlobalthisThing.savePresData();
 			return true;
 		} else {
-			if (typeof (this.Presentations[name].adminCodes[i]) === 'undefined') {
+			if (typeof (GlobalthisThing.Presentations[name].adminCodes[i]) === 'undefined') {
 				return false;
 			}
 			i += 1;
+		}
+	}
+};
+/**
+*	Reset the Password ot a Presentation
+*	
+*
+*/
+this.resetPassword = function (data) {
+	if ((Server_settings.localInstallation) && (typeof data !== 'undefined')) {
+		GlobalthisThing.Presentations[data.name].adminCodes = [Server_settings.standardPassword];
+		console.log(Server_settings.preTagServerData + ' Passwort reset to: "' + GlobalthisThing.Presentations[data.name].adminCodes[0] + '"');
+		return 'local';
+	} else {
+		if ((!Server_settings.localInstallation) && (typeof data !== 'undefined')) {
+			GlobalthisThing.Presentations[data.name].adminCodes = [Server_settings.standardPassword];
+			
+			
+			
+			console.log(Server_settings.preTagServerData + ' Passwort reset to: "' + GlobalthisThing.Presentations[data.name].adminCodes[0] + '"');
 		}
 	}
 };

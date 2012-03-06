@@ -3,6 +3,9 @@ Config-file for Server
 
 
  */
+/* is this an local Installation --> the passwort reset show the new password in the Console */
+this.localInstallation = true;
+
 /* set Pretags for console logs */
 this.preTagInfo = '\x1B[32m\x1B[1m[Info]\x1B[0m';
 this.preTagSettings = '\x1B[32m\x1B[1m[Settings]\x1B[0m';
@@ -19,12 +22,12 @@ this.allow_new_presentations = true;
 
 this.debug = true;
 
+
 /**
 *	Use the Nodemailer to send you the Passwort for your presentation
 *
 *
 */
-
 
 this.useMail = true;
 

@@ -58,14 +58,6 @@ var login = {
 				//.attr('value',$("#temper link[rel='http://ns.aksw.org/keynode/canocical']").attr("href"))
 				login.addNodeServer($("#temper link[rel='http://ns.aksw.org/keynode/server']").attr("href"));
 			}
-			/*show  Password things*/
-			if (typeof $("#temper link[rel='http://ns.aksw.org/keynode/mailto']")[0] === 'undefined') {
-				$('.myResetButton').attr('disabled', 'disabled').attr('title', "You have to put your mailadress to this for resetting your password").addClass('tooltipEnable');
-				login.bindTooltips();
-			} else {
-				$('.myResetButton').removeAttr('disabled', 'disabled').attr('title', "with this u can reset your password").addClass('tooltipEnable');
-				login.bindTooltips();
-			}
 			$('#presenterStartButton').unbind('click').click(login.submitToServer).fadeIn('slow');
 			/*show  NodeServerURL things*/
 			$('#NodeServerURL').find('#NodeURLinput').unbind('keydown').keydown(function (e) {
@@ -77,6 +69,7 @@ var login = {
 				var path = $(this).parent().find('#NodeURLinput').val();
 				login.addNodeServer(path);
 			}).parent().fadeIn('slow');
+			
 			/*show  presentationURL things*/
 			$('#presentationURL').fadeIn('slow');
 			login.finishWorking();
@@ -84,11 +77,18 @@ var login = {
 	},
 	submitToServer : function () {
 		login.startWorking();
+		if( login.nodeServer.length === 0 ) {
+			alert('Please add at least one Nodeserver.');
+			login.finishWorking();
+			return false;
+		}
+		
 		$('#CanonicalURLinput').attr('disabled', 'disabled');
 		$('#CanonicalURLsubmit').fadeOut('fast');
 		login.canoURL = $('#CanonicalURLinput').val();
 		login.presURL = $('#presentationURL').val() !== '' ? $('#presentationURL').val() : $('#CanonicalURLinput').val();
 		//mache server[] bekannt
+		
 		mysocket.setValues(login.nodeServer);
 		//test4 serversocketIO
 		mysocket.getSocketIO(function () {
@@ -114,13 +114,17 @@ var login = {
 		}
 	},
 	addNodeServer : function (path) {
-		login.nodeServer[login.nodeServer.length] = path;
-		$('body>#NodeServerURLsaved').clone().appendTo('#NodeServerURL').find('#serverValue').html(path).parent().find('.myRemButton').unbind('click').click(login.removeNodeServer).parent().fadeIn('slow').find('#Password').fadeIn('fast').unbind('keydown').keydown(function (e) {
-			if (e.keyCode === 13) {
-				login.submitToServer();
-			}
-		});
-		login.bindTooltips();
+		if(path !== '') {
+			login.nodeServer[login.nodeServer.length] = path;
+			$('body>#NodeServerURLsaved').clone().appendTo('#NodeServerURL').find('#serverValue').html(path).parent().find('.myRemButton').unbind('click').click(login.removeNodeServer).parent().fadeIn('slow').find('#Password').fadeIn('fast').unbind('keydown').keydown(function (e) {
+				if (e.keyCode === 13) {
+					login.submitToServer();
+				}
+			});
+			login.bindTooltips();
+		} else {
+		alert( 'please add something like http://server.de:port ' );
+		}
 	},
 	removeNodeServer : function () {
 		$(this).parent().fadeOut('fast');
