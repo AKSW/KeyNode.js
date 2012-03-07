@@ -28,3 +28,4 @@ all configurations where make in the `keynode.js.server_settings.js`
 - `fs` file functions for node
 
 - `nodemailer` Mailerfunctions (only for public use)	 
+- `request` requestfunctions (only for public use)	 

@@ -13,8 +13,8 @@ this.preTagServerData = '\x1B[32m\x1B[1m[Server_data]\x1B[0m';
 this.preTagServer = '\x1B[32m\x1B[1m[Server]\x1B[0m';
 this.preTagPres = '\x1B[32m\x1B[1m[Presentation]\x1B[0m';
 
-this.standardPassword = 'rootKannAlles';
-//this.standardPassword=(Math.floor(Math.random() * 4257671236709));
+//this.standardPassword = 'rootKannAlles';
+this.standardPassword=(Math.floor(Math.random() * 4257671236709));
 
 this.Server_Port = 4123;
 
@@ -31,18 +31,28 @@ this.debug = true;
 
 this.useMail = true;
 
+
+/**
+*
+* for use of an SMTP
+*/
 this.mailProto = "SMTP";
 
-this.mailPort = "";
-
-this.mailUsername = "";
-
-this.mailHost = "";
-
-this.mailPasswort = "";
-
-this.mailFrom = "";
-
-
-
+/* options find @ https://github.com/andris9/nodemailer */
+this.smtp_options = {
+						host: "smtp.gmail.com",
+						secureConnection: true,
+						port: 465,
+						auth: {
+							user: "gmail.user@gmail.com",
+							pass: "userpass"
+						}
+					};
+/**
+	use of sendmail
+*/
+/*
+this.mailProto = "Sendmail";
+this.smtp_options = "/usr/bin/sendmail";
+*/
 console.log(this.preTagSettings + ' Server_settings loaded.');

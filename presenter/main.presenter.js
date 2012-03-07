@@ -78,6 +78,7 @@ var mysocket = {
 			//TODO: broadcast Zustände
 		} else if (data.ident === "USER") {
 			globThis.find('.errorMessage').remove();
+			globThis.find('.myResetButton').show();
 			globThis.css({'background-color' : 'rgba(255,0,0,0.3)'}).append('<div class="errorMessage">Password Wrong?</div>');
 		}
 		mysocket.test4ready();

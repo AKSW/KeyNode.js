@@ -28,7 +28,7 @@
 			<div id="serverValue">NodeServer-1: http://irgendwas.net/:1337</div>	
 			<div id="Password">
 				<input id="Passwordinput" class="myPasswordInput tooltipEnable" title="Thats your Password" type="password" placeholder="Type your Password here"> 
-				<input id="PasswordReset" class="myResetButton" type="button" value="Reset">
+				<input id="PasswordReset" style="display:none;" class="myResetButton" type="button" value="Reset">
 			</div>
 		</div>
 <div id="LoadingBG"> </div>

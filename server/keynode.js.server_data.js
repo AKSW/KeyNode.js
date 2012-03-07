@@ -114,18 +114,14 @@ this.initAdminCodes = function (name) {
  */
 this.setAdminByKey = function (name, key, socket) {
 	var i = 0;
-	while (true) {
-		if (GlobalthisThing.Presentations[name].adminCodes[i] === key) {
+	for (i in GlobalthisThing.Presentations[name].adminCodes) {
+		if ((' '+GlobalthisThing.Presentations[name].adminCodes[i]).trim() === key) {
 			GlobalthisThing.Presentations[name].admin = socket.id;
 			GlobalthisThing.savePresData();
 			return true;
-		} else {
-			if (typeof (GlobalthisThing.Presentations[name].adminCodes[i]) === 'undefined') {
-				return false;
-			}
-			i += 1;
 		}
 	}
+	return false;
 };
 /**
 *	Reset the Password ot a Presentation
@@ -135,15 +131,37 @@ this.setAdminByKey = function (name, key, socket) {
 this.resetPassword = function (data) {
 	if ((Server_settings.localInstallation) && (typeof data !== 'undefined')) {
 		GlobalthisThing.Presentations[data.name].adminCodes = [Server_settings.standardPassword];
+		GlobalthisThing.savePresData();
 		console.log(Server_settings.preTagServerData + ' Passwort reset to: "' + GlobalthisThing.Presentations[data.name].adminCodes[0] + '"');
 		return 'local';
 	} else {
 		if ((!Server_settings.localInstallation) && (typeof data !== 'undefined')) {
 			GlobalthisThing.Presentations[data.name].adminCodes = [Server_settings.standardPassword];
-			if(typeof nodemailer === 'undefined') var nodemailer = require("nodemailer");
-			
-			
-			console.log(Server_settings.preTagServerData + ' Passwort reset to: "' + GlobalthisThing.Presentations[data.name].adminCodes[0] + '"');
+			GlobalthisThing.savePresData();
+			if(typeof nodemailer === 'undefined') {
+				var nodemailer = require("nodemailer");
+				if(Server_settings.useMail) {
+					/*TODO: install per npm*/
+					var request = require('/root/node_modules/request/main.js');
+					/*var request = require('request');*/
+					request(data.name, function (error, response, body) {
+						if (!error && response.statusCode == 200) {
+							//<link.+href=['"](.+)['"].+\/>
+							var re = new RegExp(/<link.rel=["']http:\/\/ns.aksw.org\/keynode\/mailto['"].+href=['"]mailto:(.+)['"].+\/>/i);
+							var arrMatches = body.match(re);
+							var Mail = arrMatches[1];
+							var transport = nodemailer.createTransport(Server_settings.mailProto, Server_settings.smtp_options);
+							var mailOptions = {
+								from: "passwordreset@KeyNodeServer.com",
+								to: Mail,
+								subject: "Passwordreset for your Presentation",
+								text: "You have reset your password for : \n\r" + data.name + '\n\rYour new Password: ' + GlobalthisThing.Presentations[data.name].adminCodes[0] + '\n\r\n\rYour NodeServer'
+							}
+							transport.sendMail(mailOptions);
+						}
+					})
+				}
+			}
 		}
 	}
 };
