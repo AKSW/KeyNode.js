@@ -31,6 +31,8 @@ this.debug = true;
 
 this.useMail = true;
 
+this.NodeMailerPackage = "nodemailer";
+this.RequestPackage = "request";
 
 /**
 *

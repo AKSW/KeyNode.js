@@ -73,9 +73,6 @@ var mysocket = {
 			globThis.find('.errorMessage').remove();
 			globThis.css({'background-color' : 'rgba(0,255,0,0.3)'});
 			console.log('U R Admin of ' + data.name + '.');
-			//	presenter.initPresenterConsole();
-			//TODO: Init Konsole
-			//TODO: broadcast Zustände
 		} else if (data.ident === "USER") {
 			globThis.find('.errorMessage').remove();
 			globThis.find('.myResetButton').show();
@@ -118,11 +115,11 @@ var mysocket = {
 			$('#presenterStartButton').attr('value', 'retest Inputs');
 		}
 		$('body').find('#Password').unbind('keydown');
-		$('.myPasswordInput').unbind('keydown').keydown( function(e) {
+		$('.myPasswordInput').unbind('keydown').keydown(function (e) {
 			if (e.keyCode === 13) {
 				mysocket.ident();
 			}
-		})
+		});
 	},
 	ident : function () {
 		$('#NodeServerURL').find('#NodeServerURLsaved').each(function () {
@@ -138,16 +135,14 @@ var mysocket = {
 				});
 				mysocket.s[t].on('resetedPassword', function (data) {
 					if (data.type === 'localReset') {
-						console.log('localReset');	
+						console.log('localReset');
 					} else {
 						if (data.type === 'mailReset') {
-						console.log('mailReset');	
+							console.log('mailReset');
 						}
 					}
 				});
 			});
-		
-				
 			if (mysocket.test4SocketIO()) {
 				for (i in mysocket.NodeServer) {
 					if (mysocket.NodeServer[i] === server) {
@@ -162,7 +157,6 @@ var mysocket = {
 					"admin" : pw,
 					"name" : login.canoURL
 				});
-				
 				mysocket.s[t].removeAllListeners('identAsAdmin');
 				mysocket.s[t].on('identAsAdmin', function (data) {
 					if (data.ident === 'ADMIN') {

@@ -69,7 +69,6 @@ var login = {
 				var path = $(this).parent().find('#NodeURLinput').val();
 				login.addNodeServer(path);
 			}).parent().fadeIn('slow');
-			
 			/*show  presentationURL things*/
 			$('#presentationURL').fadeIn('slow');
 			login.finishWorking();
@@ -77,18 +76,16 @@ var login = {
 	},
 	submitToServer : function () {
 		login.startWorking();
-		if( login.nodeServer.length === 0 ) {
+		if (login.nodeServer.length === 0) {
 			alert('Please add at least one Nodeserver.');
 			login.finishWorking();
 			return false;
 		}
-		
 		$('#CanonicalURLinput').attr('disabled', 'disabled');
 		$('#CanonicalURLsubmit').fadeOut('fast');
 		login.canoURL = $('#CanonicalURLinput').val();
 		login.presURL = $('#presentationURL').val() !== '' ? $('#presentationURL').val() : $('#CanonicalURLinput').val();
 		//mache server[] bekannt
-		
 		mysocket.setValues(login.nodeServer);
 		//test4 serversocketIO
 		mysocket.getSocketIO(function () {
@@ -114,7 +111,7 @@ var login = {
 		}
 	},
 	addNodeServer : function (path) {
-		if(path !== '') {
+		if (path !== '') {
 			login.nodeServer[login.nodeServer.length] = path;
 			$('body>#NodeServerURLsaved').clone().appendTo('#NodeServerURL').find('#serverValue').html(path).parent().find('.myRemButton').unbind('click').click(login.removeNodeServer).parent().fadeIn('slow').find('#Password').fadeIn('fast').unbind('keydown').keydown(function (e) {
 				if (e.keyCode === 13) {
@@ -123,7 +120,7 @@ var login = {
 			});
 			login.bindTooltips();
 		} else {
-		alert( 'please add something like http://server.de:port ' );
+			alert('please add something like http://server.de:port ');
 		}
 	},
 	removeNodeServer : function () {

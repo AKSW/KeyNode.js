@@ -37,14 +37,18 @@ io.sockets.on('connection', function (socket) {
 	});
 	Client.on('resetPassword', function (data) {
 		var result = Server_data.resetPassword(data);
-		if ( result ===  'local') {
+		if (result ===  'local') {
 			socket.emit('resetedPassword', {
 				"name" : data.name,
 				"type" : 'localReset'
 			});
 		} else {
-		
-		
+			if (result ===  'mail') {
+				socket.emit('resetedPassword', {
+					"name" : data.name,
+					"type" : 'mailReset'
+				});
+			}
 		}
 	});
 	Client.on('ConnectToPres', function (name) {
