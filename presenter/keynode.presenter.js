@@ -88,9 +88,9 @@ var presenter = {
 	initIframe : function () {
 		if (!$('#slide_current')[0]) {
 			setTimeout(presenter.initIframe, 500);
-			console.log('timeout1');
+			//console.log('timeout1');
 		} else {
-			console.log('fertgi' + login.presURL);
+			//console.log('fertgi' + login.presURL);
 			$('#slide_current').append('<iframe src="' + login.presURL + '" width="100%" height="100%" id="CurrentFrame" style="z-Index:0;border:none;"></iframe> ');
 			$('#slide_current').append('<div class="clickBlocker"> </div>');
 			$('#slide_before').append('<iframe src="' + login.presURL + '" width="100%" height="100%" id="BeforeFrame" style="z-Index:0;border:none;"></iframe> ');

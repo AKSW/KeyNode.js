@@ -84,7 +84,7 @@ var login = {
 		$('#CanonicalURLinput').attr('disabled', 'disabled');
 		$('#CanonicalURLsubmit').fadeOut('fast');
 		login.canoURL = $('#CanonicalURLinput').val();
-		login.presURL = $('#presentationURL').val() !== '' ? $('#presentationURL').val() : $('#CanonicalURLinput').val();
+		login.presURL = $('#presentationURLinput').val() !== '' ? $('#presentationURLinput').val() : $('#CanonicalURLinput').val();
 		//mache server[] bekannt
 		mysocket.setValues(login.nodeServer);
 		//test4 serversocketIO

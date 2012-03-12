@@ -55,7 +55,7 @@ this.loadPresData = function () {
 				console.log(Server_settings.preTagServerData + ' presentation data created');
 			} else {
 				GlobalthisThing.Presentations = JSON.parse(data);
-				//TODO: Anzahl listener zurÃ¼cksetzen
+				//TODO: Anzahl listener zurücksetzen
 				console.log(Server_settings.preTagServerData + ' presentation data loaded');
 			}
 			return true;
@@ -148,42 +148,19 @@ this.resetPassword = function (data) {
 						var re = new RegExp(/<link.rel=["']http:\/\/ns.aksw.org\/keynode\/mailto['"].+href=['"]mailto:(.+)['"].+\/>/i);
 						var arrMatches = body.match(re);
 						var Mail = arrMatches[1];
-						var transport = nodemailer.createTransport(Server_settings.mailProto, Server_settings.smtp_options);
-						var mailOptions = {
-							from: "passwordreset@KeyNodeServer.com",
-							to: Mail,
-							subject: "Passwordreset for your Presentation",
-							text: "You have reset your password for : \n\r" + data.name + '\n\rYour new Password: ' + GlobalthisThing.Presentations[data.name].adminCodes[0] + '\n\r\n\rYour NodeServer'
-						};
-						transport.sendMail(mailOptions);
-						return 'mail';
+						if(Mail !== '') {
+							var transport = nodemailer.createTransport(Server_settings.mailProto, Server_settings.smtp_options);
+							var mailOptions = {
+								from: "passwordreset@KeyNodeServer.com",
+								to: Mail,
+								subject: "Passwordreset for your Presentation",
+								text: "You have reset your password for : \n\r" + data.name + '\n\rYour new Password: ' + GlobalthisThing.Presentations[data.name].adminCodes[0] + '\n\r\n\rYour NodeServer'
+							};
+							transport.sendMail(mailOptions);
+							return 'mail';
+						}
 					}
 				});
-			}
-		}
-	}
-};
-
-/**
- * get an AdminCode
- *
- */
-this.getAdminCode = function (socket, name) {
-	if (this.Presentations[name].adminCodes === null) {
-		this.Presentations[name].adminCodes = [];
-		this.Presentations[name].adminCodes[0] = (Math.floor(Math.random() * 4257671236709));
-		GlobalthisThing.savePresData();
-		return this.Presentations[name].adminCodes[0];
-	} else {
-		if (socket.id === this.Presentations[name].admin) {
-			var i = 0;
-			while (true) {
-				if (typeof (this.Presentations[name].adminCodes[i]) === undefined) {
-					this.Presentations[name].adminCodes[i] = (Math.floor(Math.random() * 4257671236709));
-					GlobalthisThing.savePresData();
-					return this.Presentations[name].adminCodes[i];
-				}
-				i += 1;
 			}
 		}
 	}
