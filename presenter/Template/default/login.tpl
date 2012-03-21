@@ -7,7 +7,8 @@
 
 
 	<div id="presentationURL" class="tooltipEnable" title="Thats the URL to your Presentation used by the Presenter">
-		<input id="presentationURLinput" class="myURLInput"  placeholder="Type your AlternativeURL here"> 		
+		<input id="presentationURLinput" class="myURLInput"  placeholder="Type your AlternativeURL here"> 	
+		<input id="presentationURLsubmit" class="myButton" type="button" value="Ok">		
 	</div>
 
 	<div id="NodeServerURL" >

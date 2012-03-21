@@ -53,6 +53,9 @@ var login = {
 			if (status === "error") {
 				$('.errorMessage').remove();
 				$('#presentationURLinput').before('<div class="errorMessage">Can not load your presentation from the canonical url.</div>').attr('placeholder', 'Type the URL of your presentation here');
+				$('#presentationURL').find('.myButton').fadeIn('fast').unbind('click').click(function () {
+					login.testAltURL();
+				});
 			} else {
 				//$('#presentationURLinput')
 				//.attr('value',$("#temper link[rel='http://ns.aksw.org/keynode/canocical']").attr("href"))
@@ -74,8 +77,26 @@ var login = {
 			login.finishWorking();
 		});
 	},
+	testAltURL : function () {
+		login.startWorking();
+		var alt = $('#presentationURLinput');
+		$('#temper').load(alt.val() + " link[rel*='http://ns.aksw.org/keynode/']", function (response, status, xhr) {
+			if (status === "error") {
+				$('.errorMessage').remove();
+				$('#presentationURLinput').after('<div class="errorMessage">Can not load your presentation from the canonical url.</div>').attr('placeholder', 'Type the URL of your presentation here');
+			} else {
+				//$('#presentationURLinput')
+				//.attr('value',$("#temper link[rel='http://ns.aksw.org/keynode/canocical']").attr("href"))
+				login.addNodeServer($("#temper link[rel='http://ns.aksw.org/keynode/server']").attr("href"));
+			}
+		});
+		login.finishWorking();
+	},
 	submitToServer : function () {
 		login.startWorking();
+		if ($('#NodeURLinput').val() !== '') {
+			login.addNodeServer($('#NodeURLinput').val());
+		}
 		if (login.nodeServer.length === 0) {
 			alert('Please add at least one Nodeserver.');
 			login.finishWorking();
