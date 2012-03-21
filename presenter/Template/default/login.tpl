@@ -25,7 +25,7 @@
 </div>
 <div id="NodeServerURLsaved" style="display:none;" class="tooltipEnable" title="This is one of your NodeServers">
 			<input id="NodeServerURLsavedRemove" class="myRemButton" type="button" value="X">
-			<div id="serverValue">NodeServer-1: http://irgendwas.net/:1337</div>	
+			<div id="serverValue">NodeServer-1: http://something.net/:1337</div>	
 			<div id="Password">
 				<input id="Passwordinput" class="myPasswordInput tooltipEnable" title="Thats your Password" type="password" placeholder="Type your Password here"> 
 				<input id="PasswordReset" style="display:none;" class="myResetButton" type="button" value="Reset">
@@ -33,7 +33,7 @@
 		</div>
 <div id="LoadingBG"> </div>
 <div id="LoadingContainer">
-		Bitte warten
+		Please Wait
 		<div id="img" >
 		
 	</div>
