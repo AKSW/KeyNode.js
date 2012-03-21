@@ -56,7 +56,9 @@ io.sockets.on('connection', function (socket) {
 	});
 	Client.on('controlSync', function (data) {
 		if (Server_data.getAdmin(data.name) === socket.id) {
-			console.log(Server_settings.preTagPres + 'Goto :' + data.folie);
+			if (Server_settings.debug) {
+				console.log(Server_settings.preTagPres + data.name + ' goto ' + data.folie);
+			}
 			io.sockets.in(data.name).emit('GoTo', data.folie);
 		} else {
 			console.log('Someone try to controll a slide that doesn´t be his own.');

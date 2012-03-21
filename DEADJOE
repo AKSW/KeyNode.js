@@ -1,0 +1,24 @@
+
+*** These modified files were found in JOE when it aborted on Wed Mar 21 11:31:02 2012
+*** JOE was aborted because the terminal closed
+
+*** Datei '(Unbenannt)'
+root
+more-options
+menu
+
+*** Datei '.git/COMMIT_EDITMSG'
+german->english
+# with '#' will be ignored, and an empty message aborts the commit.
+# On branch master
+# Your branch is ahead of 'origin/master' by 2 commits.
+#
+# Changes to be committed:
+#   (use "git reset HEAD <file>..." to unstage)
+#
+#	modified:   presenter/Template/default/login.tpl
+#
+
+*** Datei '(Unbenannt)'
+/tmp/hg-editor-hNWWm7.txt
+.git/COMMIT_EDITMSG
