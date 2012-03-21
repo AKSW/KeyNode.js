@@ -141,7 +141,6 @@ var mysocket = {
 					bg = "rgba(255,0,0,0.5)";//rot
 				mysocket.s[t].removeAllListeners('resetedPassword');
 				mysocket.s[t].on('resetedPassword', function (data) {
-					console.log(data);
 					if (data.type === 'localReset') {
 						Message = 'The password was reset. Please look in the console of the server.';
 						bg = "rgba(0,255,0,0.5)";//grün
@@ -156,7 +155,6 @@ var mysocket = {
 							}
 						}
 					}
-					console.log(Message);
 					if (Message !== "") {
 						if ($("body>#message")[0]) {
 							clearTimeout(mysocket.messageTimeOut);
