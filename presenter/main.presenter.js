@@ -27,6 +27,7 @@ var KeyNode = {
 };
 
 var mysocket = {
+	messageTimeOut : null,
 	NodeServer : null,
 	socket : null,
 	myTimer : null,
@@ -36,7 +37,7 @@ var mysocket = {
 		return (typeof (io) === 'undefined') ? false : true;
 	},
 	mySuccess : function (callback) {
-		alert('ready');
+		//alert('ready');
 		if (mysocket.myTimer === null) {
 			return true;
 		} else {
@@ -55,6 +56,9 @@ var mysocket = {
 			if (!$(this).is(':visible')) {
 				$(this).remove();
 			}
+		});
+		$('#NodeServerURL').find('#NodeServerURLsavedRemove').each(function () {
+			$(this).remove();
 		});
 		var i = null;
 		for (i in mysocket.NodeServer) {
@@ -133,12 +137,41 @@ var mysocket = {
 				mysocket.s[t].emit('resetPassword', {
 					"name" : login.canoURL
 				});
+				var Message = "",
+					bg = "rgba(255,0,0,0.5)";//rot
+				mysocket.s[t].removeAllListeners('resetedPassword');
 				mysocket.s[t].on('resetedPassword', function (data) {
+					console.log(data);
 					if (data.type === 'localReset') {
-						console.log('localReset');
+						Message = 'The password was reset. Please look in the console of the server.';
+						bg = "rgba(0,255,0,0.5)";//grün
 					} else {
 						if (data.type === 'mailReset') {
-							console.log('mailReset');
+							Message = 'The new Password was send to your mail address.';
+							bg = "rgba(0,255,0,0.5)";//grün
+						} else {
+							if (data.type === 'fail-noMail') {
+								Message = 'No Mailadress found.';
+								bg = "rgba(255,0,0,0.5)";//rot
+							}
+						}
+					}
+					console.log(Message);
+					if (Message !== "") {
+						if ($("body>#message")[0]) {
+							clearTimeout(mysocket.messageTimeOut);
+							$("#message").css({'background': bg}).html(Message).fadeIn('slow');
+							mysocket.messageTimeOut = setTimeout(function () {
+								$("#message").fadeOut('slow');
+							}, 2000);
+						} else {
+							$("body").append('<div id="message" style="position:absolute; display:none; -border-radius:5px;-moz-border-radius:5px;-khtml-border-radius:5px; text-align:center; padding: 5px; left: 50%; width: 600px; top: 5px; margin-left:-300px;background:' + bg + '" > ' + Message + '</div>')
+								.find('#message')
+								.fadeIn('slow');
+							clearTimeout(mysocket.messageTimeOut);
+							mysocket.messageTimeOut = setTimeout(function () {
+								$("#message").fadeOut('slow');
+							}, 2000);
 						}
 					}
 				});

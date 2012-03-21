@@ -128,16 +128,17 @@ this.setAdminByKey = function (name, key, socket) {
 *	
 *
 */
-this.resetPassword = function (data) {
+this.resetPassword = function (data,socket) {
 	if ((Server_settings.localInstallation) && (typeof data !== 'undefined')) {
 		GlobalthisThing.Presentations[data.name].adminCodes = [Server_settings.standardPassword];
 		GlobalthisThing.savePresData();
 		console.log(Server_settings.preTagServerData + ' password reset to: "' + GlobalthisThing.Presentations[data.name].adminCodes[0] + '"');
-		return 'local';
+		socket.emit('resetedPassword', {
+			"name" : data.name,
+			"type" : 'localReset'
+		});
 	} else {
 		if ((!Server_settings.localInstallation) && (typeof data !== 'undefined')) {
-			GlobalthisThing.Presentations[data.name].adminCodes = [Server_settings.standardPassword];
-			GlobalthisThing.savePresData();
 			if (typeof nodemailer === 'undefined') {
 				var nodemailer = require(Server_settings.NodeMailerPackage);
 			}
@@ -145,19 +146,36 @@ this.resetPassword = function (data) {
 				var request = require(Server_settings.RequestPackage);
 				request(data.name, function (error, response, body) {
 					if (!error && response.statusCode === 200) {
-						var re = new RegExp(/<link.rel=["']http:\/\/ns.aksw.org\/keynode\/mailto['"].+href=['"]mailto:(.+)['"].+\/>/i);
-						var arrMatches = body.match(re);
-						var Mail = arrMatches[1];
-						if(Mail !== '') {
-							var transport = nodemailer.createTransport(Server_settings.mailProto, Server_settings.smtp_options);
-							var mailOptions = {
-								from: "passwordreset@KeyNodeServer.com",
-								to: Mail,
-								subject: "Passwordreset for your Presentation",
-								text: "You have reset your password for : \n\r" + data.name + '\n\rYour new Password: ' + GlobalthisThing.Presentations[data.name].adminCodes[0] + '\n\r\n\rYour NodeServer'
-							};
-							transport.sendMail(mailOptions);
-							return 'mail';
+						var re = new RegExp(/<link.rel=["']http:\/\/ns.aksw.org\/keynode\/mailto['"].+href=['"]mailto:(.+)['"].+\/>/i),
+							arrMatches = body.match(re);
+						if (arrMatches) {
+							var Mail = arrMatches[1];
+							if (Mail !== '') {
+								GlobalthisThing.Presentations[data.name].adminCodes = [Server_settings.standardPassword];
+								GlobalthisThing.savePresData();
+								var transport = nodemailer.createTransport(Server_settings.mailProto, Server_settings.smtp_options),
+									mailOptions = {
+										from: "passwordreset@KeyNodeServer.com",
+										to: Mail,
+										subject: "Passwordreset for your Presentation",
+										text: "You have reset your password for : \n\r" + data.name + '\n\rYour new Password: ' + GlobalthisThing.Presentations[data.name].adminCodes[0] + '\n\r\n\rYour NodeServer'
+									};
+								transport.sendMail(mailOptions);
+								socket.emit('resetedPassword', {
+									"name" : data.name,
+									"type" : 'mailReset'
+								});
+							} else {
+								socket.emit('resetedPassword', {
+									"name" : data.name,
+									"type" : 'fail-noMail'
+								});
+							}
+						} else {
+							socket.emit('resetedPassword', {
+								"name" : data.name,
+								"type" : 'fail-noMail'
+							});
 						}
 					}
 				});
