@@ -1,0 +1,419 @@
+<!DOCTYPE html>
+<!--[if lt IE 7]> <html class="no-js ie6" lang="en"> <![endif]-->
+<!--[if IE 7]>    <html class="no-js ie7" lang="en"> <![endif]-->
+<!--[if IE 8]>    <html class="no-js ie8" lang="en"> <![endif]-->
+<!--[if gt IE 8]><!-->  <html class="no-js" lang="en"> <!--<![endif]-->
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=1024, user-scalable=no">
+    <script data-main="./config" src="./require-jquery.js"></script>
+
+    <link rel="stylesheet" href="https://raw.github.com/imakewebthings/deck.js/master/core/deck.core.css">
+    <link rel="stylesheet" href="../style.css" id="style-theme-link" media="screen, projection">
+    <script src="../script.js"></script>
+
+    <meta name="author" content="Michael Haschke">
+    <meta name="dcterms.creator" content="http://michael.haschke.biz/">
+    <meta name="dcterms.date" content="2012-01-09">
+    <title>Manual and Styleguide of the Deck.JS theme for AKSW presentations</title>
+</head>
+
+<body class="deck-container">
+
+<figure class="deck-header">
+    <span id="aksw-logo" class="hideme">
+        Agile Knowledge &amp; Semantic Web Research Group
+    </span>
+    <span class="title-from-current-deck"></span>
+    <figcaption class="hideme">Header graphic, containing LSoM logo and title of the currently show slide</figcaption>
+</figure>
+
+<div class="slide" id="title">
+    <h1>
+        Deck.JS theme for <abbr title="Agile Knowledge &amp; Semantic Web">AKSW</abbr> research group presentations
+        <span class="subtitle">(Manual and Styleguide)</span></h1>
+</div>
+
+<div class="slide" id="headlines">
+    <h2>Headlines</h2>
+    <p class="note">
+        Please use headline <code>&lt;h2&gt;</code> for the main slide title, it is excluded automatically from the content and included in the header.
+    </p>
+    
+    <h3>Duis aute irure dolor <code>&lt;h3&gt;</code></h3>
+    <h4>Reprehenderit in voluptate <code>&lt;h4&gt;</code></h4>
+    
+    <code class="codeblock">    &lt;h2&gt;Headline for slide title&lt;/h2&gt;
+    &lt;h3&gt;Sub headline 1 used on slide&lt;/h3&gt;
+    &lt;h4&gt;Sub headline 2 used on slide&lt;/h4&gt;</code>
+</div>
+
+<div class="slide" id="paragraphs">
+    <h2>Paragraphs</h2>
+    <p>
+        Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do
+        eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim
+        ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut
+        aliquip ex ea commodo consequat.
+    </p>
+    <p>
+        Duis aute irure dolor in reprehenderit in voluptate velit esse cillum
+        dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat
+        non proident, sunt in culpa qui officia deserunt mollit anim id est
+        laborum.
+    </p>
+    
+    <code class="codeblock">    &lt;p&gt;
+        Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
+        tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
+        quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
+        consequat.
+    &lt;/p&gt;</code>
+</div>
+
+<div class="slide" id="lists-enumeration">
+    <h2>List elements (1) &mdash; Enumeration</h2>
+
+    <ul>
+        <li>Unordered list <code>&lt;ul&gt;</code></li>
+        <li>Lorem ipsum dolor sit amet, consectetur adipisicing elit
+            <ul>
+                <li>with sub items <code>&lt;li&gt;</code></li>
+                <li>sed do eiusmod tempor incididunt ut labore et dolore magna aliqua</li>
+            </ul>
+        </li>
+    </ul>
+    
+    <ol>
+        <li>Ordered list <code>&lt;ol&gt;</code></li>
+        <li>Lorem ipsum dolor sit amet, consectetur adipisicing elit
+            <ol>
+                <li>with sub items</li>
+                <li>exercitation ullamco laboris nisi ut aliquip ex ea commodo</li>
+            </ol>
+        </li>
+    </ol>
+    
+    <code class="codeblock">    &lt;ul&gt;
+        &lt;li&gt;sed do eiusmod tempor incididunt ut labore et dolore magna aliqua&lt;/li&gt;
+    &lt;/ul&gt;
+    &lt;ol&gt;
+        &lt;li&gt;exercitation ullamco laboris nisi ut aliquip ex ea commodo&lt;/li&gt;
+    &lt;/ol&gt;</code>
+</div>
+
+<div class="slide" id="lists-enumeration2">
+    <h2>List elements (2) &mdash; Enumeration classes</h2>
+    
+    <code class="codeblock">&lt;ul class="bullets-none"&gt; &lt;!-- ... --&gt; &lt;/ul&gt;</code>
+
+    <ul class="bullets-none">
+        <li>Unordered list</li>
+        <li>Lorem ipsum dolor sit amet, consectetur adipisicing elit
+            <ul>
+                <li>with sub items</li>
+                <li>sed do eiusmod tempor incididunt ut labore et dolore magna aliqua</li>
+            </ul>
+        </li>
+    </ul>
+    
+    <code class="codeblock">&lt;ol class="numbers-{alpha|roman}"&gt; &lt;!-- ... --&gt; &lt;/ol&gt;</code>
+
+    <ol class="numbers-alpha">
+        <li>Lorem ipsum dolor sit amet, consectetur adipisicing elit
+            <ol>
+                <li>exercitation ullamco laboris nisi ut aliquip ex ea commodo</li>
+            </ol>
+        </li>
+    </ol>
+    
+    <ol class="numbers-roman">
+        <li>Lorem ipsum dolor sit amet, consectetur adipisicing elit
+            <ol>
+                <li>exercitation ullamco laboris nisi ut aliquip ex ea commodo</li>
+            </ol>
+        </li>
+    </ol>
+    
+</div>
+
+<div class="slide" id="lists-definition">
+    <h2>List elements (3) &mdash; Definitions</h2>
+
+    <dl>
+        <dt>Term <code>&lt;dt&gt;</code></dt>
+        <dd>Declaration <code>&lt;dd&gt;</code></dd>
+        <dt>Lorem ipsum dolor</dt>
+        <dd>Duis aute irure dolor in reprehenderit in voluptate velit esse cillum
+        dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat
+        non proident, sunt in culpa qui officia deserunt mollit anim id est
+        laborum.</dd>
+    </dl>
+    
+    <code class="codeblock">    &lt;dl&gt;
+        &lt;dt&gt;Term&lt;/dt&gt;
+        &lt;dd&gt;Declaration&lt;/dd&gt;
+        &lt;dt&gt;sed do eiusmod tempor&lt;/dt&gt;
+        &lt;dd&gt;exercitation ullamco laboris nisi ut aliquip ex ea commodo&lt;/dd&gt;
+    &lt;/dl&gt;</code>
+</div>
+
+<div class="slide" id="citations">
+    <h2>Citations</h2>
+
+    <p>
+        In an <q>inline citation</q> you may <q cite="http://example.org/">add an author or source</q> if you want.
+    </p>
+    
+    <code class="codeblock">In an &lt;q&gt;inline citation&lt;/q&gt; you may &lt;q cite="http://example.org/"&gt;add an author or source&lt;/q&gt;</code>
+    
+    <blockquote>
+        <p>
+            Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris
+            nisi ut aliquip ex ea commodo consequat. Excepteur sint occaecat cupidatat
+            non proident, sunt in culpa qui officia deserunt mollit anim id est
+            laborum.
+        </p>
+        <cite>Dr. Lorem Ipsum</cite>
+    </blockquote>
+    
+    <blockquote>
+        Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do
+        eiusmod tempor incididunt ut labore et dolore magna aliqua.
+    </blockquote>
+    
+    <code class="codeblock">    &lt;blockquote&gt;
+        &lt;p&gt;Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.&lt;/p&gt;
+        &lt;cite&gt;Source&lt;/cite&gt;
+    &lt;/blockquote&gt;
+    &lt;blockquote&gt;
+        Exercitation ullamco laboris nisi ut aliquip ex ea commodo.
+    &lt;/blockquote&gt;</code>
+</div>
+
+<div class="slide" id="sourcecode">
+    <h2>Source code</h2>
+
+    <p>
+        <!-- block source code -->
+        Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do
+        eiusmod tempor <code>&lt;inline source code&gt;</code> incididunt
+        ut labore et dolore magna aliqua.
+    </p>
+    
+    <code class="codeblock">    &lt;p&gt;
+        &lt;!-- block source code --&gt;
+        Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do
+        eiusmod tempor &lt;code&gt;&amp;lt;inline source code&amp;gt;&lt;/code&gt; incididunt
+        ut labore et dolore magna aliqua.
+    &lt;/p&gt;</code>
+    
+    <code class="codeblock">    &lt;code class="codeblock"&gt;    &amp;lt;p&amp;gt;
+        &amp;lt;!-- block source code --&amp;gt;
+        Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do
+        eiusmod tempor &amp;lt;code&amp;gt;&amp;amp;lt;inline source code&amp;amp;gt;&amp;lt;/code&amp;gt; incididunt
+        ut labore et dolore magna aliqua.
+    &amp;lt;/p&amp;gt;&lt;/code&gt;</code>
+</div>
+
+<div class="slide" id="accentuations">
+    <h2>Accentuated text blocks</h2>
+
+    <p class="big">
+        This is big text!
+    </p>
+    
+    <p class="note">
+        This is a coloured note!
+    </p>
+
+    <div class="note">
+        <p class="big">
+            Combined, it is a big coloured text note!
+        </p>
+    </div>
+    
+    <code class="codeblock">    &lt;p class="big"&gt;This is big text!&lt;/p&gt;
+    &lt;p class="note"&gt;This is a coloured note!&lt;/p&gt;
+    &lt;div class="note"&gt;
+        &lt;p class="big"&gt;Combined, it is a big coloured text note!&lt;/p&gt;
+    &lt;/div&gt;</code>
+</div>
+
+<div class="slide" id="figures">
+    <h2>Figures and media</h2>
+
+    <figure>
+        <img src="http://dummyimage.com/400x300" alt="alternative description"/>
+        <figcaption>
+            <strong>Image: </strong>
+            quis nostrud exercitation ullamco laboris
+            nisi ut aliquip ex ea commodo consequat
+        </figcaption>
+    </figure>
+    
+    <code class="codeblock">    &lt;figure&gt;
+        &lt;img src="http://dummyimage.com/400x300" alt="alternative description"/&gt;
+        &lt;figcaption&gt;
+            &lt;strong>Image: &lt;/strong&gt; quis nostrud exercitation ullamco
+        &lt;/figcaption&gt;
+    &lt;/figure&gt;</code>
+</div>
+
+<div class="slide" id="helpers-alignment">
+    <h2>Helpers (1): Text alignments</h2>
+
+    <p class="centered">
+        Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do
+        eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim
+        ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut
+        aliquip ex ea commodo consequat. Duis aute irure dolor in
+        reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla
+        pariatur.
+    </p>
+    
+    <p class="righted">
+        Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do
+        eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim
+        ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut
+        aliquip ex ea commodo consequat. Duis aute irure dolor in
+        reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla
+        pariatur.
+    </p>
+    
+    <p class="justified">
+        Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do
+        eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim
+        ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut
+        aliquip ex ea commodo consequat. Duis aute irure dolor in
+        reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla
+        pariatur.
+    </p>
+    
+    <code class="codeblock">    &lt;p class="{centered|righted|justified}"&gt;
+        Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do
+        eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim
+        ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut
+        aliquip ex ea commodo consequat.
+    &lt;/p&gt;</code>
+</div>
+
+<div class="slide" id="helpers-size">
+    <h2>Helpers (2): Sizes</h2>
+
+    <pre class="afifth">.afifth</pre>
+    
+    <pre class="afourth">.afourth</pre>
+    
+    <pre class="athird">.athird</pre>
+    
+    <pre class="ahalf">.ahalf</pre>
+    
+    <pre class="ahalf">.ahalf<pre class="ahalf">.ahalf<pre class="ahalf">.ahalf</pre></pre></pre>
+    
+</div>
+
+<div class="slide" id="helpers-position">
+    <h2>Helpers (3): Positioning</h2>
+
+    <pre class="athird left">.left</pre>
+    <pre class="athird right">.right</pre>
+    <pre class="athird center">.center</pre>
+
+    <pre class="ahalf center">.center</pre>
+
+    <pre class="ahalf left">.left</pre>
+    <pre class="ahalf right">.right</pre>
+    
+    <br class="clear">
+
+    <pre class="afifth left">.left</pre>
+    <pre class="afifth left">.left</pre>
+    <pre class="afifth left">.left</pre>
+    <p class="note">(.note)</p>
+
+    <pre class="afifth left">.left</pre>
+    <pre class="afifth left">.left</pre>
+    <pre class="afifth left">.left</pre>
+    <p class="note clear">.clear</p>
+</div>
+
+<div class="slide" id="helpers-example">
+    <h2>Helpers (4): Combination</h2>
+
+    <figure class="ahalf right">
+        <img src="http://dummyimage.com/400x300" alt="alternative description"/>
+        <figcaption>
+            <strong>Image: </strong>
+            quis nostrud exercitation ullamco laboris
+            nisi ut aliquip ex ea commodo consequat
+        </figcaption>
+    </figure>
+    
+    <blockquote class="ahalf">
+        <p>
+            Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris
+            nisi ut aliquip ex ea commodo consequat.
+        </p>
+        <p>
+            Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do
+            eiusmod tempor incididunt ut labore et dolore magna aliqua.
+        </p>
+        <cite>Dr. Lorem Ipsum</cite>
+    </blockquote>
+    
+    <code class="codeblock clear">    &lt;figure class="ahalf right"&gt;
+        &lt;!-- ... --&gt;
+    &lt;/figure&gt;
+    &lt;blockquote class="ahalf"&gt;
+        &lt;!-- ... --&gt;
+    &lt;/blockquote&gt;</code>
+
+</div>
+
+<div class="slide" id="credits">
+    <h2>Info &amp; Credits</h2>
+<code class="codeblock">/*
+ * Deck.js Theme
+ * for Leipzig School of Media
+ *
+ * @author Michael Haschke, http://michael.haschke.biz/
+ *
+ * DO NOT EDIT THE style.css file, it is generated by Sass from style.scss
+ *
+ */</code>
+    <ul>
+        <li>
+            <strong>Files:</strong> <a href="https://github.com/haschek/deck.js/tree/LSoMstyles/userthemes/lsom">github.com/haschek/deck.js/</a>
+        </li>
+        <li>
+            <strong>Author:</strong> <a href="http://michael.haschke.biz/">Michael Haschke</a> (WebID)
+        </li>
+        <li>
+            <strong>Online:</strong> <a href="http://seebi.github.com/deck.js/2011-Manual-LSoM-Theme-for-DeckJS/">seebi.github.com/deck.js/2011-Manual-LSoM-Theme-for-DeckJS</a>
+        </li>
+    </ul>
+</div>
+
+<!-- DECKJS STUFF - NO SLIDES FROM HERE -->
+<a href="#" class="deck-prev-link" title="Previous">&#8592;</a>
+<a href="#" class="deck-next-link" title="Next">&#8594;</a>
+
+<figure class="deck-footer">
+    <div class="deck-status">
+        <span class="deck-status-current"></span>
+        <span>/</span>
+        <span class="deck-status-total"></span>
+    </div>
+    <div class="deck-meta">
+        <span class="deck-meta-title"></span>
+        <span class="deck-meta-date"></span>
+        <span>|</span>
+        <span class="deck-meta-author"></span>
+    </div>
+    <figcaption class="hideme">Footer graphic, containing site number, presentation title, author and date.</figcaption>
+</figure>
+
+</body>
+</html>
