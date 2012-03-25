@@ -4,7 +4,7 @@ Config-file for Server
 
  */
 /* is this an local Installation --> the passwort reset show the new password in the Console */
-this.localInstallation = false;
+this.localInstallation = true;
 
 /* set Pretags for console logs */
 this.preTagInfo = '\x1B[32m\x1B[1m[Info]\x1B[0m';
@@ -20,7 +20,7 @@ this.Server_Port = 4123;
 
 this.allow_new_presentations = true;
 
-this.debug = true;
+this.debug = false;
 
 
 /**
@@ -29,7 +29,7 @@ this.debug = true;
 *
 */
 
-this.useMail = true;
+this.useMail = false;
 
 this.NodeMailerPackage = "nodemailer";
 this.RequestPackage = "request";

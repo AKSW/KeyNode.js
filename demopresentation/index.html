@@ -89,6 +89,9 @@
             <a href="#presenter0">How do i use the presenter?</a>
         </li>
 		<li>
+            <a href="#server0">How do i use the server?</a>
+        </li>
+		<li>
             <a href="#technic">How does it work</a>
         </li>
     </ol>
@@ -100,7 +103,7 @@
 <div class="slide" id="General">
     <h2>General</h2>
 	<ul>
-	<li>KeyNode.Js gives you the chance to syncronise your presentations and add to deck.js the things every presenter should have.</li>
+	<li>KeyNode.Js gives you the chance to synchronise your presentations and add to deck.js the things every presenter should have.</li>
 	<li>It is written in <a href="wikipedia.org/wiki/JavaScript" target="_blank">Javascript</a> and works with every <a href="http://imakewebthings.com/deck.js" target="_blank">Deck.js</a> presentation.</li>
 </div>
 
@@ -122,6 +125,8 @@
 		<li>the presenter folder downloaded from Github:<br>
 		<a href="https://github.com/AKSW/KeyNode.js/tree/master/presenter" target="_blank">https://github.com/AKSW/KeyNode.js/tree/master/presenter</a>
 		</li>
+		<li>A NodeServer running local or online <br>
+		also located at <a href="https://github.com/AKSW/KeyNode.js">https://github.com/AKSW/KeyNode.js</a></li>
     </ul>
 </div>
 <div class="slide" id="start2">
@@ -148,9 +153,10 @@
 </div>
 <div class="slide" id="start3">
     <h2>How to start the presenter? (1)</h2>
-	<img src="./images/presenter1.PNG">
-    <ol>
-        <li>paste your canonical URL into the textfield</li>
+	 <ol>
+        <li>go to the presenter-folder and open the index.html with your browser (it works best with Google Chrome)</li>
+		<img src="./images/presenter1.PNG">
+		<li>paste your canonical URL into the textfield</li>
 		<li>hit [Enter] or hit [Ok]</li>
     </ol>
 	
@@ -161,10 +167,10 @@
     <ol>
         <li>if the presenter gets the content form the canonical URL, it fills the values found there otherwise you have to do the following steps</li>
 		<li>[optional] add an alternate URL to your presenter, this one will used by the Presenter, if set</li>
-		<li>[optional] add another NodeServer and hit [Ok] </li>
+		<li>[optional] add another NodeServer and hit [Ok] button next to it </li>
 		<li>add the password for each NodeServer (if you know it) and hit [Test Inputs] </li>
-		<li>[optional] hit [Reset] at the NodeServer you have forget the password from, then it will be send to your emailadress or will shown in the console of your local server, if you have one </li>
-		<li>With the button [start Presenter] begin to present</li>
+		<li>[optional] hit [Reset] at the NodeServer you have forget the password from, then it will be send to your emailaddress or will shown in the console of your local server, if you have one </li>
+		<li>When ready hit [start Presenter] and begin to present</li>
     </ol>
 	
 </div>
@@ -177,6 +183,7 @@
 <div class="slide" id="presenter0">
     <h2>How do i use the presenter? (1)</h2>
 	<img src="./images/presenter3.PNG">
+	`What is shown in each part of the presenter?
 	<ul>
 	<li>On the left side: your last presentation slide</li>
 	<li>In the middle: the slide everyone listen to your presentation sees</li>
@@ -185,12 +192,111 @@
 </div>
 <div class="slide" id="presenter1">
     <h2>How do i use the presenter? (2)</h2>
-	with the Arrow Keys you can control your presentation, every change will broadcasted to very slide opened with the keynode.watcher.js included.
+	With the arrow keys you can control your presentation, every change will broadcasted to every slide opened with the keynode.watcher.js included.
 	<img src="./images/presenter4.png">
 	
 </div>
+<div class="slide" id="server0">
+    <h2>How do i use the server? (1)</h2>
+	<ol>
+		<li>Check if you have installed the following programms:
+		
+		<pre>- node.js(<a href="http://nodejs.org/#download">download</a>)
+- npm (for easy nodepackage installation)
+- socket.io (extention of node.js)
+- nodemailer (extention of node.js: if you want to run a public server)
+- request (extention of node.js:  if you want to run a public server)</pre>
+		</li>
+		<li>Rename or Copy: keynode.js.server_settings.js_sample to keynode.js.server_settings.js</li>
+		<li>Check the configuration if it fits to your requirements (<a href="#serverConfig1">How to Configurate</a>)</li>
+	</ol>
+		<h3> How to actualy start the server</h3>
+		go to the folder and run the server:
+		<pre>$ cd ./server
+$ node keynode.js.server.js</pre>
+	
+	
+</div>
+<div class="slide" id="serverConfig1">
+    <h2>How do i configurate the server? (1) </h2>
+	in the Config file you have the following setting you can set:
+	<ul>
+	<li>
+		Did you want to see the password in the console if you reset it or send an email?<br>
+		Default:
+		<pre class="brush: js">this.localInstallation = false;</pre>
+	</li>
+	<li>
+		How do your consolelogging looks like<br>
+		Default:
+		<pre class="brush: js">this.preTagInfo = '\x1B[32m\x1B[1m[Info]\x1B[0m';
+this.preTagSettings = '\x1B[32m\x1B[1m[Settings]\x1B[0m';
+this.preTagServerData = '\x1B[32m\x1B[1m[Server_data]\x1B[0m';
+this.preTagServer = '\x1B[32m\x1B[1m[Server]\x1B[0m';
+this.preTagPres = '\x1B[32m\x1B[1m[Presentation]\x1B[0m';</pre>
+	</li>
+	<li>
+		What is your default password set when you reset it?<br>
+		Default:
+		<pre class="brush: js">this.standardPassword = (Math.floor(Math.random() * 4257671236709));</pre>
+		uncomment the following line and comment the other, when only you use the server
+		<pre class="brush: js">this.standardPassword = 'rootKannAlles';</pre>
+	</li>
+	<li>
+		On what port should the server listen?<br>
+		Default:
+		<pre class="brush: js">this.Server_Port = 4123;</pre>
+	</li>	
+	<li>
+		Do you whant to allow new Presentations or dont you?<br>
+		Default:
+		<pre class="brush: js">this.allow_new_presentations = true;</pre>
+	</li>
+</ul>
+
+	
+</div>
+<div class="slide" id="serverConfig2">
+    <h2>How do i configurate the server? (2) </h2>
+	in the Config file you have the following setting you can set:
+	<ul>
+	
+	<li>
+		Do you want to see all Debug informations on the console screen?
+		Default:
+		<pre class="brush: js">this.debug = true;</pre>
+	</li>
+	<li>
+		Do you want to use the MailerOptions? (only in nonlocalInstallation)<br>
+		Default:
+		<pre class="brush: js">this.useMail = false;</pre>
+		they require 2 addons for node.js (only change if they are somewhere else):
+		<pre class="brush: js">this.NodeMailerPackage = "nodemailer";
+this.RequestPackage = "request";</pre>
+	</li>
+	<li>
+		Mailconfiguration:<br>
+		you can find an great number of possible options at <a href="https://github.com/andris9/nodemailer">documentation of Nodemailer</a><br>
+		Default:
+		<pre class="brush: js">this.mailProto = "SMTP";
+this.smtp_options = {
+	host: "domain.de",
+	secureConnection: true,
+	port: 465,
+	auth: {
+		user: "user@Domain.de",
+		pass: ""
+	}
+};</pre>
+		other option is the commented sendmail config:
+		<pre class="brush: js">this.mailProto = "Sendmail";
+this.smtp_options = "/usr/bin/sendmail";</pre>
+
+	</li>
+</ul>	
+</div>
 <div class="slide" id="technic">
-    <h2>How does it work? (2)</h2>
+    <h2>How does it work? </h2>
 	the easyest way to show is the following chart:
 	<img src="https://github.com/AKSW/KeyNode.js/raw/master/documentation/acitivity-diagramm/keynode1.png">
 	
