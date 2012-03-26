@@ -1,30 +1,30 @@
-# KeyNode.js
+# KeyNode.js - Presenter
 
-is a presenter console for the deck.js slide system
+gives you the possibility to Present your deck.js presentations in a presentation console like known in Powerpoint, Keynote and Impress.
 
-It consists of a Node.JS Server, a Presenter and a Watcher-Addon for Deck.js.
+## Getting Started
 
-## Node.JS Server 
+1. you need an Deck.js presentation with the watcher
 
-To start the Server run `node ./server/keynode.js.server.js`
-[read more](https://github.com/AKSW/KeyNode.js/blob/master/server)
+2. Start the Presenter and type youre Canonical URL
 
-## Presenter 
-	
-To start the Presenter open the index.html in the presenter folder
-[read more](https://github.com/AKSW/KeyNode.js/blob/master/presenter)
-	
-Dependencies:	
+3. (optional) add a local NodeServer or a local URL to your deck.js presentation
 
-- [jQuery](http://jquery.com) 
+4. enter your Password for each NodeServer you want to broadcast
 
-- [jQuery Tools](http://jquerytools.org) 
-	
-## Watcher-Addon for Deck.js 
-	
-[read more](https://github.com/AKSW/KeyNode.js/blob/master/watcher)
-	
-Dependencies:
+5. start your presentation.
 
-- [deck.js](http://imakewebthings.github.com/deck.js/)
-	
+ 
+## Known Bugs
+
+- Tooltips be not refreshed 
+
+- you can add NodeServers without any signs
+
+- if you hit the Enterbutton in the Passwortfield the form will be send
+
+- you can broadcast slidenumbers greater than the last slide
+
+- can't reset or set your Passwort of the Presentation via e-mail
+
+- cannot select specific slide when reloaded the slide
