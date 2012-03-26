@@ -1,100 +1,314 @@
 <!DOCTYPE html>
-<html>
+<!--[if lt IE 7]> <html class="no-js ie6" lang="en"> <![endif]-->
+<!--[if IE 7]>    <html class="no-js ie7" lang="en"> <![endif]-->
+<!--[if IE 8]>    <html class="no-js ie8" lang="en"> <![endif]-->
+<!--[if gt IE 8]><!-->  <html class="no-js" lang="en"> <!--<![endif]-->
 <head>
-  <meta charset='utf-8'>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="author" content="Alrik Hausdorf">
+    <meta name="viewport" content="width=1024, user-scalable=no">
+	
+	<title>KeyNode.JS - How it Works</title>
+	 
+	<!-- Core and extension CSS files -->
+    <link rel="stylesheet" href="deck.js/core/deck.core.css">
+    <link rel="stylesheet" href="deck.js/extensions/goto/deck.goto.css">
+    <link rel="stylesheet" href="deck.js/extensions/menu/deck.menu.css">
+    <link rel="stylesheet" href="deck.js/extensions/navigation/deck.navigation.css">
+    <link rel="stylesheet" href="deck.js/extensions/status/deck.status.css">
+    <link rel="stylesheet" href="deck.js/extensions/hash/deck.hash.css">
 
-  <title>AKSW/KeyNode.js @ GitHub</title>
+    <!-- Theme CSS files (menu swaps these out) -->
+    <link rel="stylesheet" id="style-theme-link" href="deck.js/themes/style/web-2.0.css">
+    <link rel="stylesheet" id="transition-theme-link" href="deck.js/themes/transition/horizontal-slide.css">
 
-  <style type="text/css">
-    body {
-      margin-top: 1.0em;
-      background-color: #7188bf;
-      font-family: Helvetica, Arial, FreeSans, san-serif;
-      color: #000000;
-    }
-    #container {
-      margin: 0 auto;
-      width: 700px;
-    }
-    h1 { font-size: 3.8em; color: #8e7740; margin-bottom: 3px; }
-    h1 .small { font-size: 0.4em; }
-    h1 a { text-decoration: none }
-    h2 { font-size: 1.5em; color: #8e7740; }
-    h3 { text-align: center; color: #8e7740; }
-    a { color: #8e7740; }
-    .description { font-size: 1.2em; margin-bottom: 30px; margin-top: 30px; font-style: italic;}
-    .download { float: right; }
-    pre { background: #000; color: #fff; padding: 15px;}
-    hr { border: 0; width: 80%; border-bottom: 1px solid #aaa}
-    .footer { text-align:center; padding-top:30px; font-style: italic; }
-  </style>
+    <!-- Custom CSS just for this page -->
+    <link rel="stylesheet" href="deck.js/introduction/introduction.css">
+    <link rel="stylesheet" href="demo.css">
+
+    <script src="deck.js/modernizr.custom.js"></script>
+    <script src="deck.js/jquery.js"></script>
+
+    <!-- client syntax highlightning -->
+    <link   href="scripts/syntax/shThemeDefault.css" rel="stylesheet" type="text/css" />
+    <script src="scripts/syntax/shCore.js" type="text/javascript"></script>
+    <script src="scripts/syntax/shAutoloader.js" type="text/javascript"></script>
+	<script src="scripts/syntax/shBrushJScript.js" type="text/javascript"></script>
+	<script src="scripts/syntax/shBrushXml.js" type="text/javascript"></script>
+
+    <script type="text/javascript">
+        SyntaxHighlighter.defaults['toolbar'] = false;
+        SyntaxHighlighter.all();
+        </script>
+	 <!-- Deck Core and extensions -->
+    <script src="deck.js/core/deck.core.js"></script>
+    <script src="deck.js/extensions/menu/deck.menu.js"></script>
+    <script src="deck.js/extensions/goto/deck.goto.js"></script>
+    <script src="deck.js/extensions/status/deck.status.js"></script>
+    <script src="deck.js/extensions/navigation/deck.navigation.js"></script>
+    <script src="deck.js/extensions/hash/deck.hash.js"></script>
+
+    <!-- Specific to this page -->
+    <script type="text/javascript">
+		$(document).ready(function(){
+			$.deck('.slide');
+		});
+	</script>
+
+   
+
+    <link rel="stylesheet" id="style-theme-link" href="deck.js/themes/style/web-2.0.css">
+    <link rel="stylesheet" id="transition-theme-link" href="deck.js/themes/transition/horizontal-slide.css">
+	
 </head>
 
-<body>
-  <a href="https://github.com/AKSW/KeyNode.js"><img style="position: absolute; top: 0; right: 0; border: 0;" src="http://s3.amazonaws.com/github/ribbons/forkme_right_darkblue_121621.png" alt="Fork me on GitHub" /></a>
+<body class="deck-container">
 
-  <div id="container">
+<div class="slide" id="begin0">
+    <h1>KeyNode.JS <br>-<br>How it Works</h1>
+  <figure>
+        <p></p>
+        <figcaption>by Alrik Hausdorf</figcaption>
+    </figure>
 
-    <div class="download">
-      <a href="https://github.com/AKSW/KeyNode.js/zipball/master">
-        <img border="0" width="90" src="https://github.com/images/modules/download/zip.png"></a>
-      <a href="https://github.com/AKSW/KeyNode.js/tarball/master">
-        <img border="0" width="90" src="https://github.com/images/modules/download/tar.png"></a>
-    </div>
+</div>
 
-    <h1><a href="https://github.com/AKSW/KeyNode.js">KeyNode.js</a>
-      <span class="small">by <a href="https://github.com/AKSW">AKSW</a></span></h1>
+<div class="slide" id="begin1">
+    <h2>KeyNode.JS - How it Works</h2>
 
-    <div class="description">
-      a presenter console for the deck.js slide system
-    </div>
+    <h3>The parts of these presentation:</h3>
+    <ol>
+        <li>
+            <a href="#General">What ist KeyNode.JS?</a>
+        </li>
+		<li>
+            <a href="#start0">How get started?</a>
+        </li>
+		<li>
+            <a href="#presenter0">How do i use the presenter?</a>
+        </li>
+		<li>
+            <a href="#server0">How do i use the server?</a>
+        </li>
+		<li>
+            <a href="#technic">How does it work</a>
+        </li>
+    </ol>
 
-    
+	
+   
+</div>
 
-    
-      <h2>Dependencies</h2>
-      <p>node.js
-socket.io
-deck.js
-nodemailer
-request</p>
-    
+<div class="slide" id="General">
+    <h2>General</h2>
+	<ul>
+	<li>KeyNode.Js gives you the chance to synchronise your presentations and add to deck.js the things every presenter should have.</li>
+	<li>It is written in <a href="wikipedia.org/wiki/JavaScript" target="_blank">Javascript</a> and works with every <a href="http://imakewebthings.com/deck.js" target="_blank">Deck.js</a> presentation.</li>
+</div>
 
-    
-      <h2>Install</h2>
-      <p>clone the repo
-start server with node ./server/keynode.js.server
-open ./presenter/index.html with browser</p>
-    
+<div class="slide" id="start0">
+    <h2>How get started?</h2>
+    <ul>
+        <li><a href="#start1">What do you need?</a></li>
+        <li><a href="#start2">Changes at your deck.js presentation</a></li>
+		<li><a href="#start3">How to start the presenter?</a></li>
+    </ul>
+</div>
+<div class="slide" id="start1">
+    <h2>What do you need?</h2>
+    <ul>
+        <li>A running deck.js presentation</li>
+        <li>the watcher.js downloaded or linked from Github:<br>
+		<a href="https://raw.github.com/AKSW/KeyNode.js/master/watcher/keynode.watch.js">https://raw.github.com/AKSW/KeyNode.js/master/watcher/keynode.watch.js</a>
+		</li>
+		<li>the presenter folder downloaded from Github:<br>
+		<a href="https://github.com/AKSW/KeyNode.js/tree/master/presenter" target="_blank">https://github.com/AKSW/KeyNode.js/tree/master/presenter</a>
+		</li>
+		<li>A NodeServer running local or online <br>
+		also located at <a href="https://github.com/AKSW/KeyNode.js">https://github.com/AKSW/KeyNode.js</a></li>
+    </ul>
+</div>
+<div class="slide" id="start2">
+    <h2>Changes at your deck.js presentation</h2>
+    <ul>
+        <li>Paste the link to the keynode.watcher.js into the head of your presentation before the deck was initialiated<br>
+		example:
+		<pre class="brush: js">
+		&lt;script src="../watcher/keynode.watch.js"&gt;&lt;/script&gt;</pre>
+		</li>
+        <li>add an canonical URL to your head in the following form:<br>
+		<pre class="brush: xml">
+		&lt;link rel="http://ns.aksw.org/keynode/canonical" href="[your canonical url e.g. http://myserver.com/mypresentation.html]" /&gt;</pre>
+		</li>
+		<li>add an NodeServer-URL to your head in the following form:<br>
+		<pre class="brush: xml">
+		&lt;link rel="http://ns.aksw.org/keynode/server" href="[e.g.http://localhost:4123]" /&gt;</pre>
+		</li>
+		<li>add your email address to your head in the following form:<br>
+		<pre class="brush: xml">
+		&lt;link rel="http://ns.aksw.org/keynode/mailto" href="[e.g.mailto:ich@meinserver.net]" /&gt;</pre>
+		</li>
+    </ul>
+</div>
+<div class="slide" id="start3">
+    <h2>How to start the presenter? (1)</h2>
+	 <ol>
+        <li>go to the presenter-folder and open the index.html with your browser (it works best with Google Chrome)</li>
+		<img src="./images/presenter1.PNG">
+		<li>paste your canonical URL into the textfield</li>
+		<li>hit [Enter] or hit [Ok]</li>
+    </ol>
+	
+</div>
+<div class="slide" id="start4">
+    <h2>How to start the presenter? (2)</h2>
+	<img src="./images/presenter2.PNG">
+    <ol>
+        <li>if the presenter gets the content form the canonical URL, it fills the values found there otherwise you have to do the following steps</li>
+		<li>[optional] add an alternate URL to your presenter, this one will used by the Presenter, if set</li>
+		<li>[optional] add another NodeServer and hit [Ok] button next to it </li>
+		<li>add the password for each NodeServer (if you know it) and hit [Test Inputs] </li>
+		<li>[optional] hit [Reset] at the NodeServer you have forget the password from, then it will be send to your emailaddress or will shown in the console of your local server, if you have one </li>
+		<li>When ready hit [start Presenter] and begin to present</li>
+    </ol>
+	
+</div>
+<div class="slide" id="start5">
+    <h2>How to start the presenter? (3)</h2>
+	Now you are on the presenter console and can begin to have your talk.
+	<img src="./images/presenter3.PNG">
+	On the next Slide: How to use the presenter
+</div>
+<div class="slide" id="presenter0">
+    <h2>How do i use the presenter? (1)</h2>
+	<img src="./images/presenter3.PNG">
+	`What is shown in each part of the presenter?
+	<ul>
+	<li>On the left side: your last presentation slide</li>
+	<li>In the middle: the slide everyone listen to your presentation sees</li>
+	<li>On the right side: your next presentation slide</li>
+	</ul>
+</div>
+<div class="slide" id="presenter1">
+    <h2>How do i use the presenter? (2)</h2>
+	With the arrow keys you can control your presentation, every change will broadcasted to every slide opened with the keynode.watcher.js included.
+	<img src="./images/presenter4.png">
+	
+</div>
+<div class="slide" id="server0">
+    <h2>How do i use the server? (1)</h2>
+	<ol>
+		<li>Check if you have installed the following programms:
+		
+		<pre>- node.js(<a href="http://nodejs.org/#download">download</a>)
+- npm (for easy nodepackage installation)
+- socket.io (extention of node.js)
+- nodemailer (extention of node.js: if you want to run a public server)
+- request (extention of node.js:  if you want to run a public server)</pre>
+		</li>
+		<li>Rename or Copy: keynode.js.server_settings.js_sample to keynode.js.server_settings.js</li>
+		<li>Check the configuration if it fits to your requirements (<a href="#serverConfig1">How to Configurate</a>)</li>
+	</ol>
+		<h3> How to actualy start the server</h3>
+		go to the folder and run the server:
+		<pre>$ cd ./server
+$ node keynode.js.server.js</pre>
+	
+	
+</div>
+<div class="slide" id="serverConfig1">
+    <h2>How do i configurate the server? (1) </h2>
+	in the Config file you have the following setting you can set:
+	<ul>
+	<li>
+		Did you want to see the password in the console if you reset it or send an email?<br>
+		Default:
+		<pre class="brush: js">this.localInstallation = false;</pre>
+	</li>
+	<li>
+		How do your consolelogging looks like<br>
+		Default:
+		<pre class="brush: js">this.preTagInfo = '\x1B[32m\x1B[1m[Info]\x1B[0m';
+this.preTagSettings = '\x1B[32m\x1B[1m[Settings]\x1B[0m';
+this.preTagServerData = '\x1B[32m\x1B[1m[Server_data]\x1B[0m';
+this.preTagServer = '\x1B[32m\x1B[1m[Server]\x1B[0m';
+this.preTagPres = '\x1B[32m\x1B[1m[Presentation]\x1B[0m';</pre>
+	</li>
+	<li>
+		What is your default password set when you reset it?<br>
+		Default:
+		<pre class="brush: js">this.standardPassword = (Math.floor(Math.random() * 4257671236709));</pre>
+		uncomment the following line and comment the other, when only you use the server
+		<pre class="brush: js">this.standardPassword = 'rootKannAlles';</pre>
+	</li>
+	<li>
+		On what port should the server listen?<br>
+		Default:
+		<pre class="brush: js">this.Server_Port = 4123;</pre>
+	</li>	
+	<li>
+		Do you whant to allow new Presentations or dont you?<br>
+		Default:
+		<pre class="brush: js">this.allow_new_presentations = true;</pre>
+	</li>
+</ul>
 
-    
+	
+</div>
+<div class="slide" id="serverConfig2">
+    <h2>How do i configurate the server? (2) </h2>
+	in the Config file you have the following setting you can set:
+	<ul>
+	
+	<li>
+		Do you want to see all Debug informations on the console screen?
+		Default:
+		<pre class="brush: js">this.debug = true;</pre>
+	</li>
+	<li>
+		Do you want to use the MailerOptions? (only in nonlocalInstallation)<br>
+		Default:
+		<pre class="brush: js">this.useMail = false;</pre>
+		they require 2 addons for node.js (only change if they are somewhere else):
+		<pre class="brush: js">this.NodeMailerPackage = "nodemailer";
+this.RequestPackage = "request";</pre>
+	</li>
+	<li>
+		Mailconfiguration:<br>
+		you can find an great number of possible options at <a href="https://github.com/andris9/nodemailer">documentation of Nodemailer</a><br>
+		Default:
+		<pre class="brush: js">this.mailProto = "SMTP";
+this.smtp_options = {
+	host: "domain.de",
+	secureConnection: true,
+	port: 465,
+	auth: {
+		user: "user@Domain.de",
+		pass: ""
+	}
+};</pre>
+		other option is the commented sendmail config:
+		<pre class="brush: js">this.mailProto = "Sendmail";
+this.smtp_options = "/usr/bin/sendmail";</pre>
 
-    
-      <h2>Authors</h2>
-      <p>Alrik Hausdorf (admin@morulia.de)<br/>Sebastian Tramp (mail@sebastian.tramp.name)<br/>      </p>
-    
+	</li>
+</ul>	
+</div>
+<div class="slide" id="technic">
+    <h2>How does it work? </h2>
+	the easyest way to show is the following chart:
+	<img src="https://github.com/AKSW/KeyNode.js/raw/master/documentation/acitivity-diagramm/keynode1.png">
+	
+</div>
+<a href="#" class="deck-prev-link" title="Previous">&#8592;</a>
+<a href="#" class="deck-next-link" title="Next">&#8594;</a>
 
-    
-      <h2>Contact</h2>
-      <p>AKSW Research Group @ University of Leipzig (aksw-core@informatik.uni-leipzig.de)<br/>      </p>
-    
-
-    <h2>Download</h2>
-    <p>
-      You can download this project in either
-      <a href="https://github.com/AKSW/KeyNode.js/zipball/master">zip</a> or
-      <a href="https://github.com/AKSW/KeyNode.js/tarball/master">tar formats.
-    </p>
-    <p>You can also clone the project with <a href="http://git-scm.com">Git</a>
-      by running:
-      <pre>$ git clone git://github.com/AKSW/KeyNode.js</pre>
-    </p>
-
-    <div class="footer">
-      get the source code on GitHub : <a href="https://github.com/AKSW/KeyNode.js">AKSW/KeyNode.js</a>
-    </div>
-
-  </div>
+<p class="deck-status">
+    <span class="deck-status-current"></span>
+    /
+    <span class="deck-status-total"></span>
+</p>
 
 </body>
 </html>
