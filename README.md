@@ -1,30 +1,13 @@
-# KeyNode.js
+# KeyNode.js - Watch
 
-is a presenter console for the deck.js slide system
+this listens on a specificated node server for updates
 
-It consists of a Node.JS Server, a Presenter and a Watcher-Addon for Deck.js.
+## How to use
 
-## Node.JS Server 
+1. load the keynode.watch.js in your header after the deck.js is loaded and before the deck is initiated.
 
-To start the Server run `node ./server/keynode.js.server.js`
-[read more](https://github.com/AKSW/KeyNode.js/blob/master/server)
-
-## Presenter 
-	
-To start the Presenter open the index.html in the presenter folder
-[read more](https://github.com/AKSW/KeyNode.js/blob/master/presenter)
-	
-Dependencies:	
-
-- [jQuery](http://jquery.com) 
-
-- [jQuery Tools](http://jquerytools.org) 
-	
-## Watcher-Addon for Deck.js 
-	
-[read more](https://github.com/AKSW/KeyNode.js/blob/master/watcher)
-	
-Dependencies:
-
-- [deck.js](http://imakewebthings.github.com/deck.js/)
+2. insert in to your head the following informations:
+	<link rel="http://ns.aksw.org/keynode/canocical" href="<1>" /> (<1> - the link to the presentation)
+    <link rel="http://ns.aksw.org/keynode/server" href="<2>" /> (<2> - the link to the NodeServer it should listen on)
+	<link rel="http://ns.aksw.org/keynode/mailto" href="<3>" /> (<3> - Mailadress of the adminitrator of the presentation)
 	
