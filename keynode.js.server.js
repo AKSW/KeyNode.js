@@ -12,7 +12,7 @@ Server_data.loadPresData();
 
 io.configure(function () {
 	//	io.set('transports', ['websocket', 'flashsocket', 'xhr-polling']);
-	if (Server_settings.debug) {
+	if (!Server_settings.debug) {
 		io.set('log level', 1);
 		io.enable('log');
 	}

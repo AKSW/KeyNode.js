@@ -1,0 +1,60 @@
+/*
+Config-file for Server
+
+
+ */
+/* is this an local Installation --> the passwort reset show the new password in the Console */
+this.localInstallation = true;
+
+/* set Pretags for console logs */
+this.preTagInfo = '\x1B[32m\x1B[1m[Info]\x1B[0m';
+this.preTagSettings = '\x1B[32m\x1B[1m[Settings]\x1B[0m';
+this.preTagServerData = '\x1B[32m\x1B[1m[Server_data]\x1B[0m';
+this.preTagServer = '\x1B[32m\x1B[1m[Server]\x1B[0m';
+this.preTagPres = '\x1B[32m\x1B[1m[Presentation]\x1B[0m';
+
+//this.standardPassword = 'rootKannAlles';
+this.standardPassword = (Math.floor(Math.random() * 4257671236709));
+
+this.Server_Port = 4123;
+
+this.allow_new_presentations = true;
+
+this.debug = true;
+
+
+/**
+*	Use the Nodemailer to send you the Passwort for your presentation
+*
+*
+*/
+
+this.useMail = false;
+
+this.NodeMailerPackage = "nodemailer";
+this.RequestPackage = "request";
+
+/**
+*
+* for use of an SMTP
+*/
+this.mailProto = "SMTP";
+
+/* options find @ https://github.com/andris9/nodemailer */
+this.smtp_options = {
+	host: "domain.de",
+	secureConnection: true,
+	port: 465,
+	auth: {
+		user: "user@Domain.de",
+		pass: ""
+	}
+};
+/**
+	use of sendmail
+*/
+/*
+this.mailProto = "Sendmail";
+this.smtp_options = "/usr/bin/sendmail";
+*/
+console.log(this.preTagSettings + ' Server_settings loaded.');
