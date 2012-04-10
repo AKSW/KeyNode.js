@@ -1,7 +1,7 @@
 <div id="CenterBox">
 	<h1 id="title"></h1>
 	<div id="CanonicalURL" class="tooltipEnable" title="Thats your Canonical URL">
-		<input id="CanonicalURLinput" class="myInput" value="http://slidewiki.morulia.de/deck.js/2012-01-13-SchoolOfMedia-WT2II/index.html" placeholder="Type your Canonical URL here"> 
+		<input id="CanonicalURLinput" class="myInput" value="http://aksw.github.com/KeyNode.js/" placeholder="Type your Canonical URL here"> 
 		<input id="CanonicalURLsubmit" class="myButton" type="button" value="Ok">
 	</div>
 
