@@ -90,27 +90,27 @@ var diff = 0;
 		});
 	}
 	function receivePostMessage(event) {
-		switch (event.data) {
-		case (event.data.indexof('getDiff:') !=-1):
-			event.source.postMessage("getDiff:"+diff,event.origin);
-			break;
-		case (event.data.indexof('setDiff:') !=-1):
-			temp=event.data.split(':',1);
-			diff=temp[1];
-			event.source.postMessage('setDiff:true',event.origin);
-			break;
-		case (event.data.indexof('getSettings:') !=-1):
-			event.source.postMessage('getSettings:{"canonical":"'+CanonicalURL+'","server":"'+NodeServer+'","mail":"'+Mail+'"}',event.origin);
-			break;
+		if (event.data.indexOf('getDiff') !== -1) {
+			event.source.postMessage("getDiff:" + diff, event.origin);
+		} else if (event.data.indexOf('getNumberSlides') !== -1) {
+			event.source.postMessage('getNumberSlides:'+$.deck('getSlides').length, event.origin);
+		} else if (event.data.indexOf('setDiff') !== -1) {
+			temp = event.data.substring(event.data.indexOf(':')+1);
+			diff = parseInt(temp);
+			if((diff!==-1) && (diff!==1)) alert(temp);
+			
+			//event.source.postMessage('setDiff:true', event.origin);
+		} else if (event.data.indexOf('getSettings') !== -1) {
+			event.source.postMessage('getSettings:{"canonical":"' + CanonicalURL + '","server":"' + NodeServer + '","mail":"' + Mail + '"}', event.origin);			
+		} 
 /*		case 'showNotes':
 			break;
 		case 'hideNotes':
 			break;
 		case 'statusNotes':
 			break;*/
-		default: 
-			break;
-		}
+
+		
 
 	}
 	/**
