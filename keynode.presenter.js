@@ -24,7 +24,7 @@ var presenter = {
 		}
 	},
 	Next : function () {
-		document.getElementById('temper').contentWindow.postMessage("getNumberSlides:a",$('#temper').attr('src'));
+		document.getElementById('CurrentFrame').contentWindow.postMessage("getNumberSlides:a",$('#CurrentFrame').attr('src'));
 		if ((presenter.slideLength!=-1)&&(presenter.slideNumber < presenter.slideLength)) {
 			presenter.slideNumber += 1;
 			presenter.GotoFolie(presenter.slideNumber);
