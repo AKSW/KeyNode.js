@@ -99,6 +99,7 @@ var diff = 0;
 			event.source.postMessage('setDiff:true',event.origin);
 			break;
 		case (event.data.indexof('getSettings:') !=-1):
+			event.source.postMessage('getSettings:{"canonical":"'+CanonicalURL+'","server":"'+NodeServer+'","mail":"'+Mail+'"}',event.origin);
 			break;
 /*		case 'showNotes':
 			break;
