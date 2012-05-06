@@ -41,6 +41,7 @@ var diff = 0;
 				if (mysocket.serverTrys <= 0) {
 					return false;
 				} else {
+					if(NodeServer.charAt(NodeServer.length-1)=='/') NodeServer=NodeServer.substring(0, (NodeServer.length-1));
 					mysocket.serverTrys -= 1;
 					$.ajax({
 						url : NodeServer + '/socket.io/socket.io.js',
