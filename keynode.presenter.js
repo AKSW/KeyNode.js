@@ -25,7 +25,7 @@ var presenter = {
 	},
 	Next : function () {
 		document.getElementById('temper').contentWindow.postMessage("getNumberSlides:a",$('#temper').attr('src'));
-		if ((presenter.slideLength!=-1)&&(presenter.slideNumber <= presenter.slideLength)) {
+		if ((presenter.slideLength!=-1)&&(presenter.slideNumber < presenter.slideLength)) {
 			presenter.slideNumber += 1;
 			presenter.GotoFolie(presenter.slideNumber);
 			}
@@ -97,8 +97,8 @@ var presenter = {
 			//console.log('fertgi' + login.presURL);
 			$('#slide_current').append('<iframe src="' + login.presURL + '" width="100%" height="100%" id="CurrentFrame" style="z-Index:0;border:none;"></iframe> ');
 			$('#slide_current').append('<div class="clickBlocker"> </div>');
-			$('#slide_before').append('<iframe src="' + login.presURL + '" width="100%" height="100%" id="BeforeFrame" style="z-Index:0;border:none;"></iframe> ');
-			$('#slide_before').append('<div class="clickBlocker"> </div>');
+			//$('#slide_before').append('<iframe src="' + login.presURL + '" width="100%" height="100%" id="BeforeFrame" style="z-Index:0;border:none;"></iframe> ');
+			//$('#slide_before').append('<div class="clickBlocker"> </div>');
 			$('#slide_after').append('<iframe src="' + login.presURL + '" width="100%" height="100%" id="AfterFrame" style="z-Index:0;border:none;"></iframe> ');
 			$('#slide_after').append('<div class="clickBlocker"> </div>');
 			presenter.BindKeys();

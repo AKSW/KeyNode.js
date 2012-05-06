@@ -53,6 +53,7 @@ var login = {
 	login.showMore();
 		},
 	showMore : function(){
+		$('#temper').remove();
 		$('#presenterStartButton').unbind('click').click(login.submitToServer).fadeIn('slow');
 		/*show  NodeServerURL things*/
 		$('#NodeServerURL').find('#NodeURLinput').unbind('keydown').keydown(function (e) {
@@ -83,7 +84,7 @@ var login = {
 		} else
 		if (event.data.indexOf('getNumberSlides') !=-1) {
 			temp=parseInt(event.data.substring(event.data.indexOf(':')+1));
-			presenter.slideLength=temp;
+			presenter.slideLength=(temp-1);
 		} 
 
 	},
