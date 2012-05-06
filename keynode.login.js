@@ -41,6 +41,62 @@ var login = {
 			});
 		}
 	},
+	timertest:null,
+	handleSettingsReceive : function(str){
+	if(timertest!=null) { 
+			clearTimeout(timertest);
+			timertest=null;
+		}
+	var myObject = JSON.parse(str);
+	//$('#presentationURLinput').attr('value',myObject.canonical);
+	login.addNodeServer(myObject.server);
+	login.showMore();
+		},
+	showMore : function(){
+		$('#presenterStartButton').unbind('click').click(login.submitToServer).fadeIn('slow');
+		/*show  NodeServerURL things*/
+		$('#NodeServerURL').find('#NodeURLinput').unbind('keydown').keydown(function (e) {
+			if (e.keyCode === 13) {
+				var path = $(this).val();
+				login.addNodeServer(path);
+			}
+		}).parent().find('#NodeURLsubmit').unbind('click').click(function () {
+			var path = $(this).parent().find('#NodeURLinput').val();
+			login.addNodeServer(path);
+		}).parent().fadeIn('slow');
+		/*show  presentationURL things*/
+		$('#presentationURL').fadeIn('slow');
+		login.finishWorking();
+	},
+	receivePostMessage : function (event) {
+		if (event.data.indexOf('getDiff') !=-1) {
+			event.source.postMessage("getDiff:"+diff,event.origin);
+		} else 
+		if (event.data.indexOf('setDiff') !=-1) {
+			temp=event.data.substring(event.data.indexOf(':')+1);
+			diff=temp;
+			//event.source.postMessage('setDiff:true',event.origin);
+		} else
+		if (event.data.indexOf('getSettings') !=-1) {
+			temp=event.data.substring(event.data.indexOf(':')+1);
+			login.handleSettingsReceive(temp);
+		} else
+		if (event.data.indexOf('getNumberSlides') !=-1) {
+			temp=parseInt(event.data.substring(event.data.indexOf(':')+1));
+			presenter.slideLength=temp;
+		} 
+
+	},
+	failGetSettings : function () {
+		
+				$('.errorMessage').remove();
+				$('#presentationURLinput').before('<div class="errorMessage">Can not load your presentation from the canonical url.</div>').attr('placeholder', 'Type the URL of your presentation here');
+				$('#presentationURL').find('.myButton').fadeIn('fast').unbind('click').click(function () {
+					login.testAltURL();
+				});
+				login.showMore();
+				login.finishWorking();
+	},
 	testCanoURL : function () {
 		login.startWorking();
 		login.nodeServer = [];
@@ -48,49 +104,31 @@ var login = {
 		$("#NodeServerURL .myURLInput ").show();
 		$("#NodeServerURL .myButton").show();
 		var cano = $('#CanonicalURLinput');
-		$('body').append('<div id="temper" style="display:none;"></div>');
-		$('#temper').load(cano.val() + " link[rel*='http://ns.aksw.org/keynode/']", function (response, status, xhr) {
-			if (status === "error") {
-				$('.errorMessage').remove();
-				$('#presentationURLinput').before('<div class="errorMessage">Can not load your presentation from the canonical url.</div>').attr('placeholder', 'Type the URL of your presentation here');
-				$('#presentationURL').find('.myButton').fadeIn('fast').unbind('click').click(function () {
-					login.testAltURL();
-				});
-			} else {
-				//$('#presentationURLinput')
-				//.attr('value',$("#temper link[rel='http://ns.aksw.org/keynode/canocical']").attr("href"))
-				login.addNodeServer($("#temper link[rel='http://ns.aksw.org/keynode/server']").attr("href"));
-			}
-			$('#presenterStartButton').unbind('click').click(login.submitToServer).fadeIn('slow');
-			/*show  NodeServerURL things*/
-			$('#NodeServerURL').find('#NodeURLinput').unbind('keydown').keydown(function (e) {
-				if (e.keyCode === 13) {
-					var path = $(this).val();
-					login.addNodeServer(path);
-				}
-			}).parent().find('#NodeURLsubmit').unbind('click').click(function () {
-				var path = $(this).parent().find('#NodeURLinput').val();
-				login.addNodeServer(path);
-			}).parent().fadeIn('slow');
-			/*show  presentationURL things*/
-			$('#presentationURL').fadeIn('slow');
-			login.finishWorking();
-		});
+		//new IFRAME Methods
+		$('body').append('<iframe id="temper" style="display:none;"></iframe>');
+		$('#temper').attr('src',cano.val());
+		setTimeout(function(){document.getElementById('temper').contentWindow.postMessage("getSettings:",cano.val());},2000);
+		timertest=setTimeout(login.failGetSettings,2500);
+		window.addEventListener("message", login.receivePostMessage, false);
 	},
 	testAltURL : function () {
-		login.startWorking();
 		var alt = $('#presentationURLinput');
-		$('#temper').load(alt.val() + " link[rel*='http://ns.aksw.org/keynode/']", function (response, status, xhr) {
-			if (status === "error") {
-				$('.errorMessage').remove();
-				$('#presentationURLinput').after('<div class="errorMessage">Can not load your presentation from the canonical url.</div>').attr('placeholder', 'Type the URL of your presentation here');
-			} else {
-				//$('#presentationURLinput')
-				//.attr('value',$("#temper link[rel='http://ns.aksw.org/keynode/canocical']").attr("href"))
-				login.addNodeServer($("#temper link[rel='http://ns.aksw.org/keynode/server']").attr("href"));
-			}
-		});
-		login.finishWorking();
+		login.startWorking();
+		login.nodeServer = [];
+		$("#NodeServerURLsaved ").hide();
+		$("#NodeServerURL .myURLInput ").show();
+
+		//new IFRAME Methods
+		$('body').append('<iframe id="temper" style="display:none;"></iframe>');
+		$('#temper').attr('src',alt.val());
+		setTimeout(function(){document.getElementById('temper').contentWindow.postMessage("getSettings:",alt.val());},2000);
+		if(timertest!=null) { 
+			clearTimeout(timertest);
+			timertest=null;
+		}
+		timertest=setTimeout(login.failGetSettings,2500);
+		window.addEventListener("message", login.receivePostMessage, false);
+
 	},
 	submitToServer : function () {
 		login.startWorking();
