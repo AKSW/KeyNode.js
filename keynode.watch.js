@@ -60,6 +60,7 @@ var diff = 0;
 				setTimeout(init, 200);
 			} else {
 				bindSocketEvents();
+				bindPostMessages();
 			}
 		}
 	}
@@ -119,5 +120,6 @@ var diff = 0;
 	function bindPostMessages() {
 		window.addEventListener("message", receivePostMessage, false);
 	}
+	
 	$(document).bind('deck.init', init);
 })(jQuery, 'deck');
