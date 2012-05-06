@@ -41,7 +41,7 @@ var diff = 0;
 				if (mysocket.serverTrys <= 0) {
 					return false;
 				} else {
-					if(NodeServer.charAt(NodeServer.length-1)=='/') NodeServer=NodeServer.substring(0, (NodeServer.length-1));
+					if (NodeServer.charAt(NodeServer.length - 1) === '/') {NodeServer = NodeServer.substring(0, (NodeServer.length - 1)); }
 					mysocket.serverTrys -= 1;
 					$.ajax({
 						url : NodeServer + '/socket.io/socket.io.js',
@@ -87,6 +87,36 @@ var diff = 0;
 			});
 			mysocket.getSocket().on('Ready', function (data) {});
 		});
+	}
+	function receivePostMessage(event) {
+		switch (event.data) {
+		case (event.data.indexof('getDiff:') !=-1):
+			event.source.postMessage("getDiff:"+diff,event.origin);
+			break;
+		case (event.data.indexof('setDiff:') !=-1):
+			temp=event.data.split(':',1);
+			diff=temp[1];
+			event.source.postMessage('setDiff:true',event.origin);
+			break;
+		case (event.data.indexof('getSettings:') !=-1):
+			break;
+/*		case 'showNotes':
+			break;
+		case 'hideNotes':
+			break;
+		case 'statusNotes':
+			break;*/
+		default: 
+			break;
+		}
+
+	}
+	/**
+	 *	Bind the IframeMessageSystem
+	 *
+	 */
+	function bindPostMessages() {
+		window.addEventListener("message", receivePostMessage, false);
 	}
 	$(document).bind('deck.init', init);
 })(jQuery, 'deck');
