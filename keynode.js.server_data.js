@@ -124,7 +124,7 @@ this.setAdminByKey = function (name, key, socket) {
 			GlobalthisThing.Presentations[name].admin = socket.id;
 			GlobalthisThing.savePresData();
                             socket.emit('identAsAdmin', {
-                            "name" : Json1.name,
+                            "name" : name,
                             'ident' : 'ADMIN'
                             });
                         console.log(Server_settings.preTagServer + " Client " + Client.id + " ACCESS GRANTED");
@@ -145,20 +145,20 @@ this.setAdminByKey = function (name, key, socket) {
                             GlobalthisThing.Presentations[name].admin = socket.id;
                             GlobalthisThing.savePresData();
                             socket.emit('identAsAdmin', {
-                                "name" : Json1.name,
+                                "name" : name,
                                 'ident' : 'ADMIN'
                                 });
                             console.log(Server_settings.preTagServer + " Client " + Client.id + " ACCESS GRANTED");
                         } else {
                             socket.emit('identAsAdmin', {
-                                "name" : Json1.name,
+                                "name" : name,
                                 'ident' : 'USER'
                                 });
                             console.log(Server_settings.preTagServer + " Client  " + Client.id + ' ACCESS DENIED');
                         }
                     } else {
                         socket.emit('identAsAdmin', {
-                            "name" : Json1.name,
+                            "name" : name,
                             'ident' : 'USER'
                             });
                         console.log(Server_settings.preTagServer + " Client  " + Client.id + ' ACCESS DENIED');
@@ -166,7 +166,14 @@ this.setAdminByKey = function (name, key, socket) {
                 }
                     
             });
-        } catch (err) { console.log(err); }
+        } catch (err) { 
+            socket.emit('identAsAdmin', {
+                "name" : name,
+                'ident' : 'USER'
+                });
+            console.log(Server_settings.preTagServer + " Client  " + Client.id + ' ACCESS DENIED');
+            
+            console.log(err); }
 };
 /**
 *	Reset the Password of a Presentation
