@@ -129,26 +129,25 @@ this.setAdminByKey = function (name, key, socket) {
         try {
             //try to get an MD5(MD5(password)) from the Canonical URL
             var request = require(Server_settings.RequestPackage);
-                    request(data.name, function (error, response, body) {
-                            if (!error && response.statusCode === 200) {
-                                //<meta name="password" content="65e769bcfba3cc2a78d7ea32c59b7e09">-->tester
-                                    var re = new RegExp(/<meta.name=["']password['"].+content=['"](.+)['"].+\/>/i),
-                                            arrMatches = body.match(re);
-                                    if (arrMatches) { 
-                                        if(arrMatches[1]==md5TestString_send)
-                                        {
-                                            GlobalthisThing.Presentations[name].admin = socket.id;
-                                            GlobalthisThing.savePresData();
-                                            return true;
-                                        }
-                                         else return false;
-                                    } else {
-                                           return false;
-                                    }
+            request(name, function (error, response, body) {
+                    if (!error && response.statusCode === 200) {
+                        //<meta name="password" content="65e769bcfba3cc2a78d7ea32c59b7e09">-->tester
+                            var re = new RegExp(/<meta.name=["']password['"].+content=['"](.+)['"].+\/>/i),
+                                    arrMatches = body.match(re);
+                            if (arrMatches) { 
+                                if(arrMatches[1]==md5TestString_send)
+                                {
+                                    GlobalthisThing.Presentations[name].admin = socket.id;
+                                    GlobalthisThing.savePresData();
+                                    return true;
+                                }
+                                    else return false;
+                            } else {
+                                    return false;
                             }
-                    });
-            
-            
+                    }
+                    return false;
+            });
         } catch (err) { console.log(err); }
 	return false;
 };
