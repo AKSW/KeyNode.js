@@ -123,6 +123,11 @@ this.setAdminByKey = function (name, key, socket) {
 		if ( md5TestString2 === md5TestString_send) {
 			GlobalthisThing.Presentations[name].admin = socket.id;
 			GlobalthisThing.savePresData();
+                            socket.emit('identAsAdmin', {
+                            "name" : Json1.name,
+                            'ident' : 'ADMIN'
+                            });
+                        console.log(Server_settings.preTagServer + " Client " + Client.id + " ACCESS GRANTED");
 			return true;
 		}
 	}
@@ -130,26 +135,38 @@ this.setAdminByKey = function (name, key, socket) {
             //try to get an MD5(MD5(password)) from the Canonical URL
             var request = require(Server_settings.RequestPackage);
             request(name, function (error, response, body) {
-                    if (!error && response.statusCode === 200) {
-                        //<meta name="password" content="65e769bcfba3cc2a78d7ea32c59b7e09">-->tester
-                            var re = new RegExp(/<meta.name=["']password['"].+content=['"](.+)['"].+\/>/i),
-                                    arrMatches = body.match(re);
-                            if (arrMatches) { 
-                                if(arrMatches[1]==md5TestString_send)
-                                {
-                                    GlobalthisThing.Presentations[name].admin = socket.id;
-                                    GlobalthisThing.savePresData();
-                                    return true;
-                                }
-                                    else return false;
-                            } else {
-                                    return false;
-                            }
+                if (!error && response.statusCode === 200) {
+                    //<meta name="password" content="65e769bcfba3cc2a78d7ea32c59b7e09">-->tester
+                    var re2 = new RegExp(/<meta.name=["']password['"].+content=['"](.+)['"]>/i),
+                    arrMatches2 = body.match(re2);	
+                    if (arrMatches2) {
+                        if(arrMatches2[1]==md5TestString_send)
+                        {
+                            GlobalthisThing.Presentations[name].admin = socket.id;
+                            GlobalthisThing.savePresData();
+                            socket.emit('identAsAdmin', {
+                                "name" : Json1.name,
+                                'ident' : 'ADMIN'
+                                });
+                            console.log(Server_settings.preTagServer + " Client " + Client.id + " ACCESS GRANTED");
+                        } else {
+                            socket.emit('identAsAdmin', {
+                                "name" : Json1.name,
+                                'ident' : 'USER'
+                                });
+                            console.log(Server_settings.preTagServer + " Client  " + Client.id + ' ACCESS DENIED');
+                        }
+                    } else {
+                        socket.emit('identAsAdmin', {
+                            "name" : Json1.name,
+                            'ident' : 'USER'
+                            });
+                        console.log(Server_settings.preTagServer + " Client  " + Client.id + ' ACCESS DENIED');
                     }
-                    return false;
+                }
+                    
             });
         } catch (err) { console.log(err); }
-	return false;
 };
 /**
 *	Reset the Password of a Presentation

@@ -21,19 +21,7 @@ io.configure(function () {
 io.sockets.on('connection', function (socket) {
 	var Client = socket;
 	Client.on('SetAdmin', function (Json1) {
-		if (Server_data.setAdminByKey(Json1.name, Json1.admin, socket)) {
-			socket.emit('identAsAdmin', {
-				"name" : Json1.name,
-				'ident' : 'ADMIN'
-			});
-			console.log(Server_settings.preTagServer + " Client " + Client.id + " ACCESS GRANTED");
-		} else {
-			socket.emit('identAsAdmin', {
-				"name" : Json1.name,
-				'ident' : 'USER'
-			});
-			console.log(Server_settings.preTagServer + " Client  " + Client.id + ' ACCESS DENIED');
-		}
+		Server_data.setAdminByKey(Json1.name, Json1.admin, socket);
 	});
 	Client.on('resetPassword', function (data) {
 		Server_data.resetPassword(data, socket);
