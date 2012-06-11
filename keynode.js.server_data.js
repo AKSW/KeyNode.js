@@ -127,7 +127,7 @@ this.setAdminByKey = function (name, key, socket) {
                             "name" : name,
                             'ident' : 'ADMIN'
                             });
-                        console.log(Server_settings.preTagServer + " Client " + Client.id + " ACCESS GRANTED");
+                        console.log(Server_settings.preTagServer + " Client " + socket.id + " ACCESS GRANTED");
 			return true;
 		}
 	}
@@ -148,20 +148,20 @@ this.setAdminByKey = function (name, key, socket) {
                                 "name" : name,
                                 'ident' : 'ADMIN'
                                 });
-                            console.log(Server_settings.preTagServer + " Client " + Client.id + " ACCESS GRANTED");
+                            console.log(Server_settings.preTagServer + " Client " + socket.id + " ACCESS GRANTED");
                         } else {
                             socket.emit('identAsAdmin', {
                                 "name" : name,
                                 'ident' : 'USER'
                                 });
-                            console.log(Server_settings.preTagServer + " Client  " + Client.id + ' ACCESS DENIED');
+                            console.log(Server_settings.preTagServer + " Client  " + socket.id + ' ACCESS DENIED');
                         }
                     } else {
                         socket.emit('identAsAdmin', {
                             "name" : name,
                             'ident' : 'USER'
                             });
-                        console.log(Server_settings.preTagServer + " Client  " + Client.id + ' ACCESS DENIED');
+                        console.log(Server_settings.preTagServer + " Client  " + socket.id + ' ACCESS DENIED');
                     }
                 }
                     
