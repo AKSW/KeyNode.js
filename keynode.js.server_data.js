@@ -1,7 +1,8 @@
 this.Presentations = null;
 var GlobalthisThing = this;
 var Server_settings = require('./keynode.js.server_settings');
-this.FHandler = require('fs');
+this.FHandler = require(Server_settings.fsPackage);
+this.crypto = require(Server_settings.cryptoPackage);
 /**
  * init The Presentations object
  *
@@ -55,7 +56,7 @@ this.loadPresData = function () {
 				console.log(Server_settings.preTagServerData + ' presentation data created');
 			} else {
 				GlobalthisThing.Presentations = JSON.parse(data);
-				//TODO: Anzahl listener zurücksetzen
+				//TODO: Anzahl listener zurï¿½cksetzen
 				console.log(Server_settings.preTagServerData + ' presentation data loaded');
 			}
 			return true;
@@ -114,17 +115,45 @@ this.initAdminCodes = function (name) {
  */
 this.setAdminByKey = function (name, key, socket) {
 	var i = 0;
+        var md5TestString=this.crypto.createHash('md5').update(key).digest("hex");
+        var md5TestString_send=this.crypto.createHash('md5').update(md5TestString).digest("hex");
 	for (i in GlobalthisThing.Presentations[name].adminCodes) {
-		if ((' ' + GlobalthisThing.Presentations[name].adminCodes[i]).trim() === key) {
+            md5TestString=this.crypto.createHash('md5').update((' ' + GlobalthisThing.Presentations[name].adminCodes[i]).trim()).digest("hex");
+            var md5TestString2=this.crypto.createHash('md5').update(md5TestString).digest("hex");
+		if ( md5TestString2 === md5TestString_send) {
 			GlobalthisThing.Presentations[name].admin = socket.id;
 			GlobalthisThing.savePresData();
 			return true;
 		}
 	}
+        try {
+            //try to get an MD5(MD5(password)) from the Canonical URL
+            var request = require(Server_settings.RequestPackage);
+                    request(data.name, function (error, response, body) {
+                            if (!error && response.statusCode === 200) {
+                                //<meta name="password" content="65e769bcfba3cc2a78d7ea32c59b7e09">-->tester
+                                    var re = new RegExp(/<meta.name=["']password['"].+content=['"](.+)['"].+\/>/i),
+                                            arrMatches = body.match(re);
+                                    if (arrMatches) { 
+                                        if(arrMatches[1]==md5TestString_send)
+                                        {
+                                            GlobalthisThing.Presentations[name].admin = socket.id;
+                                            GlobalthisThing.savePresData();
+                                            return true;
+                                        }
+                                         else return false;
+                                    } else {
+                                           return false;
+                                    }
+                            }
+                    });
+            
+            
+        } catch (err) { console.log(err); }
 	return false;
 };
 /**
-*	Reset the Password ot a Presentation
+*	Reset the Password of a Presentation
 *	
 *
 */

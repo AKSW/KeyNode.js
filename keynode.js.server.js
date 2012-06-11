@@ -5,7 +5,7 @@ var Server_data = require('./keynode.js.server_data');
  *	Init Server on Server_Port
  *
  */
-var io = require('socket.io').listen(Server_settings.Server_Port);
+var io = require(Server_settings.socketIoPackage).listen(Server_settings.Server_Port);
 
 console.log(Server_settings.preTagInfo + ' server listen at port ' + Server_settings.Server_Port + '.');
 Server_data.loadPresData();
@@ -47,7 +47,7 @@ io.sockets.on('connection', function (socket) {
 			}
 		}
 		Client.join(name);
-		console.log(Server_settings.preTagPres + 'Client ' + Client.id + ' added to room ' + name + '.  There are ' + io.sockets.in(name).clients().length.toString() + ' listener.');
+		console.log(Server_settings.preTagPres + 'Client ' + Client.id + ' added to room ' + name + '.  There are ' + io.sockets.in(name).clients().length.toString() + ' listener. ');
 		Client.emit('Ready', "");
 	});
 	Client.on('giveMeAnAdminKeyFor', function (beNice) {

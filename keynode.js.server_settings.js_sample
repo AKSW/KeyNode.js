@@ -3,6 +3,11 @@ Config-file for Server
 
 
  */
+
+this.fsPackage = "fs";
+this.socketIoPackage = "socket.io";
+this.cryptoPackage = "crypto";
+
 /* is this an local Installation --> the passwort reset show the new password in the Console */
 this.localInstallation = true;
 
