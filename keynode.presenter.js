@@ -2,105 +2,105 @@ var presenter = {
 	slideNumber : 0,
 	slideLength:-1,
 	ShowNext : function () {
-		if ($('#slide_container').css('left') === '0px') {
-			$('#slide_container').stop().animate({
+		if ($(KeyNode.options.selectors.slide_container).css('left') === '0px') {
+			$(KeyNode.options.selectors.slide_container).stop().animate({
 				'left' : '-1024px'
 			}, 200);
-		} else if ($('#slide_container').css('left') === '1024px') {
+		} else if ($(KeyNode.options.selectors.slide_container).css('left') === '1024px') {
 		//	$('#slide_container').stop().animate({
 		//		'left' : '0'
 		//	}, 200);
 		}
 	},
 	ShowLast : function () {
-		if ($('#slide_container').css('left') === '-1024px') {
-			$('#slide_container').stop().animate({
+		if ($(KeyNode.options.selectors.slide_container).css('left') === '-1024px') {
+			$(KeyNode.options.selectors.slide_container).stop().animate({
 				'left' : '0px'
 			}, 200);
-		} else if ($('#slide_container').css('left') === '0px') {
+		} else if ($(KeyNode.options.selectors.slide_container).css('left') === '0px') {
 		//	$('#slide_container').stop().animate({
 		//		'left' : '1024px'
 		//	}, 200);
 		}
 	},
 	Next : function () {
-		document.getElementById('CurrentFrame').contentWindow.postMessage("getNumberSlides:a",$('#CurrentFrame').attr('src'));
 		if ((presenter.slideLength!=-1)&&(presenter.slideNumber < presenter.slideLength)) {
 			presenter.slideNumber += 1;
 			presenter.GotoFolie(presenter.slideNumber);
+                        var e = $.Event($.keynode('getEvents').change);
+                        $(document).trigger(e,[presenter.slideNumber-1,presenter.slideNumber]);
 			}
 	},
 	Prev : function () {
 		if (presenter.slideNumber > 0) {
 			presenter.slideNumber -= 1;
 			presenter.GotoFolie(presenter.slideNumber);
+                        var e = $.Event($.keynode('getEvents').change);
+                        $(document).trigger(e,[presenter.slideNumber+1,presenter.slideNumber]);
 		}
 	},
 	BindKeys : function () {
-		$(document).keydown(function (e) {
-			switch (e.keyCode) {
-				//new By ME
-			case 39:
-				presenter.ShowNext();
-				e.preventDefault();
-				break; //right arrow
-			case 37:
-				presenter.ShowLast();
-				e.preventDefault();
-				break; //left arrow
-			case 13:
-				presenter.Next();
-				e.preventDefault();
-				break; //enter
-			case 34:
-				presenter.Next();
-				e.preventDefault();
-				break; //page down
-			case 32:
-				presenter.Next();
-				e.preventDefault();
-				break; //space
-			case 40:
-				presenter.Next();
-				e.preventDefault();
-				break; //down arrow
-			case 8:
-				presenter.Prev();
-				e.preventDefault();
-				break; //backspace
-			case 33:
-				presenter.Prev();
-				e.preventDefault();
-				break; //page up
-			case 38:
-				presenter.Prev();
-				e.preventDefault();
-				break; //up arrow
-			default:
-				return;
-			}
-			setTimeout(function(){
-			//document.getElementById('BeforeFrame').contentWindow.postMessage('setDiff:-1',login.presURL);
-			document.getElementById('AfterFrame').contentWindow.postMessage('setDiff:1',login.presURL);
-			},1500);
-		});
-		$('.clickBlocker').css({
-			'height' : '100%',
-			'z-index' : '10'
-		});
+            
+            $(document).keydown(function (e) {
+                options=$.keynode('getOptions');
+                if (e.which === options.keys.next 
+                    || $.inArray(e.which, options.keys.next) > -1) {
+                        presenter.Next();
+                        e.preventDefault();
+                }
+                else if (e.which === options.keys.previous 
+                    || $.inArray(e.which, options.keys.previous) > -1) {
+                        presenter.Prev();
+                        e.preventDefault();
+                }
+                else if (e.which === options.keys.gotoRight 
+                    || $.inArray(e.which, options.keys.gotoRight) > -1) {
+                        presenter.ShowNext();
+                        e.preventDefault();
+                }
+                else if (e.which === options.keys.gotoLeft 
+                    || $.inArray(e.which, options.keys.gotoLeft) > -1) {
+                        presenter.ShowLast();
+                        e.preventDefault();
+                }
+            });
+	
+            //@TODO: var time not time out
+            setTimeout(function(){
+            document.getElementById(KeyNode.options.selectors.after_frame.substr(1))
+                .contentWindow
+                .postMessage('setDiff:1',$(KeyNode.options.selectors.after_frame).attr('src'));
+            document.getElementById(KeyNode.options.selectors.current_frame.substr(1))
+                .contentWindow
+                .postMessage("getNumberSlides:a",$(KeyNode.options.selectors.current_frame).attr('src'));
+
+            },3000);
+
+            $(KeyNode.options.selectors.click_blocker).css({
+                    'height' : '100%',
+                    'z-index' : '10'
+            });
 	},
 	initIframe : function () {
-		if (!$('#slide_current')[0]) {
+		if (!$(KeyNode.options.selectors.current_container)[0]) {
 			setTimeout(presenter.initIframe, 500);
-			//console.log('timeout1');
 		} else {
-			//console.log('fertgi' + login.presURL);
-			$('#slide_current').append('<iframe src="' + login.presURL + '" width="100%" height="100%" id="CurrentFrame" style="z-Index:0;border:none;"></iframe> ');
-			$('#slide_current').append('<div class="clickBlocker"> </div>');
-			//$('#slide_before').append('<iframe src="' + login.presURL + '" width="100%" height="100%" id="BeforeFrame" style="z-Index:0;border:none;"></iframe> ');
-			//$('#slide_before').append('<div class="clickBlocker"> </div>');
-			$('#slide_after').append('<iframe src="' + login.presURL + '" width="100%" height="100%" id="AfterFrame" style="z-Index:0;border:none;"></iframe> ');
-			$('#slide_after').append('<div class="clickBlocker"> </div>');
+			$(KeyNode.options.selectors.current_container)
+                            .append('<iframe src="' + login.presURL + '" width="100%" height="100%" id="'
+                                +KeyNode.options.selectors.current_frame.substr(1)
+                                +'" style="z-Index:0;border:none;"></iframe> ');
+			$(KeyNode.options.selectors.current_container)
+                            .append('<div class="'
+                                +KeyNode.options.selectors.click_blocker.substr(1)
+                                +'"> </div>');
+			$(KeyNode.options.selectors.after_container)
+                            .append('<iframe src="' + login.presURL + '" width="100%" height="100%" id="'
+                             +KeyNode.options.selectors.after_frame.substr(1)
+                            +'" style="z-Index:0;border:none;"></iframe> ');
+			$(KeyNode.options.selectors.after_container)
+                            .append('<div class="'
+                                +KeyNode.options.selectors.click_blocker.substr(1)
+                                +'"> </div>');
 			presenter.BindKeys();
 		}
 	},

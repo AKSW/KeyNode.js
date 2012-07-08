@@ -29,12 +29,16 @@ var login = {
 		login.bindCanoUrl();
 	},
 	bindCanoUrl : function () {
-		if (!$('#CanonicalURL')[0] && login.timerTest()) {
+		if (!$(KeyNode.options.selectors.cano_container)[0] && login.timerTest()) {
 			login.timer = setTimeout(login.bindCanoUrl, 100);
 		} else {
 			login.bindTooltips();
-			$('#CanonicalURLsubmit').unbind('click').click(login.testCanoURL);
-			$('#CanonicalURLinput').unbind('keydown').keydown(function (e) {
+			$(KeyNode.options.selectors.cano_submit)
+                            .unbind('click')
+                            .click(login.testCanoURL);
+			$(KeyNode.options.selectors.cano_input)
+                            .unbind('keydown')
+                            .keydown(function (e) {
 				if (e.keyCode === 13) {
 					login.testCanoURL();
 				}
@@ -54,19 +58,33 @@ var login = {
 		},
 	showMore : function(){
 		$('#temper').remove();
-		$('#presenterStartButton').unbind('click').click(login.submitToServer).fadeIn('slow');
+		$(KeyNode.options.selectors.login_start_btn)
+                    .unbind('click')
+                    .click(login.submitToServer)
+                    .fadeIn('slow');
 		/*show  NodeServerURL things*/
-		$('#NodeServerURL').find('#NodeURLinput').unbind('keydown').keydown(function (e) {
+		$(KeyNode.options.selectors.node_container)
+                    .find(KeyNode.options.selectors.node_input)
+                    .unbind('keydown')
+                    .keydown(function (e) {
 			if (e.keyCode === 13) {
 				var path = $(this).val();
 				login.addNodeServer(path);
 			}
-		}).parent().find('#NodeURLsubmit').unbind('click').click(function () {
-			var path = $(this).parent().find('#NodeURLinput').val();
+                    })
+                    .parent()
+                    .find(KeyNode.options.selectors.node_submit)
+                    .unbind('click')
+                    .click(function () {
+			var path = $(this).parent().find(KeyNode.options.selectors.node_input).val();
 			login.addNodeServer(path);
-		}).parent().fadeIn('slow');
+                    })
+                    .parent()
+                    .fadeIn('slow');
+                    
 		/*show  presentationURL things*/
-		$('#presentationURL').fadeIn('slow');
+		$(KeyNode.options.selectors.pres_url)
+                    .fadeIn('slow');
 		login.finishWorking();
 	},
 	receivePostMessage : function (event) {
@@ -89,22 +107,27 @@ var login = {
 
 	},
 	failGetSettings : function () {
-		
-				$('.errorMessage').remove();
-				$('#presentationURLinput').before('<div class="errorMessage">Can not load your presentation from the canonical url.</div>').attr('placeholder', 'Type the URL of your presentation here');
-				$('#presentationURL').find('.myButton').fadeIn('fast').unbind('click').click(function () {
-					login.testAltURL();
-				});
-				login.showMore();
-				login.finishWorking();
+            $(KeyNode.options.selectors.error_class)
+                .remove();
+            $(KeyNode.options.selectors.pres_url_input)
+                .before('<div class="'+KeyNode.options.selectors.error_class.substr(1)+'">'+KeyNode.options.strings.error_no_load_from_cano+'</div>')
+            $(KeyNode.options.selectors.pres_url)
+                .find(KeyNode.options.selectors.pres_url_mybutton)
+                .fadeIn('fast')
+                .unbind('click')
+                .click(function () {
+                    login.testAltURL();
+                });
+            login.showMore();
+            login.finishWorking();
 	},
 	testCanoURL : function () {
 		login.startWorking();
 		login.nodeServer = [];
-		$("#NodeServerURLsaved ").hide();
-		$("#NodeServerURL .myURLInput ").show();
-		$("#NodeServerURL .myButton").show();
-		var cano = $('#CanonicalURLinput');
+		$(KeyNode.options.selectors.node_saved).hide();
+		$(KeyNode.options.selectors.node_container+' '+KeyNode.options.selectors.node_url_input).show();
+		$(KeyNode.options.selectors.node_container+' '+KeyNode.options.selectors.node_mybutton).show();
+		var cano = $(KeyNode.options.selectors.cano_input);
 		//new IFRAME Methods
 		$('body').append('<iframe id="temper" style="display:none;"></iframe>');
 		$('#temper').attr('src',cano.val());
@@ -113,11 +136,12 @@ var login = {
 		window.addEventListener("message", login.receivePostMessage, false);
 	},
 	testAltURL : function () {
-		var alt = $('#presentationURLinput');
+		var alt = $(KeyNode.options.selectors.pres_url_input);
 		login.startWorking();
 		login.nodeServer = [];
-		$("#NodeServerURLsaved ").hide();
-		$("#NodeServerURL .myURLInput ").show();
+		$(KeyNode.options.selectors.node_saved).hide();
+		$(KeyNode.options.selectors.node_container+" "+KeyNode.options.selectors.node_url_input)
+                    .show();
 
 		//new IFRAME Methods
 		$('body').append('<iframe id="temper" style="display:none;"></iframe>');
@@ -133,18 +157,20 @@ var login = {
 	},
 	submitToServer : function () {
 		login.startWorking();
-		if ($('#NodeURLinput').val() !== '') {
-			login.addNodeServer($('#NodeURLinput').val());
+		if ($(KeyNode.options.selectors.node_input).val() !== '') {
+			login.addNodeServer($(KeyNode.options.selectors.node_input).val());
 		}
 		if (login.nodeServer.length === 0) {
-			alert('Please add at least one Nodeserver.');
+			alert(KeyNode.options.strings.error_one_at_least);
 			login.finishWorking();
-			return false;
 		}
-		$('#CanonicalURLinput').attr('disabled', 'disabled');
-		$('#CanonicalURLsubmit').fadeOut('fast');
-		login.canoURL = $('#CanonicalURLinput').val();
-		login.presURL = $('#presentationURLinput').val() !== '' ? $('#presentationURLinput').val() : $('#CanonicalURLinput').val();
+		$(KeyNode.options.selectors.cano_input).attr('disabled', 'disabled');
+		$(KeyNode.options.selectors.cano_submit).fadeOut('fast');
+		login.canoURL = $(KeyNode.options.selectors.cano_input).val();
+		login.presURL = $(KeyNode.options.selectors.pres_url_input).val() !== '' ? 
+                    $(KeyNode.options.selectors.pres_url_input).val() :
+                    $(KeyNode.options.selectors.cano_input).val();
+                    
 		//mache server[] bekannt
 		mysocket.setValues(login.nodeServer);
 		//test4 serversocketIO
@@ -155,16 +181,16 @@ var login = {
 		});
 	},
 	startWorking : function () {
-		var bg = $('#LoadingBG'),
-			load = $('#LoadingContainer');
+		var bg = $(KeyNode.options.selectors.loading_bg),
+			load = $(KeyNode.options.selectors.loading_container);
 		if (bg[0] && load[0]) {
 			bg.fadeIn('fast');
 			load.fadeIn('fast');
 		}
 	},
 	finishWorking : function () {
-		var bg = $('#LoadingBG'),
-			load = $('#LoadingContainer');
+		var bg = $(KeyNode.options.selectors.loading_bg),
+			load = $(KeyNode.options.selectors.loading_container);
 		if (bg[0] && load[0]) {
 			bg.fadeOut('fast');
 			load.fadeOut('fast');
@@ -173,19 +199,33 @@ var login = {
 	addNodeServer : function (path) {
 		if (path !== '') {
 			login.nodeServer[login.nodeServer.length] = path;
-			$('body>#NodeServerURLsaved').clone().appendTo('#NodeServerURL').find('#serverValue').html(path).parent().find('.myRemButton').unbind('click').click(login.removeNodeServer).parent().fadeIn('slow').find('#Password').fadeIn('fast').unbind('keydown').keydown(function (e) {
+			$('body>'+KeyNode.options.selectors.node_saved)
+                            .clone()
+                            .appendTo(KeyNode.options.selectors.node_container)
+                            .find(KeyNode.options.selectors.node_server_input)
+                            .html(path)
+                            .parent()
+                            .find(KeyNode.options.selectors.node_remove_btn)
+                            .unbind('click')
+                            .click(login.removeNodeServer)
+                            .parent()
+                            .fadeIn('slow')
+                            .find(KeyNode.options.selectors.node_pw_container)
+                            .fadeIn('fast')
+                            .unbind('keydown')
+                            .keydown(function (e) {
 				if (e.keyCode === 13) {
 					login.submitToServer();
 				}
 			});
 			login.bindTooltips();
 		} else {
-			alert('please add something like http://server.de:port ');
+			alert(KeyNode.options.strings.node_not_empty);
 		}
 	},
 	removeNodeServer : function () {
 		$(this).parent().fadeOut('fast');
-		var t = $(this).parent().find('#serverValue').html(),
+		var t = $(this).parent().find(KeyNode.options.selectors.node_server_input).html(),
 			k = null;
 		for (k in login.nodeServer) {
 			if (login.nodeServer[k] === t) {
