@@ -112,7 +112,8 @@ this.initAdminCodes = function (name) {
 };
 
 this.setAdminEvents = function (name,socket,io) {
-    this.Presentations[name].presenterOnline=true;
+var thisThing=this;
+    thisThing.Presentations[name].presenterOnline=true;
     io.sockets
         .in(name)
         .emit('presenterOnline');
@@ -120,7 +121,7 @@ this.setAdminEvents = function (name,socket,io) {
         io.sockets
             .in(name)
             .emit('presenterOffline');
-            this.Presentations[name].presenterOnline=false;
+            thisThing.Presentations[name].presenterOnline=false;
     });
 }
 
