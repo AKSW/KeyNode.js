@@ -21,7 +21,7 @@ io.configure(function () {
 io.sockets.on('connection', function (socket) {
 	var Client = socket;
 	Client.on('SetAdmin', function (Json1) {
-		Server_data.setAdminByKey(Json1.name, Json1.admin, Client);
+		Server_data.setAdminByKey(Json1.name, Json1.admin, Client,io);
                 
 	});
 	Client.on('resetPassword', function (data) {

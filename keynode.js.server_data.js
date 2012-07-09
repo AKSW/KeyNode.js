@@ -110,7 +110,7 @@ this.initAdminCodes = function (name) {
 	this.Presentations[name].adminCodes[0] = Server_settings.standardPassword;
 };
 
-this.setAdminEvents = function (name,socket) {
+this.setAdminEvents = function (name,socket,io) {
     io.sockets
         .in(name)
         .emit('presenterOnline');
@@ -125,7 +125,7 @@ this.setAdminEvents = function (name,socket) {
  * Ident the User as Admin by testing the AdminCode
  *
  */
-this.setAdminByKey = function (name, key, socket) {
+this.setAdminByKey = function (name, key, socket,io) {
 	var i = 0;
         var md5TestString=this.crypto.createHash('md5').update(key).digest("hex");
         var md5TestString_send=this.crypto.createHash('md5').update(md5TestString).digest("hex");
@@ -139,7 +139,7 @@ this.setAdminByKey = function (name, key, socket) {
                             "name" : name,
                             'ident' : 'ADMIN'
                             });
-                        GlobalthisThing.setAdminEvents(name,socket);
+                        GlobalthisThing.setAdminEvents(name,socket,io);
                         console.log(Server_settings.preTagServer + " Client " + socket.id + " ACCESS GRANTED");
 			return true;
 		}
@@ -161,7 +161,7 @@ this.setAdminByKey = function (name, key, socket) {
                                 "name" : name,
                                 'ident' : 'ADMIN'
                                 });
-                            GlobalthisThing.setAdminEvents(name,socket);    
+                            GlobalthisThing.setAdminEvents(name,socket,io);    
                             console.log(Server_settings.preTagServer + " Client " + socket.id + " ACCESS GRANTED");
                         } else {
                             socket.emit('identAsAdmin', {
