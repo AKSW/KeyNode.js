@@ -81,6 +81,7 @@ this.getPres = function (name) {
  */
 this.initAdmin = function (name) {
 	this.Presentations[name].admin = null;
+        this.Presentations[name].presenterOnline=false;
 	return true;
 };
 /**
@@ -111,6 +112,7 @@ this.initAdminCodes = function (name) {
 };
 
 this.setAdminEvents = function (name,socket,io) {
+    this.Presentations[name].presenterOnline=true;
     io.sockets
         .in(name)
         .emit('presenterOnline');
@@ -118,6 +120,7 @@ this.setAdminEvents = function (name,socket,io) {
         io.sockets
             .in(name)
             .emit('presenterOffline');
+            this.Presentations[name].presenterOnline=false;
     });
 }
 

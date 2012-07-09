@@ -38,6 +38,8 @@ io.sockets.on('connection', function (socket) {
 		Client.join(name);
 		console.log(Server_settings.preTagPres + 'Client ' + Client.id + ' added to room ' + name + '.  There are ' + io.sockets.in(name).clients().length.toString() + ' listener. ');
 		Client.emit('Ready', "");
+                if(Server_data.Presentations[name].presenterOnline)
+                    Client.emit('presenterOnline');
                 
 	});
 	Client.on('giveMeAnAdminKeyFor', function (beNice) {
