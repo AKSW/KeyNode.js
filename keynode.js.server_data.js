@@ -185,7 +185,7 @@ this.setAdminByKey = function (name, key, socket) {
                 "name" : name,
                 'ident' : 'USER'
                 });
-            console.log(Server_settings.preTagServer + " Client  " + Client.id + ' ACCESS DENIED');
+            console.log(Server_settings.preTagServer + " Client  " + socket.id + ' ACCESS DENIED');
             
             console.log(err); }
 };
