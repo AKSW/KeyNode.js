@@ -21,7 +21,8 @@ io.configure(function () {
 io.sockets.on('connection', function (socket) {
 	var Client = socket;
 	Client.on('SetAdmin', function (Json1) {
-		Server_data.setAdminByKey(Json1.name, Json1.admin, socket);
+		Server_data.setAdminByKey(Json1.name, Json1.admin, Client);
+                
 	});
 	Client.on('resetPassword', function (data) {
 		Server_data.resetPassword(data, socket);
@@ -37,6 +38,7 @@ io.sockets.on('connection', function (socket) {
 		Client.join(name);
 		console.log(Server_settings.preTagPres + 'Client ' + Client.id + ' added to room ' + name + '.  There are ' + io.sockets.in(name).clients().length.toString() + ' listener. ');
 		Client.emit('Ready', "");
+                
 	});
 	Client.on('giveMeAnAdminKeyFor', function (beNice) {
 		var t = socket;

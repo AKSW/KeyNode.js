@@ -109,6 +109,18 @@ this.initAdminCodes = function (name) {
 	this.Presentations[name].adminCodes = [];
 	this.Presentations[name].adminCodes[0] = Server_settings.standardPassword;
 };
+
+this.setAdminEvents = function (name,socket) {
+    io.sockets
+        .in(name)
+        .emit('presenterOnline');
+    socket.on('disconnect', function () {
+        io.sockets
+            .in(name)
+            .emit('presenterOffline');
+    });
+}
+
 /**
  * Ident the User as Admin by testing the AdminCode
  *
@@ -127,6 +139,7 @@ this.setAdminByKey = function (name, key, socket) {
                             "name" : name,
                             'ident' : 'ADMIN'
                             });
+                        GlobalthisThing.setAdminEvents(name,socket);
                         console.log(Server_settings.preTagServer + " Client " + socket.id + " ACCESS GRANTED");
 			return true;
 		}
@@ -148,6 +161,7 @@ this.setAdminByKey = function (name, key, socket) {
                                 "name" : name,
                                 'ident' : 'ADMIN'
                                 });
+                            GlobalthisThing.setAdminEvents(name,socket);    
                             console.log(Server_settings.preTagServer + " Client " + socket.id + " ACCESS GRANTED");
                         } else {
                             socket.emit('identAsAdmin', {
