@@ -49,7 +49,7 @@
     <script src="deck.js/extensions/navigation/deck.navigation.js"></script>
     <script src="deck.js/extensions/hash/deck.hash.js"></script>
 
-	
+	<meta name="password" content="65e769bcfba3cc2a78d7ea32c59b7e09">
 	<link rel="http://ns.aksw.org/keynode/canonical" href="http://aksw.github.com/KeyNode.js/" />
 	<link rel="http://ns.aksw.org/keynode/server" href="http://prod1.aksw.org:9123/" />
         <!-- first add the Addon -->
@@ -85,13 +85,13 @@
 <div class="slide" id="begin1">
     <h2>KeyNode.JS - How it Works</h2>
 
-    <h3>The parts of these presentation:</h3>
+    <h3>The parts of this presentation:</h3>
     <ol>
         <li>
             <a href="#General">What ist KeyNode.JS?</a>
         </li>
 		<li>
-            <a href="#start0">How get started?</a>
+            <a href="#start0">How to get started?</a>
         </li>
 		<li>
             <a href="#presenter0">How do i use the presenter?</a>
@@ -100,7 +100,7 @@
             <a href="#server0">How do i use the server?</a>
         </li>
 		<li>
-            <a href="#technic">How does it work</a>
+            <a href="#technic">How does it work?</a>
         </li>
     </ol>
 
@@ -116,7 +116,7 @@
 </div>
 
 <div class="slide" id="start0">
-    <h2>How get started?</h2>
+    <h2>How to get started?</h2>
     <ul>
         <li><a href="#start1">What do you need?</a></li>
         <li><a href="#start2">Changes at your deck.js presentation</a></li>
@@ -191,7 +191,7 @@
 <div class="slide" id="presenter0">
     <h2>How do i use the presenter? (1)</h2>
 	<img src="./images/presenter3.PNG">
-	`What is shown in each part of the presenter?
+	What is shown in each part of the presenter?
 	<ul>
 	<li>On the left side: your last presentation slide</li>
 	<li>In the middle: the slide everyone listen to your presentation sees</li>
@@ -199,15 +199,15 @@
 	</ul>
 </div>
 <div class="slide" id="presenter1">
-    <h2>How do i use the presenter? (2)</h2>
-	With the arrow keys you can control your presentation, every change will broadcasted to every slide opened with the keynode.watcher.js included.
+    <h2>How do I use the presenter? (2)</h2>
+	With the arrow keys you can control your presentation, any change will be broadcasted to every slide opened with the keynode.watcher.js included.
 	<img src="./images/presenter4.png">
 	
 </div>
 <div class="slide" id="server0">
-    <h2>How do i use the server? (1)</h2>
+    <h2>How do I use the server? (1)</h2>
 	<ol>
-		<li>Check if you have installed the following programms:
+		<li>Check if you have installed the following programs:
 		
 		<pre>- node.js(<a href="http://nodejs.org/#download">download</a>)
 - npm (for easy nodepackage installation)
@@ -226,8 +226,8 @@ $ node keynode.js.server.js</pre>
 	
 </div>
 <div class="slide" id="serverConfig1">
-    <h2>How do i configurate the server? (1) </h2>
-	in the Config file you have the following setting you can set:
+    <h2>How do I configure the server? (1) </h2>
+	in the Config file you find the following settings:
 	<ul>
 	<li>
 		Did you want to see the password in the console if you reset it or send an email?<br>
@@ -256,7 +256,7 @@ this.preTagPres = '\x1B[32m\x1B[1m[Presentation]\x1B[0m';</pre>
 		<pre class="brush: js">this.Server_Port = 4123;</pre>
 	</li>	
 	<li>
-		Do you whant to allow new Presentations or dont you?<br>
+		Do you want to allow new presentations or dont you?<br>
 		Default:
 		<pre class="brush: js">this.allow_new_presentations = true;</pre>
 	</li>
@@ -265,12 +265,12 @@ this.preTagPres = '\x1B[32m\x1B[1m[Presentation]\x1B[0m';</pre>
 	
 </div>
 <div class="slide" id="serverConfig2">
-    <h2>How do i configurate the server? (2) </h2>
-	in the Config file you have the following setting you can set:
+    <h2>How do I configure the server? (2) </h2>
+	in the Config file you find the following settings:
 	<ul>
 	
 	<li>
-		Do you want to see all Debug informations on the console screen?
+		Do you want to see all debug information on the console screen?
 		Default:
 		<pre class="brush: js">this.debug = true;</pre>
 	</li>
@@ -283,7 +283,7 @@ this.preTagPres = '\x1B[32m\x1B[1m[Presentation]\x1B[0m';</pre>
 this.RequestPackage = "request";</pre>
 	</li>
 	<li>
-		Mailconfiguration:<br>
+		Mail configuration:<br>
 		you can find an great number of possible options at <a href="https://github.com/andris9/nodemailer">documentation of Nodemailer</a><br>
 		Default:
 		<pre class="brush: js">this.mailProto = "SMTP";
@@ -296,7 +296,7 @@ this.smtp_options = {
 		pass: ""
 	}
 };</pre>
-		other option is the commented sendmail config:
+		another option is the commented sendmail config:
 		<pre class="brush: js">this.mailProto = "Sendmail";
 this.smtp_options = "/usr/bin/sendmail";</pre>
 
