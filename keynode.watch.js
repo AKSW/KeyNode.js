@@ -152,7 +152,7 @@ var LastTry = 5;
     });       
     $[deck]('extend', 'watcher.bindPostMessages', function() {
         $d.trigger($[deck]('getOptions').events.bindPostMessages);
-        window.addEventListener("message", function(data){$[deck]('watcher.receivePostMessage')(data)}, false);    
+        window.addEventListener("message", function(data){$[deck]('watcher.receivePostMessage',data)}, false);    
 	}); 
     $[deck]('extend', 'watcher.bindSocketEvents', function() {
         $d.trigger($[deck]('getOptions').events.bindSocketEvents);

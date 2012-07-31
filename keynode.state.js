@@ -111,17 +111,14 @@ var presState ={
     setOffline:function(){
         this.stateDiv.node.attr('style',this.stateDiv.gradOne).css(this.stateDiv.CSS);//red
         this.content.setText(this.strings.offline);
-        console.log(this.strings.offline);
     },
     setOnline:function(){
         this.stateDiv.node.attr('style',this.stateDiv.gradTwo).css(this.stateDiv.CSS);//red
         this.content.setText(this.strings.online);
-        console.log(this.strings.online);
     },
     setPresented:function(){
         this.stateDiv.node.attr('style',this.stateDiv.gradThree).css(this.stateDiv.CSS);//red
         this.content.setText(this.strings.presenting);
-        console.log(this.strings.presenting);
     },
     showCSS:{
         'height':'40px',
