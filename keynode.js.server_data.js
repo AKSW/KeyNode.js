@@ -4,7 +4,7 @@ var Server_settings = require('./keynode.js.server_settings');
 this.FHandler = require(Server_settings.fsPackage);
 this.crypto = require(Server_settings.cryptoPackage);
 /**
- * init The Presentations object
+ * init the Presentations object
  *
  */
 this.initPres = function () {
@@ -28,7 +28,7 @@ this.addPres = function (name) {
 };
 
 /**
- * save the Presentationdata to file
+ * save the Presentation data to file
  *
  */
 this.savePresData = function () {
@@ -44,7 +44,7 @@ this.savePresData = function () {
 	});
 };
 /**
- * load Presentationdata from file
+ * load Presentation data from file
  *
  */
 this.loadPresData = function () {
@@ -76,7 +76,7 @@ this.getPres = function (name) {
 };
 //Admins
 /**
- * Init the List of Admins
+ * Init the list of admins
  *
  */
 this.initAdmin = function (name) {
@@ -85,14 +85,14 @@ this.initAdmin = function (name) {
 	return true;
 };
 /**
- * Did the Presentation have an registered Admin?
+ * Did the presentation have a registered admin?
  *
  */
 this.HasAdmin = function (name) {
 	return this.Presentations[name].admin === null ? false : true;
 };
 /**
- * get the Registered Admin
+ * Get the registered admin
  *
  */
 this.getAdmin = function (name) {
@@ -103,7 +103,7 @@ this.getAdmin = function (name) {
 	}
 };
 /**
- * Init the List of AdminCodes
+ * Init the list of AdminCodes
  *
  */
 this.initAdminCodes = function (name) {
@@ -126,7 +126,7 @@ var thisThing=this;
 }
 
 /**
- * Ident the User as Admin by testing the AdminCode
+ * Identify the user as admin by testing the AdminCode
  *
  */
 this.setAdminByKey = function (name, key, socket,io) {
@@ -227,8 +227,8 @@ this.resetPassword = function (data,socket) {
 									mailOptions = {
 										from: "passwordreset@KeyNodeServer.com",
 										to: Mail,
-										subject: "Passwordreset for your Presentation",
-										text: "You have reset your password for : \n\r" + data.name + '\n\rYour new Password: ' + GlobalthisThing.Presentations[data.name].adminCodes[0] + '\n\r\n\rYour NodeServer'
+										subject: "Password reset for your presentation",
+										text: "You have reset your password for : \n\r" + data.name + '\n\rYour new password: ' + GlobalthisThing.Presentations[data.name].adminCodes[0] + '\n\r\n\rYour NodeServer'
 									};
 								transport.sendMail(mailOptions);
 								socket.emit('resetedPassword', {

@@ -7,7 +7,7 @@ var Server_data = require('./keynode.js.server_data');
  */
 var io = require(Server_settings.socketIoPackage).listen(Server_settings.Server_Port);
 
-console.log(Server_settings.preTagInfo + ' server listen at port ' + Server_settings.Server_Port + '.');
+console.log(Server_settings.preTagInfo + ' server is listening on port ' + Server_settings.Server_Port + '.');
 Server_data.loadPresData();
 
 io.configure(function () {
@@ -36,7 +36,7 @@ io.sockets.on('connection', function (socket) {
 			}
 		}
 		Client.join(name);
-		console.log(Server_settings.preTagPres + 'Client ' + Client.id + ' added to room ' + name + '.  There are ' + io.sockets.in(name).clients().length.toString() + ' listener. ');
+		console.log(Server_settings.preTagPres + 'Client ' + Client.id + ' added to room ' + name + '.  There are ' + io.sockets.in(name).clients().length.toString() + ' listeners. ');
 		Client.emit('Ready', "");
                 if(Server_data.Presentations[name].presenterOnline)
                     Client.emit('presenterOnline');
@@ -53,7 +53,7 @@ io.sockets.on('connection', function (socket) {
 			}
 			io.sockets.in(data.name).emit('GoTo', data.folie);
 		} else {
-			console.log('Someone try to controll a slide that doesn´t be his own.');
+			console.log('Someone tries to control a slide that is not his own one.');
 		}
 	});
 });
