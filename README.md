@@ -1,25 +1,25 @@
 # KeyNode.js - Node.js Server
 
-broadcast the events send by the presenter to each client watching the Presentation.
+Broadcast the events sent by the presenter to each client watching the presentation.
 
 ## Start the Server
 
-start it with:
+Start it with:
 
 	`node ./server/keynode.js.server.js`
 
 	
 ## How to set up the Server
 
-all configurations where make in the `keynode.js.server_settings.js`
+All configurations are located in `keynode.js.server_settings.js`
 
-- `preTag<type>` - this is written before each \<type\> of the Server
+- `preTag<type>` - this is written before each \<type\> of the server
 
-- `standardPassword` - the dafault Password for the presentations
+- `standardPassword` - the default password for the presentations
 
-- `Server_Port` - the port the server listen on
+- `Server_Port` - the port the server listens on
 
-- `allow_new_presentations` - does the server accept new Presentations
+- `allow_new_presentations` - whether the server should accept new presentations or not
 
 - `debug` - if it runs in debug mode (more logging)
 
