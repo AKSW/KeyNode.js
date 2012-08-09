@@ -19,7 +19,7 @@ var KeyNode = {
 					$('body').find('#' + k).html(filldata[k]);
 				}
 			}
-		});
+		}, 'html');
 	},
 	loadJS : function (path) {
 		$.getScript('./' + path + '.js');
