@@ -1,6 +1,9 @@
 var Server_settings = require('./keynode.js.server_settings');
 var Server_data = require('./keynode.js.server_data');
 
+var extensionVideo = require('./extensions/video.js');
+
+
 /**
  *	Init Server on Server_Port
  *
@@ -56,4 +59,7 @@ io.sockets.on('connection', function (socket) {
 			console.log('Someone tries to control a slide that is not his own one.');
 		}
 	});
+	
+	extensionVideo.init(io, socket);
 });
+
