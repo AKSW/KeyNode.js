@@ -184,4 +184,5 @@ var presState ={
  */
 $(document).bind('watcher.beforeInit', function() {
     presState.init();
-})
+});
+
