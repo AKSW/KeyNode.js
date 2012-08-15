@@ -131,8 +131,8 @@ var login = {
 		//new IFRAME Methods
 		$('body').append('<iframe id="temper" style="display:none;"></iframe>');
 		$('#temper').attr('src',cano.val());
-		setTimeout(function(){document.getElementById('temper').contentWindow.postMessage("getSettings:",cano.val());},2000);
-		timertest=setTimeout(login.failGetSettings,2500);
+		setTimeout(function(){document.getElementById('temper').contentWindow.postMessage("getSettings:",cano.val());},5000);
+		timertest=setTimeout(login.failGetSettings,5500);
 		window.addEventListener("message", login.receivePostMessage, false);
 	},
 	testAltURL : function () {
