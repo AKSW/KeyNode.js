@@ -103,6 +103,8 @@ var mysocket = {
 	startPresenter : function () {
 		KeyNode.loadCSS('presenter');
 		KeyNode.loadJS('keynode.presenter');
+		KeyNode.loadCSS('video');
+		KeyNode.loadJS('keynode.video');
 	},
 	readypres : null,
 	test4ready : function () {
