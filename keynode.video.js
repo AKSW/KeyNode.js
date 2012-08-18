@@ -60,6 +60,7 @@ var VideoContainer = {
     },
     
     setEmbedHTML : function (html) {
+        html = html.replace(/<script[^>]*>|<\/script>/gi, '');
         VideoContainer.$container.find('> .video').html(html);
     },
     
