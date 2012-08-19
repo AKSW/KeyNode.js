@@ -12,6 +12,11 @@ var VideoAddon = {
     
     init : function () {
         
+    },
+    
+    setVideoEmbedTag : function (html) {
+        var socket = mysocket.s[0];
+        socket.emit('setVideoEmbedTag', {name: login.canoURL, html: html});
     }
 };
 
@@ -42,10 +47,20 @@ var VideoContainer = {
         
         // add options:
         $options.append(
+            // embed code textfield:
             $('<div class="option"></div>').append(
                 $('<label for="embedHTML"></label>').text(VideoAddon.strings.option_embedHTML_label),
                 $('<input id="embedHTML" type="text" />'),
                 $('<input type="button" value="&gt;" />').click(VideoContainer.setOption_embedHTML)
+            ),
+            
+            // Google+ Hangout button:
+            $('<div class="option"></div>').append(
+                $('<a href="https://plus.google.com/hangouts/_" target="_blank" style="text-decoration:none;"></a>').append(
+                    $('<img src="https://ssl.gstatic.com/s2/oz/images/stars/hangout/1/gplus-hangout-24x100-normal.png"\
+                            alt="Start a Hangout"\
+                            style="border:0;width:100px;height:24px;"/>')
+                )
             )
         );
     },
@@ -78,9 +93,8 @@ var VideoContainer = {
     },
     
     setOption_embedHTML : function () {
-        var socket = mysocket.s[0];
         var html = VideoContainer.$container.find('#embedHTML').val();
-        socket.emit('setVideoEmbedTag', {name: login.canoURL, html: html});
+        VideoAddon.setVideoEmbedTag(html);
     }
 };
 

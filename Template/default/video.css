@@ -49,8 +49,10 @@
 
 
 #video-container-presenter > .options > .option {
-    
+    margin-top: 5pt;
 }
+
+#video-container-presenter > .options > .option:first-child { margin-top: 0 }
 
 #video-container-presenter > .options > .option > label {
     display: block;
