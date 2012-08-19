@@ -1,0 +1,10 @@
+{
+    "name"          : "KeyNode.js",
+    "description"   : "A presenter console for the deck.js slide system. See https://github.com/AKSW/KeyNode.js/",
+    "author"        : "Alrik Hausdorf",
+    "version"       : "0.1.0",
+    "dependencies"  : {
+        "request"   : ">=2.10.0",
+        "socket.io" : ">=0.9.9"
+    }
+}
