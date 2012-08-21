@@ -123,6 +123,7 @@ $(document).bind('watcher.bindSocketEvents', function() {
         if(html == VideoAddon.embedHTML)
             return;
         
+        console.log("Received video embed code: "+html);
         VideoAddon.embedHTML = html;
         
         if(html) {
