@@ -111,8 +111,9 @@ var VideoContainer = {
         var server = mysocket.NodeServer[0].replace(/^[a-z]+:\/\//, ''),
             $options = VideoContainer.$container.find('> .options');
         
+        var gd = encodeURIComponent(server+url+'?token='+token+'&liveid=');
         $options.find('a.hangout-button')
-            .attr('href', 'https://plus.google.com/hangouts/_?gid=60297079067&gd='+server+url+'?token='+token+'&liveid=')
+            .attr('href', 'https://plus.google.com/hangouts/_?gid=60297079067&gd='+gd)
             .animate({opacity: 1});
     },
     
