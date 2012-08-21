@@ -52,7 +52,7 @@ Video.init = function (io, fileServer) {
         
         console.log("Received YouTube Live Id: "+liveId+" ("+canoURL+")");
         Video.data.currentToken[canoURL] = null;
-        Video.setVideoEmbedTag(io, canoURL, '<iframe width="420" height="315" src="http://www.youtube.com/embed/'+liveId+'" frameborder="0" allowfullscreen></iframe>');
+        Video.setVideoEmbedTag(io, canoURL, '<iframe width="420" height="315" src="http://www.youtube.com/embed/'+liveId+'" frameborder="0" allowfullscreen="allowfullscreen"></iframe>');
         
         res.writeHead(200, {
             'Access-Control-Allow-Origin': '*',
