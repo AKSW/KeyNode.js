@@ -54,14 +54,20 @@ Video.init = function (io, fileServer) {
         Video.data.currentToken[canoURL] = null;
         Video.setVideoEmbedTag(io, canoURL, '<iframe width="420" height="315" src="http://www.youtube.com/embed/'+liveId+'" frameborder="0" allowfullscreen></iframe>');
         
-        res.writeHeader(200);
+        res.writeHead(200, {
+            'Access-Control-Allow-Origin': '*',
+            'Content-Type': 'text/plain'
+        });
         res.write("Success");
         res.end();
         return true;
         
         
         function fail (message) {
-            res.writeHeader(400);
+            res.writeHead(400, {
+                'Access-Control-Allow-Origin': '*',
+                'Content-Type': 'text/plain'
+            });
             res.write(message);
             res.end();
         }
