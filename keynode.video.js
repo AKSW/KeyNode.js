@@ -108,7 +108,7 @@ var VideoContainer = {
     },
     
     updateGoogleHangoutButton : function (token, url) {
-        var server = mysocket.NodeServer[0],
+        var server = mysocket.NodeServer[0].replace(/^[a-z]+:\/\//, ''),
             $options = VideoContainer.$container.find('> .options');
         
         $options.find('a.hangout-button')
