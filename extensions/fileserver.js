@@ -16,7 +16,7 @@ FileServer.prototype = {
         
         if(port)
             this.port = port;
-        this.httpServer = require(ServerSettings.httpPackage).createServer();
+        this.httpServer = require(ServerSettings.httpPackage || "http").createServer();
         
         this.httpServer.on('request', function(req, res) {
             var uri = url.parse(req.url, true),
