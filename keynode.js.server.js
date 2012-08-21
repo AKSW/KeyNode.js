@@ -1,14 +1,15 @@
 var Server_settings = require('./keynode.js.server_settings');
 var Server_data = require('./keynode.js.server_data');
 
-var extensionVideo = require('./extensions/video.js');
+var extensionFileServer = require('./extensions/fileserver');
+var extensionVideo = require('./extensions/video');
 
 
 /**
  *	Init Server on Server_Port
- *
  */
-var io = require(Server_settings.socketIoPackage).listen(Server_settings.Server_Port);
+var fileServer = extensionFileServer.createServer(Server_settings.Server_Port);
+var io = require(Server_settings.socketIoPackage).listen(fileServer.getHTTPServer());
 
 console.log(Server_settings.preTagInfo + ' server is listening on port ' + Server_settings.Server_Port + '.');
 Server_data.loadPresData();
@@ -20,6 +21,11 @@ io.configure(function () {
 		io.enable('log');
 	}
 });
+
+
+/**
+ *  Init Socket.IO message handling:
+ */
 
 io.sockets.on('connection', function (socket) {
 	var Client = socket;
@@ -60,6 +66,8 @@ io.sockets.on('connection', function (socket) {
 		}
 	});
 	
-	extensionVideo.init(io, socket);
+	extensionVideo.initSocket(io, socket);
 });
+
+extensionVideo.init(io, fileServer);
 
