@@ -38,6 +38,7 @@
 
 #video-container-presenter > .options {
     min-width: 90pt;
+    height: 78px;
     padding: 3pt 8pt;
     
     background: #888;

@@ -11,7 +11,17 @@ var VideoAddon = {
     },
     
     init : function () {
+        var socket = mysocket.s[0];
         
+        socket.on('videoEmbedTag', function(html) {
+            VideoContainer.updateEmbedCodeInput(html);
+        });
+        
+        socket.on('videoAuthToken', function(data) {
+            console.log("Received video authorization token: "+data.token);
+            VideoContainer.updateGoogleHangoutButton(data.token, data.url);
+        });
+        socket.emit('generateVideoAuthToken', login.canoURL);
     },
     
     setVideoEmbedTag : function (html) {
@@ -56,11 +66,11 @@ var VideoContainer = {
             
             // Google+ Hangout button:
             $('<div class="option"></div>').append(
-                $('<a href="https://plus.google.com/hangouts/_" target="_blank" style="text-decoration:none;"></a>').append(
+                $('<a class="hangout-button" href="https://plus.google.com/hangouts/_" target="_blank" style="text-decoration:none;"></a>').append(
                     $('<img src="https://ssl.gstatic.com/s2/oz/images/stars/hangout/1/gplus-hangout-24x100-normal.png"\
                             alt="Start a Hangout"\
                             style="border:0;width:100px;height:24px;"/>')
-                )
+                ).css({opacity: 0.5})
             )
         );
     },
@@ -90,6 +100,20 @@ var VideoContainer = {
             $h2.unbind('mouseenter').unbind('mouseleave');
             VideoContainer.slideState = false;
         }
+    },
+    
+    updateEmbedCodeInput : function (html) {
+        var $options = VideoContainer.$container.find('> .options');
+        $options.find('#embedHTML').val(html);
+    },
+    
+    updateGoogleHangoutButton : function (token, url) {
+        var server = mysocket.NodeServer[0],
+            $options = VideoContainer.$container.find('> .options');
+        
+        $options.find('a.hangout-button')
+            .attr('href', 'https://plus.google.com/hangouts/_?gid=60297079067&gd='+server+url+'?token='+token+'&liveid=')
+            .animate({opacity: 1});
     },
     
     setOption_embedHTML : function () {
