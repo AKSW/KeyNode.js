@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8" ?>
+﻿<?xml version="1.0" encoding="UTF-8" ?>
 <!--
 	Google Hangout extension for KeyNode.js
 	This extension tells the server about the Hangout's YouTube Live Id if the Hangout
@@ -59,7 +59,7 @@
 		};
 		
 		function startApp () {
-			var appData = gadgets.views.getParams()['appData'],
+			var appData = decodeURIComponent( gadgets.views.getParams()['appData'] ),
 				url = "http://"+appData,
 				server = appData.replace(/\/.*/, '');
 			
@@ -70,6 +70,8 @@
 			gapi.hangout.onair.onYouTubeLiveIdReady.add(function (evt) {
 				log.clear();
 				log.success("YouTube Live ID: "+evt.youTubeLiveId);
+				console.log("Calling back: "+url+evt.youTubeLiveId);
+				
 				// do AJAX request to submit YouTube Live Id:
 				$.get(url+evt.youTubeLiveId, function() {
 					log.success("Sent Live Id to server: "+server);
@@ -98,4 +100,3 @@
 ]]>
 </Content>
 </Module>
-
