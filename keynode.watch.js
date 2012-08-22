@@ -181,7 +181,7 @@ var LastTry = 5;
                     console.log(strings.presenter_online );
                 });
                 mysocket.getSocket().removeAllListeners('presenterOffline').on('presenterOffline', function () {
-                    $d.trigger($[deck]('getOptions').events.setOnline);
+                    $d.trigger($[deck]('getOptions').events.setOffline);
 
                     console.log(strings.presenter_offline );
                 });
