@@ -103,6 +103,17 @@ this.getAdmin = function (name) {
 	}
 };
 /**
+ * Get the canonical URL of the presentation that's presenter
+ * socket ID is `socketId`.
+ */
+this.getCanoURLByAdminSocketId = function (socketId) {
+    for(var canoURL in this.Presentations) {
+        if(this.Presentations[canoURL].admin == socketId)
+            return canoURL;
+    }
+    return null;
+};
+/**
  * Init the list of AdminCodes
  *
  */

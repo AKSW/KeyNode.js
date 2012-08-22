@@ -85,6 +85,16 @@ Video.initSocket = function (io, socket) {
     
     // Init the handlers for the video-related socket.io messages:
     
+    socket.on('disconnect', function() {
+        var canoURL = ServerData.getCanoURLByAdminSocketId(socket.id);
+        if(!canoURL)    // return if canoURL==null => this socket is not a presenter socket
+            return;
+        
+        // Reset video embed code, but do not broadcast it
+        // So the still connected watchers may keep watching, but new watchers
+        // will not receive a most-likely obsolete embed code
+        Video.data.embedTag[canoURL] = undefined;
+    });
     
     socket.on('setVideoEmbedTag', function(data) {
         var canoURL = data.name;
