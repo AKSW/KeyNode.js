@@ -48,7 +48,7 @@ Video.init = function (io, fileServer) {
         
         // Everything is fine:
         
-        liveId = liveId.replace(/[^A-Za-z0-9]/, '');        // just for security purposes
+        liveId = liveId.replace(/[^A-Za-z0-9_-]/, '');        // just for security purposes
         
         console.log("Received YouTube Live Id: "+liveId+" ("+canoURL+")");
         Video.data.currentToken[canoURL] = null;
