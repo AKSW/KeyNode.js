@@ -13,6 +13,13 @@ var VideoAddon = {
     init : function () {
         var socket = mysocket.s[0];
         
+        // init strings:
+        if (navigator.language.indexOf("de") > -1) {
+            VideoAddon.strings = VideoAddon.lang.de;
+        } else {
+            VideoAddon.strings = VideoAddon.lang.en;
+        }
+        
         socket.on('videoEmbedTag', function(html) {
             VideoContainer.updateEmbedCodeInput(html);
         });
@@ -36,13 +43,6 @@ var VideoContainer = {
     
     init : function () {
         var $h2, $options;
-        
-        // init strings:
-        if (navigator.language.indexOf("de") > -1) {
-            VideoAddon.strings = VideoAddon.lang.de;
-        } else {
-            VideoAddon.strings = VideoAddon.lang.en;
-        }
         
         // create container <div>:
         VideoContainer.$container = $('<div id="video-container-presenter"></div>');
