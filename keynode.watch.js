@@ -1,11 +1,12 @@
 var diff = 0;
 
 var myTimer = null,
-strings=null,
-currSlide=0;
-CanonicalURL = $("link[rel='http://ns.aksw.org/keynode/canonical']")[0] ? $("link[rel='http://ns.aksw.org/keynode/canonical']").attr("href") : null,
-NodeServer = $("link[rel='http://ns.aksw.org/keynode/server']")[0] ? $("link[rel='http://ns.aksw.org/keynode/server']").attr("href") : null,
-Mail = $("link[rel='http://ns.aksw.org/keynode/mailto']")[0] ? $("link[rel='http://ns.aksw.org/keynode/mailto']").attr("href") : null,
+    strings=null,
+    currSlide=0;
+    CanonicalURL = $("link[rel='http://ns.aksw.org/keynode/canonical']")[0] ? $("link[rel='http://ns.aksw.org/keynode/canonical']").attr("href") : null,
+    NodeServer = $("link[rel='http://ns.aksw.org/keynode/server']")[0] ? $("link[rel='http://ns.aksw.org/keynode/server']").attr("href") : null,
+    Mail = $("link[rel='http://ns.aksw.org/keynode/mailto']")[0] ? $("link[rel='http://ns.aksw.org/keynode/mailto']").attr("href") : null,
+
 /**
 * Socket for the communication with the server
 *
@@ -55,7 +56,7 @@ mysocket = {
         }
 },
 /**
- *  Stings in different languages
+ *  Strings in different languages
  *
  *
  **/
@@ -73,11 +74,11 @@ lang={
     },
     eng:{
         get_it_from_server:'Socket.IO not found(try to get it from Server).',
-        get_it_success:'Retry canceled.(Socket.io loaded)',
+        get_it_success:'Retry cancelled.(Socket.io loaded)',
         connected_to:'Connection established to:',/*serverURL added after*/
         presenter_online:'Presenter online',
         presenter_offline:'Presenter offline',
-        presenter_push_slide:'Goto: ',/* new slideNUmber added after*/
+        presenter_push_slide:'Goto: ',/* new slideNumber added after*/
         disconnected:'Lost connection',
         connecting:'try 2 connect',
         retry_in:'Retry in ',/* time added after */
@@ -89,8 +90,19 @@ lang={
 var LastTry = 5;
 (function($, deck, undefined) {
 	var $d = $(document);
-        
-        $.extend(true, $[deck].defaults, {
+    
+    var hash = document.location.href.split('#')[1];
+    if(hash && hash.match(/^slidechooser-slide-([0-9]+)/)) {
+        var slideNo = parseInt(RegExp.$1);
+        // This document is just a slidechooser slide preview:
+        $d.bind('deck.init', function() {
+            $[deck]('go', slideNo);
+        });
+        return;     // stop initialization
+    }
+    
+    
+    $.extend(true, $[deck].defaults, {
 		classes: {
 			
 		},
@@ -100,38 +112,37 @@ var LastTry = 5;
 		},
 		
 		keys: {
+		    
 		},
-                events : {
-                    /*
-                    Event fired whenever a new slidenumber is recived.
-                    */
-                    watcherChange: 'watcher.GoToSlide',
-                    /*
-                    Event fired before the Init of the login
-                    */
-                    beforeInitialize: 'watcher.beforeInit',
-                    /*
-                    Event fired when the presenter is started
-                    */
-                    initialize: 'watcher.init',
-                    /*
-                    Event fired after the PostMessages are bind
-                    */
-                    bindPostMessages: 'watcher.bindPostMessages',
-                    
-                    bindSocketEvents: 'watcher.bindSocketEvents',
-
-                    receivePostMessage: 'watcher.receivePostMessage',
-
-                    setOnline: 'watcher.setOnline',
-
-                    setPresented: 'watcher.setPresented',
-
-                    setOffline: 'watcher.setOffline',
-                
-                
-                },
+		
+        events : {
+            /*
+            Event fired whenever a new slidenumber is recived.
+            */
+            watcherChange: 'watcher.GoToSlide',
+            /*
+            Event fired before the Init of the login
+            */
+            beforeInitialize: 'watcher.beforeInit',
+            /*
+            Event fired when the presenter is started
+            */
+            initialize: 'watcher.init',
+            /*
+            Event fired after the PostMessages are bind
+            */
+            bindPostMessages: 'watcher.bindPostMessages',
             
+            bindSocketEvents: 'watcher.bindSocketEvents',
+
+            receivePostMessage: 'watcher.receivePostMessage',
+
+            setOnline: 'watcher.setOnline',
+
+            setPresented: 'watcher.setPresented',
+
+            setOffline: 'watcher.setOffline'
+        }
 	});
     $[deck]('extend', 'watcher.receivePostMessage',function(event) {
         $d.trigger($[deck]('getOptions').events.receivePostMessage);
@@ -182,15 +193,13 @@ var LastTry = 5;
                 });
                 mysocket.getSocket().removeAllListeners('presenterOffline').on('presenterOffline', function () {
                     $d.trigger($[deck]('getOptions').events.setOffline);
-
                     console.log(strings.presenter_offline );
                 });
                 mysocket.getSocket().removeAllListeners('GoTo').on('GoTo', function (data) {
-                    
-                        $.deck('go', (data + diff));
-                        currSlide=(data + diff);
-                        $d.trigger($[deck]('getOptions').events.watcherChange,data);
-                        console.log(strings.presenter_push_slide,data );
+                    $[deck]('go', (data + diff));
+                    currSlide = (data + diff);
+                    $d.trigger($[deck]('getOptions').events.watcherChange, data);
+                    console.log(strings.presenter_push_slide, data);
                 });
                 mysocket.getSocket().removeAllListeners('disconnect').on('disconnect', function () {
                     $d.trigger($[deck]('getOptions').events.setOffline);
@@ -199,7 +208,7 @@ var LastTry = 5;
         });
         
 	}); 
-     $[deck]('extend', 'watcher.init', function() {
+    $[deck]('extend', 'watcher.init', function() {
         /*
         * LanguageSelect 
         */
@@ -221,10 +230,10 @@ var LastTry = 5;
         }
 	}); 
 
-    $[deck]('extend', 'watcher.getLastSlide',function() {
+    $[deck]('extend', 'watcher.getLastSlide', function() {
         return currSlide;
-
     });
+    
     $d.bind('deck.init', function() {
         $d.trigger($[deck]('getOptions').events.beforeInitialize);
         $[deck]('watcher.init');
