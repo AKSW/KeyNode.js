@@ -13,7 +13,8 @@ var TimerAddon = {
         .css({opacity: minOpacity})
         .mouseenter(function() { $timer.animate({opacity: 1}, 200) })
         .mouseleave(function() { $timer.animate({opacity: minOpacity}, 200) })
-        .click(TimerAddon.startOrPause);
+        .click(TimerAddon.startOrPause)
+        .dblclick(TimerAddon.resetTimer);
         
         TimerAddon.updateTime();
         PresenterUI.MultiBar.add($timer, 10);
@@ -30,8 +31,21 @@ var TimerAddon = {
         }
     },
     
+    resetTimer : function () {
+        if(TimerAddon.interval) {
+            window.clearInterval(TimerAddon.interval);
+            TimerAddon.interval = null;
+        }
+        TimerAddon.timeMinutes = TimerAddon.timeSeconds = 0;
+        TimerAddon.updateTime();
+    },
+    
     intervalHandler : function () {
         TimerAddon.timeSeconds++;
+        if(TimerAddon.timeSeconds == 60) {
+            TimerAddon.timeMinutes++;
+            TimerAddon.timeSeconds = 0;
+        }
         TimerAddon.updateTime();
     },
     
