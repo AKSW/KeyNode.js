@@ -30,11 +30,27 @@ var SlideChooserAddon = {
         var $broad = $('<div class="broad"></div>');
         $(document.body).append( $slideChooser.append($broad) );
         
+        
+        var slideChooserMinOpacity = 0.5,
+            iframeContainerMinOpacity = 0.7;
+        
+        $slideChooser
+        .css({opacity: slideChooserMinOpacity})
+        .mouseenter(function() { $slideChooser.stop().animate({opacity: 1}, 200); })
+        .mouseleave(function() { $slideChooser.stop().animate({opacity: slideChooserMinOpacity}, 300); });
+        
+        
         for(var slideNo=0; slideNo<presenter.slideLength; slideNo++) {
             var $iframe    = $('<iframe />').attr('src', login.canoURL+'#slidechooser-slide-'+slideNo);
             var $blocker   = $('<div class="click-blocker"></div>');
             var $container = $('<div class="slide-container"></div>');
             $broad.append( $container.append($iframe, $blocker) );
+            
+            $container
+            .css({opacity: iframeContainerMinOpacity});
+            $blocker
+            .mouseenter(function() { $(this).parent().stop().animate({opacity: 1}, 200); })
+            .mouseleave(function() { $(this).parent().stop().animate({opacity: iframeContainerMinOpacity}, 300); });
             
             $blocker[0].slideNo = slideNo;
             $blocker.attr('title', strings.slidePreviewTitle.replace(/\$1/, slideNo+1));
