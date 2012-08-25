@@ -103,6 +103,10 @@ var mysocket = {
 	startPresenter : function () {
 		KeyNode.loadCSS('presenter');
 		KeyNode.loadJS('keynode.presenter');
+		KeyNode.loadCSS('slidechooser');
+		KeyNode.loadJS('keynode.slidechooser');
+		KeyNode.loadCSS('timer');
+		KeyNode.loadJS('keynode.timer');
 		KeyNode.loadCSS('video');
 		KeyNode.loadJS('keynode.video');
 	},

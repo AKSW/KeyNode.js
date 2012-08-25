@@ -2,65 +2,18 @@
 /* video.css - Stylesheet for the KeyNode.js video support */
 
 
-#video-container-presenter {
-    position: fixed;
-    bottom: 0;
-    right: 45pt;
-    z-index: 30;
-}
-
-#video-container-presenter > h2 {
-    display: block;
-    width: 60pt;
-    height: 18pt;
-    margin: 0;
-    margin-left: auto;
-    padding: 2pt 8pt;
-    
-    background: #555;
-    border: 1px solid #999;
-    border-bottom: none;
-    -moz-border-radius: 4pt 4pt 0 0;
-    -webkit-border-radius: 4pt 4pt 0 0;
-    border-radius: 4pt 4pt 0 0;
-    color: white;
-    cursor: pointer;
-    font-family: ​Calibri,​Arial,sans-serif;
-    font-weight: normal;
-    font-size: 14pt;
-    text-align: center;
-}
-
-#video-container-presenter > h2:hover {
-    text-shadow: 0 0 0.05em #ccc;
-}
-
-
-#video-container-presenter > .options {
-    min-width: 90pt;
-    height: 78px;
-    padding: 3pt 8pt;
-    
-    background: #888;
-    -moz-border-radius: 4pt 0 0 0;
-    -webkit-border-radius: 4pt 0 0 0;
-    border-radius: 4pt 0 0 0;
-    color: white;
-}
-
-
-#video-container-presenter > .options > .option {
+#video-options-tab > .content > .option {
     margin-top: 5pt;
 }
 
-#video-container-presenter > .options > .option:first-child { margin-top: 0 }
+#video-options-tab > .content > .option:first-child { margin-top: 0 }
 
-#video-container-presenter > .options > .option > label {
+#video-options-tab > .content > .option > label {
     display: block;
     font-family: ​Calibri,​Arial,sans-serif;
 }
 
-#video-container-presenter > .options > .option > input[type="button"] {
+#video-options-tab > .content > .option > input[type="button"] {
     margin-left: 10pt;
 }
 
