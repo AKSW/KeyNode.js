@@ -12,6 +12,12 @@ var SlideChooserAddon = {
     },
     
     init : function () {
+        // do not do anything before presenter.slideLength is available:
+        if(presenter.slideLength < 0) {
+            setTimeout(SlideChooserAddon.init, 500);
+            return;
+        }
+        
         // init strings:
         if (navigator.language.indexOf("de") > -1) {
             SlideChooserAddon.strings = SlideChooserAddon.lang.de;
@@ -20,11 +26,6 @@ var SlideChooserAddon = {
         }
         var strings = SlideChooserAddon.strings;
         
-        // do not do anything before presenter.slideLength is available:
-        if(presenter.slideLength < 0) {
-            setTimeout(SlideChooserAddon.init, 500);
-            return;
-        }
         
         var $slideChooser = SlideChooserAddon.$slideChooser = $('<div id="SlideChooser"></div>');
         var $broad = $('<div class="broad"></div>');
