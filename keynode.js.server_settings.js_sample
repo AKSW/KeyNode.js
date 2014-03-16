@@ -1,7 +1,6 @@
-/*
-Config-file for Server
-
-
+/**
+ * @author Alrik Hausdorf
+ * Config-file for Server
  */
 
 this.cryptoPackage = "crypto";
@@ -9,9 +8,20 @@ this.fsPackage = "fs";
 this.httpPackage = "http";
 this.socketIoPackage = "socket.io";
 this.urlPackage = "url";
+this.nodeStatic = "node-static";
+
+
 
 /* is this an local Installation --> the passwort reset show the new password in the Console */
 this.localInstallation = true;
+this.allowAnonymousAuth = true;
+
+
+
+/*Web Server Settings*/
+this.webRoot = "../";
+/* Foldername for Local Installation (webRoot+"/"+presentationFolders)*/
+this.presentationFolders = "presentations";
 
 /* set Pretags for console logs */
 this.preTagInfo = '\x1B[32m\x1B[1m[Info]\x1B[0m';
@@ -23,11 +33,12 @@ this.preTagPres = '\x1B[32m\x1B[1m[Presentation]\x1B[0m';
 //this.standardPassword = 'rootKannAlles';
 this.standardPassword = (Math.floor(Math.random() * 4257671236709));
 
-this.Server_Port = 4123;
+this.Server_Port = 80;
 
 this.allow_new_presentations = true;
 
 this.debug = false;
+this.socketIOdebug = false;
 
 
 /**

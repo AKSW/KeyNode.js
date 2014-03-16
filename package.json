@@ -1,10 +1,31 @@
 {
     "name"          : "KeyNode.js",
-    "description"   : "A presenter console for the deck.js slide system. See https://github.com/AKSW/KeyNode.js/",
-    "author"        : "Alrik Hausdorf",
-    "version"       : "0.1.0",
-    "dependencies"  : {
+    "description"   : "A presenter console for the deck.js slide system.",
+    "homepage"      : "https://github.com/AKSW/KeyNode.js/",
+    "author"        : 
+    {
+        "name"      : "Alrik Hausdorf",
+        "url"       : "morulia.de",
+        "email"     : ""
+        
+    },
+    "version"       : "1.0.0",
+    "bugs"          : 
+    {
+        "url"       : "https://github.com/AKSW/KeyNode.js/issues"
+    },
+    "repository"    :
+    { 
+        "type"      : "git",
+        "url"       : "https://github.com/AKSW/KeyNode.js.git#server"
+    },
+    "dependencies"  : 
+    {
         "request"   : ">=2.10.0",
-        "socket.io" : ">=0.9.9"
+        "node-static": ">=0.7.2",
+        "KeyNode.js.presenter":"https://github.com/AKSW/KeyNode.js.git#presenter",
+        "socket.io" : ">=0.9.9",
+        "then-fs"   : ">=1.0.3",
+        "crypto-browserify" : ">=1.0.9"
     }
 }

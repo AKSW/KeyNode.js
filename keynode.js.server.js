@@ -13,10 +13,15 @@ var io = require(Server_settings.socketIoPackage).listen(fileServer.getHTTPServe
 
 console.log(Server_settings.preTagInfo + ' server is listening on port ' + Server_settings.Server_Port + '.');
 Server_data.loadPresData();
-
+if(Server_settings.localInstallation){
+    Server_data.createLocalPresFile();
+    }
+if(Server_settings.allowAnonymousAuth){
+    console.log(Server_settings.preTagServer + ' WARNING! anonymous mode enabled.');
+    }    
 io.configure(function () {
 	//	io.set('transports', ['websocket', 'flashsocket', 'xhr-polling']);
-	if (!Server_settings.debug) {
+	if (!Server_settings.socketIOdebug) {
 		io.set('log level', 1);
 		io.enable('log');
 	}
@@ -30,8 +35,7 @@ io.configure(function () {
 io.sockets.on('connection', function (socket) {
 	var Client = socket;
 	Client.on('SetAdmin', function (Json1) {
-		Server_data.setAdminByKey(Json1.name, Json1.admin, Client,io);
-                
+		Server_data.setAdminByKey(Json1.name, Json1.admin, Client, io);
 	});
 	Client.on('resetPassword', function (data) {
 		Server_data.resetPassword(data, socket);
@@ -47,8 +51,12 @@ io.sockets.on('connection', function (socket) {
 		Client.join(name);
 		console.log(Server_settings.preTagPres + 'Client ' + Client.id + ' added to room ' + name + '.  There are ' + io.sockets.in(name).clients().length.toString() + ' listeners. ');
 		Client.emit('Ready', "");
-                if(Server_data.Presentations[name].presenterOnline)
+                if(Server_data.Presentations[name].presenterOnline){
                     Client.emit('presenterOnline');
+                    var slide=Server_data.getSlideNumber(name); 
+                    Client.emit('GoTo', slide);
+                    
+                }
                 
 	});
 	Client.on('giveMeAnAdminKeyFor', function (beNice) {
@@ -56,11 +64,13 @@ io.sockets.on('connection', function (socket) {
 		socket.emit('hereIsYourAdminKey', Server_data.getAdminCode(t, beNice));
 	});
 	Client.on('controlSync', function (data) {
-		if (Server_data.getAdmin(data.name) === socket.id) {
-			if (Server_settings.debug) {
-				console.log(Server_settings.preTagPres + data.name + ' goto ' + data.folie);
-			}
-			io.sockets.in(data.name).emit('GoTo', data.folie);
+		if ( Server_data.isAdmin(data.name,socket) ) {
+                    
+                    if (Server_settings.debug) {
+                            console.log(Server_settings.preTagPres + data.name + ' goto ' + data.folie);
+                    }
+                    io.sockets.in(data.name).emit('GoTo', data.folie);
+                    Server_data.setSlideNumber(data.name,data.folie);  
 		} else {
 			console.log('Someone tries to control a slide that is not his own one.');
 		}
