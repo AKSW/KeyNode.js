@@ -1,43 +1,50 @@
 
 /**
  *  Indicator for the state of presentation
- *
+ *  @version 1.0b
  *
  **/
 
 var presState ={
     /**
-    *  Stings in different languages
-    *
-    **/
+     *  Stings in different languages
+     *
+     **/
     lang:{
         de:{
             offline:'keine Verbindung',
-            online:'Verbunden, warte auf Präsentator',
+            connected:'Verbunden, warte auf Präsentator',
             presenting:'Präsentation wird gehalten',
         },
         eng:{
-            offline:'no connection to server',
-            online:'connected, waiting for presenter',
+            disconnected:'no connection to server',
+            connected:'connected, waiting for presenter',
             presenting:'presentation in process',
         }
 
     },
+    /**
+     * if user follows Presentation
+     * @type Bool
+     */
+    followPres:true,
+    numberOnline:0,
     strings:null,
     elem:null,
     selectorID: 'presState',
     cssGradient:"   background: rgb(214,249,255);\
-                    background: -moz-linear-gradient(top, rgba(214,249,255,1) 0%, rgba(158,232,250,1) 100%);\
-                    background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,rgba(214,249,255,1)), color-stop(100%,rgba(158,232,250,1)));\
-                    background: -webkit-linear-gradient(top, rgba(214,249,255,1) 0%,rgba(158,232,250,1) 100%);\
-                    background: -o-linear-gradient(top, rgba(214,249,255,1) 0%,rgba(158,232,250,1) 100%);\
-                    background: -ms-linear-gradient(top, rgba(214,249,255,1) 0%,rgba(158,232,250,1) 100%);\
-                    background: linear-gradient(to bottom, rgba(214,249,255,1) 0%,rgba(158,232,250,1) 100%);\
-                    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#d6f9ff', endColorstr='#9ee8fa',GradientType=0 );",
+            background: -moz-linear-gradient(top, rgba(214,249,255,1) 0%, rgba(158,232,250,1) 100%);\
+            background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,rgba(214,249,255,1)), color-stop(100%,rgba(158,232,250,1)));\
+            background: -webkit-linear-gradient(top, rgba(214,249,255,1) 0%,rgba(158,232,250,1) 100%);\
+            background: -o-linear-gradient(top, rgba(214,249,255,1) 0%,rgba(158,232,250,1) 100%);\
+            background: -ms-linear-gradient(top, rgba(214,249,255,1) 0%,rgba(158,232,250,1) 100%);\
+            background: linear-gradient(to bottom, rgba(214,249,255,1) 0%,rgba(158,232,250,1) 100%);\
+            filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#d6f9ff', endColorstr='#9ee8fa',GradientType=0 );",
     css:{
         'display':'none',
         'position':'fixed',
         'overflow':'hidden',
+        'z-Index':'1000',
         'top':'0px',
         'right':'0px',
         '-webkit-border-bottom-left-radius': '7px',
@@ -45,17 +52,15 @@ var presState ={
         'border-bottom-left-radius': '7px',
     },
     content:{
-       node:null,
-       selectorID:'contentDiv', 
-       CSS:{
+        node:null,
+        selectorID:'contentDiv', 
+        CSS:{
             'display':'block',
             'font-size':'10pt',
             'overflow':'hidden',
-            'height':'30px',
-            'width':'100px',
+            'height':'auto',
             'margin':'5px',
             'float':'left',
-            
         },
         setText:function(text){
             this.node.html(text);
@@ -74,7 +79,7 @@ var presState ={
                 background: linear-gradient(to bottom,  rgba(169,3,41,1) 0%,rgba(143,2,34,1) 44%,rgba(109,0,25,1) 100%);\
                 filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#a90329', endColorstr='#6d0019',GradientType=0 );\
                 ",
-        /* yellow */
+                /* yellow */
         gradTwo:"background: rgb(255,255,5);\
                 background: -moz-linear-gradient(top,  rgba(255,255,5,1) 0%, rgba(232,209,4,1) 45%, rgba(239,227,59,1) 100%);\
                 background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,rgba(255,255,5,1)), color-stop(45%,rgba(232,209,4,1)), color-stop(100%,rgba(239,227,59,1)));\
@@ -84,7 +89,7 @@ var presState ={
                 background: linear-gradient(to bottom,  rgba(255,255,5,1) 0%,rgba(232,209,4,1) 45%,rgba(239,227,59,1) 100%);\
                 filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ffff05', endColorstr='#efe33b',GradientType=0 );\
                 ",
-        /* green */
+                /* green */
         gradThree:"background: rgb(180,227,145);\
                 background: -moz-linear-gradient(top,  rgba(180,227,145,1) 0%, rgba(97,196,25,1) 50%, rgba(180,227,145,1) 100%);\
                 background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,rgba(180,227,145,1)), color-stop(50%,rgba(97,196,25,1)), color-stop(100%,rgba(180,227,145,1)));\
@@ -96,33 +101,53 @@ var presState ={
                 ",
         CSS:{
             'display':'block',
-            'height':'30px',
-            'width': '30px',
+            'cursor':'pointer',
+
+            'height':'20px',
+            'width': '20px',
             'margin':'5px',
-            'padding-top':'1px',
+            'padding-top':'0px',
             'text-align':'center',
+            'font-size':'100%',
             'float':'left',
             '-webkit-border-radius': '8px',
             '-moz-border-radius': '8px',
             'border-radius': '8px',
-        },
-        
+        }
     },
+            /* from Socket disconnect */
+    setDisconnected:function(){
+        this.stateDiv.node
+                .attr('style',this.stateDiv.gradOne)
+                .css(this.stateDiv.CSS);//red
+        this.content.setText(this.strings.disconnected);
+    },
+            /* Presenter offline */
     setOffline:function(){
-        this.stateDiv.node.attr('style',this.stateDiv.gradOne).css(this.stateDiv.CSS);//red
-        this.content.setText(this.strings.offline);
+        this.stateDiv.node
+                .attr('style',this.stateDiv.gradTwo)
+                .css(this.stateDiv.CSS);//yellow
+        this.content.setText(this.strings.connected);
     },
-    setOnline:function(){
-        this.stateDiv.node.attr('style',this.stateDiv.gradTwo).css(this.stateDiv.CSS);//red
-        this.content.setText(this.strings.online);
+            /* connected to Socket and ident for deck */
+    setOnline:function(server){
+        this.stateDiv.node
+                .attr('title',server.url)
+                .attr('style',this.stateDiv.gradTwo)
+                .css(this.stateDiv.CSS);//yellow
+        this.content.setText(this.strings.connected);
     },
-    setPresented:function(){
-        this.stateDiv.node.attr('style',this.stateDiv.gradThree).css(this.stateDiv.CSS);//red
+            /* Presenter online */
+    setPresented:function(server){
+        this.stateDiv.node
+                .attr('style',this.stateDiv.gradThree)
+                .attr('title',server.url)
+                .css(this.stateDiv.CSS);//green
         this.content.setText(this.strings.presenting);
     },
     showCSS:{
-        'height':'40px',
-        'width':'150px',
+        'height':'auto',
+        'width':'auto',
     },
     hideCSS:{
         'height':'0px',
@@ -135,20 +160,19 @@ var presState ={
             this.strings=this.lang.eng;
         }
         if (this.elem===null){
-            $('body')
-                .append('<div id="'+this.selectorID+'" style="'+this.cssGradient+'"></div>')
-                .find('#'+this.selectorID)
-                .css(this.css)
-                .append('<div id="'+this.stateDiv.selectorID+'"></div>')
-                .find('#'+this.stateDiv.selectorID)
-                .css(this.stateDiv.CSS)
-                .parent()
-                .append('<div id="'+this.content.selectorID+'">TestContent</div>')
-                .find('#'+this.content.selectorID)
-                .css(this.content.CSS);
+            var element='<div id="'+this.selectorID+'" style="'+this.cssGradient+'">\
+                        <div id="'+this.stateDiv.selectorID+'"></div>\
+                        <div id="'+this.content.selectorID+'"></div>\
+                        </div>';
+            $('body').append(element)
+                    .find('#'+this.selectorID).css(this.css)
+                    .find('#'+this.stateDiv.selectorID).css(this.stateDiv.CSS).parent()
+                    .find('#'+this.content.selectorID).css(this.content.CSS);
+                    
             this.elem=$('#'+this.selectorID);
             this.stateDiv.node=$('#'+this.stateDiv.selectorID);
             this.content.node=$('#'+this.content.selectorID);
+            
             this.show();
             this.setOffline();
             
@@ -156,20 +180,30 @@ var presState ={
         /**
          * Bind the events of the presenter
          */
-        $(document).bind('watcher.GoToSlide', function(event,to) {
+        $(document).bind('watcherGoToSlide', function(event,to1) {
             /**
              * shows the number of the last broadcasted Slide in the statusbar.
              */
-            presState.stateDiv.node.html(to+1);
+            presState.stateDiv.node.html(to1+1);
+            var to=to1;
+            presState.content.node.unbind('click').click(function(e){
+                try{
+                    $.deck('go', to);
+                }catch(e){}
+            });
+            
         });
-        $(document).bind('watcher.setOnline', function() {
-            presState.setOnline();
+        $(document).bind('watcherSetOnline', function(e,server) {
+            presState.setOnline(server);
         });
-        $(document).bind('watcher.setOffline', function() {
-            presState.setOffline();
+        $(document).bind('watcherSetDisconnected', function(e,server) {
+            presState.setOffline(server);
         });        
-        $(document).bind('watcher.setPresented', function() {
-            presState.setPresented();
+        $(document).bind('watcherSetOffline', function(e,server) {
+            presState.setOffline(server);
+        });        
+        $(document).bind('watcherSetPresented', function(server) {
+            presState.setPresented(server);
         }); 
     },
     show: function(){
@@ -182,7 +216,7 @@ var presState ={
 /**
  * bind the init-function to the beforinit-event of the Watcher
  */
-$(document).bind('watcher.beforeInit', function() {
+$(document).bind('watcherBeforeInit', function() {
     presState.init();
 });
 

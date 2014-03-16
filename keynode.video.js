@@ -99,7 +99,7 @@ VideoAddon.init();
 $(document).bind('watcher.init', function() {
     
     // include stylesheet:
-    if( $('head > link[rel="stylesheet"][href*="keynode.video.css"]').size() == 0 ) {
+    if( $('head > link[rel="stylesheet"][href*="keynode.video.css"]').size() === 0 ) {
         $('head').append(
             $('<link rel="stylesheet" type="text/css" href="css/keynode.video.css" />')
         );
@@ -120,7 +120,7 @@ $(document).bind('watcher.bindSocketEvents', function() {
     
     // Handle 'videoEmbedTag' message:
     socket.on('videoEmbedTag', function(html) {
-        if(html == VideoAddon.embedHTML)
+        if(html === VideoAddon.embedHTML)
             return;
         
         console.log("Received video embed code: "+html);
