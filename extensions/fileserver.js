@@ -2,6 +2,8 @@ var ServerSettings = require('../keynode.js.server_settings');
 
 var fs = require(ServerSettings.fsPackage || "fs");
 var url = require(ServerSettings.urlPackage || "url");
+var static = require(ServerSettings.nodeStatic || 'node-static');
+var file = new static.Server(ServerSettings.webRoot || "./public", { cache: 0 });
 
 
 var FileServer = function () {
@@ -19,12 +21,24 @@ FileServer.prototype = {
         this.httpServer = require(ServerSettings.httpPackage || "http").createServer();
         
         this.httpServer.on('request', function(req, res) {
+            if(req.url==="/presenter/")
+                req.url = "keynode.js.presenter/index.html";
+            else
+                req.url = req.url.replace(/\/presenter\//g, "/keynode.js.presenter/");
+
+                        
             var uri = url.parse(req.url, true),
+                
                 handler = that.fileHandlers[uri.pathname];
             
             if(handler) {
+                //if Handler exists (Hangouts)
                 return handler(uri, req, res);
-            }
+            }else{
+                req.addListener('end', function () {
+                    file.serve(req, res);
+                }).resume();  
+            };
         });
         
         this.httpServer.listen(this.port);
