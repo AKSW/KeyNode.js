@@ -1,1 +1,5 @@
-body{overflow:hidden;background:url(./images/BG.png); }
+@import "./Bootstrap/bootstrap.min.css";
+body{
+    /*overflow:hidden;*/
+    background:url(./images/BG.png); 
+}

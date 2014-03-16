@@ -1,33 +1,191 @@
+/**
+ * 
+ * Socket Stuff
+ * 
+ * @version 0.1.0
+ * @author Alrik Hausdorf <admin@morulia.de>
+ * 
+ */
+var SocketHandler = window.SocketHandler || {};
 
-var KeyNode = {
-	init : function () {
-            KeyNode.options=$.keynode('getOptions');
-            KeyNode.loadCSS('parent');
-            KeyNode.loadJS('keynode.login');
-                
-	},
-	loadCSS : function (path) {
-		$('head').append('<link rel="stylesheet" href="' + './Template/' + KeyNode.options.template.src + '/' + path + '.css" />');
-		//$.getScript(path);
-	},
-	loadTmpl : function (path, filldata) {
-		$.get('./Template/' + KeyNode.options.template.src + '/' + path + '.tpl', function (data) {
-			$('body').append(data);
-			var k = null;
-			for (k in filldata) {
-				if (typeof filldata[k] !== 'undefined') {
-					$('body').find('#' + k).html(filldata[k]);
-				}
-			}
-		}, 'html');
-	},
-	loadJS : function (path) {
-		$.getScript('./' + path + '.js');
-	},
-        options:{}
+var SocketHandler = function(){
+    
+    var $events=$.keynode('getEvents');
+    
+    var $setup=$.keynode('getSetup');
+    
+    var $serverSocketIO=null;
+    
+    var timeRetryGetSocketIO = 5000;
+    
+    
+    var servers=null;
+    /**
+     * tests for socketIO
+     * @returns {Boolean} true/false if socket io is there
+     */
+    function hasSocketIO () {
+        return (typeof (io) === typeof(undefined)) ? false : true;
+    };
+    function connectServers () {
+        var nodes=$setup.getNodeServers();
+        for (var server in nodes){
+            nodes[server].socket=io.connect(nodes[server].url);
+            bindEvents(nodes[server]);
+        }
+       
+    };
+    var listener = {
+        connect : function(server){
+            server.state=1;
+            console.log(server.url," -- Connect");              
+            $(document).trigger($events.nodeServer.connected,server);
+            //ident for Pres
+            server.socket.emit('ConnectToPres', $setup.getCanonicalURL());
+        },
+        disconnect : function(server){
+            server.state=0;
+            console.log(server.url," -- Disconnect");
+            $(document).trigger($events.nodeServer.diconnected,server);
+        },
+        ready : function(server) {
+            console.log(server.url," -- Ready");
+            $(document).trigger($events.nodeServer.ready,server);
+            server.socket.emit('SetAdmin', {
+					"admin" : server.password,
+					"name" : $setup.getCanonicalURL()
+				});
+           // server.socket.emit('identAsAdmin', $setup.getCanonicalURL());
+        },        
+        ident : function(server,data) {
+            console.log(server.url," -- ident");
+            var eventData={
+                "server":server,
+                "data":data
+            };
+            $(document).trigger($events.nodeServer.ident,eventData);
+        },        
+        goto : function(server,data) {
+            console.log(server.url," -- goto",data);
+            
+            $.keynode('setSlideNumber',data);
+            try{
+                presenter.slideNumber=data;
+            }catch(e){}
+        },        
+        passwordReset : function(server,data) { 
+            var eventData={
+                "server" : server,
+                "data" : data
+            };
+            console.log(server.url," -- passwordReset");
+            $(document).trigger($events.nodeServer.passReset,eventData);
+        }
+    };
+    function bindEvents (server1) {
+        var server=server1;
+        console.log(server.url," -- BINDING");
+        $(document).trigger($events.nodeServer.binding,server);
+        server.socket
+            .removeAllListeners('connect')
+            .on('connect', function(){
+                listener.connect(server);
+            })
+            .removeAllListeners('Ready')
+            .on('Ready', function(){
+                listener.ready(server);
+            })
+            .removeAllListeners('GoTo')
+            .on('GoTo', function(data){
+                listener.goto(server,data);
+            })
+            .removeAllListeners('disconnect')
+            .on('disconnect', function(){
+                listener.disconnect(server);
+            })
+            .removeAllListeners('identAsAdmin')
+            .on('identAsAdmin', function (data) {
+                    listener.ident(server,data);
+                    
+            })
+            .removeAllListeners('resetedPassword')
+            .on('resetedPassword', function (data) {
+                    listener.passwordReset(server,data);
+                    
+            });
+        
+    };
+    /**
+     * try to get Socket IO from one of the Servers
+     * @param {function|undefined} i wich iterator step
+     * @param {function|undefined} callback function called at success
+     * @returns void
+     */
+     function getSocketIO (callback,i) {
+            if(typeof (callback) === typeof(undefined)) callback=function(){};
+            if(typeof (i) === typeof(undefined)) i=0;
+            if(servers === null){ 
+                servers=[];
+                nodes=$setup.getNodeServers();
+                for (server in nodes){
+                    servers[servers.length]=nodes[server];
+                }
+            }
+            $.ajax({
+                timeout: 500,
+                url : servers[i].url + '/socket.io/socket.io.js',
+                dataType : "script"
+            }).done(function() {
+                $serverSocketIO= servers[i];
+                $(document).trigger($events.setup.advancedform.socketIOReady,servers[i]);
+                callback();
+            }).fail(function(){
+                $(document).trigger($events.setup.advancedform.socketIOError,servers[i]);
+                i=i+1;
+                if(typeof (servers[i]) === typeof(undefined)) {
+                    window.setTimeout(function(){
+                        getSocketIO(callback,0);
+                    },timeRetryGetSocketIO);
+                    
+                }else{
+                  getSocketIO(callback,i);  
+                }
+            });
+        };
+    /**
+     * Init SocketHandler
+     * 
+     */
+    function init(){
+        if(!hasSocketIO()) return getSocketIO(init);
+        connectServers();
+        
+    };
+    delete window.io; 
+    init();
+    return {
+       reinit : function(){
+            delete window.io; 
+            servers = null;
+            init();
+       },
+       broadcast : function (message,data){
+            var nodes=$setup.getNodeServers();
+            for (var server in nodes){
+                nodes[server].socket.emit(message,data);
+            }
+       },
+       bind : function (message,func){
+            var nodes=$setup.getNodeServers();
+            for (var server in nodes){
+                nodes[server].socket.removeAllListeners(message).on(message,func);
+            }
+       }
+    };
 };
 
-var mysocket = {
+
+/*var mysocket = {
 	messageTimeOut : null,
 	NodeServer : null,
 	socket : null,
@@ -35,7 +193,7 @@ var mysocket = {
 	s : null,
 	LastTry : 2,
 	test4SocketIO : function () {
-		return (typeof (io) === 'undefined') ? false : true;
+		return (typeof (io) === typeof(undefined)) ? false : true;
 	},
 	mySuccess : function (callback) {
 		//alert('ready');
@@ -48,6 +206,7 @@ var mysocket = {
 			return true;
 		}
 	},
+        
 	connect2Server : function (callback) {
 		if (mysocket.s === null) {
 			mysocket.s = [];
@@ -172,7 +331,7 @@ var mysocket = {
 			if (e.keyCode === 13) {
 				mysocket.ident();
 			}
-		});*/
+		});
 	},
 	ident : function () {
 		$(KeyNode.options.selectors.node_container)
@@ -300,205 +459,25 @@ var mysocket = {
 			i = 0;
 		}
 
-		if (!mysocket.test4SocketIO()) {
-			$.getScript((mysocket.NodeServer[i] + '/socket.io/socket.io.js'), function (data, textStatus, jqxhr) {
-				if (((jqxhr.status >= 200) && (jqxhr.status < 300)) || (jqxhr.status === 304)) {
-					callback();
-				} else {
-					i += 1;
-					if (i < mysocket.NodeServer.length) {
-						mysocket.getSocketIO(i, callback);
-					} else {
-						console.log(KeyNode.options.strings.retry_in, mysocket.LastTry + ' sec');
-						mysocket.myTimer = window.setTimeout(function () {
-							mysocket.getSocketIO(0, callback);
-						}, mysocket.LastTry * 1000);
-						mysocket.LastTry = mysocket.LastTry * 2;
-					}
-				}
-			});
-		}
+                if (!mysocket.test4SocketIO()) {
+                    $.getScript((mysocket.NodeServer[i] + '/socket.io/socket.io.js'))
+                        .done(function () {
+                            callback();
+                        }).fail(function(){
+                            i += 1;
+                            if (i < mysocket.NodeServer.length) {
+                                mysocket.getSocketIO(i, callback);
+                            } else {
+                                console.log(KeyNode.options.strings.retry_in, mysocket.LastTry + ' sec');
+                                mysocket.myTimer = window.setTimeout(function () {
+                                    mysocket.getSocketIO(0, callback);
+                                }, mysocket.LastTry * 1000);
+                                mysocket.LastTry = mysocket.LastTry * 2;
+                            }
+                        });
+                }
 	},
 	setValues : function (server) {
 		mysocket.NodeServer = server;
 	}
-};
-(function($, keynode, document, undefined) {
-    var $d = $(document),
-    options = {},
-    events = {
-		/*
-                Event fired whenever a new slidenumber is broadcasted.
-                 */
-		change: 'keynode.change',
-		
-		/*
-		Event fired before the Init of the login
-		*/
-		beforeInitialize: 'keynode.beforeInit',
-		
-		/*
-		Event fired when the presenter is started
-		*/
-		initialize: 'keynode.init',
-                
-                /*
-		Event fired after the Canonical URL is entered and submitted
-		*/
-		canonicalSend: 'keynode.canonicalSend',
-                
-                /*
-		Event fired after a new Nodeserver is added to the list
-		*/
-		newNodeServer: 'keynode.newNodeServer',
-                
-                /*
-		Event fired after a Nodeserver was removed from the list
-		*/
-		delNodeServer: 'keynode.delNodeServer'
-                
-	},
-    methods = {
-        init:function(opts){
-            $d.trigger(events.beforeInitialize);
-
-            options = $.extend(true, {}, $[keynode].defaults, opts);
-           
-            KeyNode.init();
-            $d.trigger(events.initialize);
-            
-        },
-        getOptions:function(){
-            return options;
-        },
-        getEvents:function(){
-            return events;
-        }
-    }
-    /* jQuery extension */
-    $[keynode] = function(method, arg) {
-            if (methods[method]) {
-                    return methods[method].apply(this, Array.prototype.slice.call(arguments, 1));
-            }
-            else {
-                    return methods.init(arg);
-            }
-    };
-    
-    
-    
-    $[keynode].defaults = {
-                template: {
-                    src : 'default',
-                },
-		selectors: {
-                    
-                    /* global Stuff */
-                    loading_bg:         '#LoadingBG',
-                    loading_container:  '#LoadingContainer',
-                    
-                    /* canonical selectors */
-                    cano_container:     '#CanonicalURL',
-                    cano_submit:        '#CanonicalURLsubmit',
-                    cano_input:         '#CanonicalURLinput',
-                    
-                    /* pres URL */
-                    pres_url:           '#presentationURL',
-                    pres_url_input:     '#presentationURLinput',
-                    pres_url_mybutton:  '.myButton',
-                    
-                    /* Node selectors */
-                    node_container:     '#NodeServerURL',
-                    node_input:         '#NodeURLinput',
-                    node_submit:        '#NodeURLsubmit',
-                    node_saved:         '#NodeServerURLsaved',
-                    node_remove:        '#NodeServerURLsavedRemove',
-                    node_pw_reset_btn:  '.myResetButton',
-                    node_url_input:     '.myURLInput',
-                    node_remove_btn:    '.myRemButton',
-                    node_mybutton:      '.myButton',
-                    node_pw_input:      '#Passwordinput',
-                    node_pw_container:  '#Password',
-                    node_server_input:  '#serverValue',
-                    
-                    /* buttons */
-                    login_start_btn:    '#presenterStartButton',
-                    login_retry_btn:    '#presenterStartButton2',
-                    
-                    error_class:        '.errorMessage',
-                    /* presenter tpl */
-                    slide_container:    '#slide_container',
-                    current_container:  '#slide_current',
-                    current_frame:      '#CurrentFrame',
-                    after_container:    '#slide_after',
-                    after_frame:        '#AfterFrame',
-                    click_blocker:      '.clickBlocker',
-                    
-                    
-
-		},
-		message:{
-                    id: '#message',
-                    timeout_time: 2000,
-                },
-		strings: {
-                    retry_canceled:     'Retry canceled.(Socket.io loaded)',
-                    try_connect:        'try 2 connect to: ',/* serverURl added after */
-                    ident_accepted:     'U r admin of: ',/* CanoURL added after */
-                    connected_server:   'Connected to servernumber: ',/* servernumber added after */
-                    error_pw_wrong:     'Password wrong?',
-                    retry_in:           'Retry in ' ,/*seconds and 'sec' added after*/
-                    error_no_load_from_cano : 'Can not load your presentation from the canonical url.',
-                    error_one_at_least: 'Please add at least one Nodeserver.',
-                    
-                    socket_pw_reseted_console:  'The password was reset. Please look in the console of the server.',
-                    socket_pw_reseted_mail: 'The new Password was send to your mail address.',
-                    socket_pw_reset_fail_nomail: 'No Mailadress found.',
-                    
-                    
-                    start_pres:     'start presenter',
-                    test_inputs:    'test inputs',
-                    retest_inputs:  'retest inputs',
-                    node_not_empty: 'please add something like http://server.de:port ',
-		},
-		
-		keys: {
-			// enter, space, page down,  down arrow,
-			next: [13, 32, 34,  40],
-			// backspace, page up,  up arrow
-			previous: [8, 33, 38],
-                        // right arrow,
-                        gotoRight:[39],
-                        // left arrow,
-                        gotoLeft:[37]
-		},
-		
-	};
-    
-})(jQuery, 'keynode', document);
-
-
-$(document).bind('keynode.beforeInit', function(event) {
-   console.log('beforeInit erfolgreich...');
-});
-
-$(document).bind('keynode.change', function(event,from,to) {
-   console.log('keynode.change:',from,'-->',to);
-});
-
-$(document).bind('keynode.init', function(event) {
-   console.log('init erfolgreich...');
-});
-
-$(document).bind('keynode.canonicalSend', function(event) {
-   console.log('canonicalSend erfolgreich...');
-});
-
-$(document).bind('keynode.newNodeServer', function(event) {
-   console.log('newNodeServer erfolgreich...');
-});
-
-$(document).bind('keynode.delNodeServer', function(event) {
-   console.log('delNodeServer erfolgreich...');
-});
-
+};*/

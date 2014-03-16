@@ -1,51 +1,61 @@
 var presenter = {
-	slideNumber : 0,
+	slideNumber : $.keynode('getSlideNumber'),
+        $setup : $.keynode('getSetup'),
+        $socket : $.keynode('getSocketHandler'),
 	slideLength:-1,
-	ShowNext : function () {
-		if ($(KeyNode.options.selectors.slide_container).css('left') === '0px') {
-			$(KeyNode.options.selectors.slide_container).stop().animate({
-				'left' : '-1024px'
-			}, 200);
-		} else if ($(KeyNode.options.selectors.slide_container).css('left') === '1024px') {
-		//	$('#slide_container').stop().animate({
-		//		'left' : '0'
-		//	}, 200);
-		}
-	},
-	ShowLast : function () {
-		if ($(KeyNode.options.selectors.slide_container).css('left') === '-1024px') {
-			$(KeyNode.options.selectors.slide_container).stop().animate({
-				'left' : '0px'
-			}, 200);
-		} else if ($(KeyNode.options.selectors.slide_container).css('left') === '0px') {
-		//	$('#slide_container').stop().animate({
-		//		'left' : '1024px'
-		//	}, 200);
-		}
-	},
+//	ShowNext : function () {
+////		if ($(KeyNode.options.selectors.slide_container).css('left') === '0px') {
+////			$(KeyNode.options.selectors.slide_container).stop().animate({
+////				'left' : '-1024px'
+////			}, 200);
+////		} else if ($(KeyNode.options.selectors.slide_container).css('left') === '1024px') {
+////		//	$('#slide_container').stop().animate({
+////		//		'left' : '0'
+////		//	}, 200);
+////		}
+//	},
+//	ShowLast : function () {
+////		if ($(KeyNode.options.selectors.slide_container).css('left') === '-1024px') {
+////			$(KeyNode.options.selectors.slide_container).stop().animate({
+////				'left' : '0px'
+////			}, 200);
+////		} else if ($(KeyNode.options.selectors.slide_container).css('left') === '0px') {
+////		//	$('#slide_container').stop().animate({
+////		//		'left' : '1024px'
+////		//	}, 200);
+////		}
+//	},
 	Next : function () {
-		if ((presenter.slideLength!=-1)&&(presenter.slideNumber < presenter.slideLength)) {
+            console.log($.keynode('getSlideNumber'));
+                presenter.slideNumber = $.keynode('getSlideNumber');
+		if ((presenter.slideLength!==-1)&&(presenter.slideNumber < presenter.slideLength)) {
 			presenter.slideNumber += 1;
+                        $.keynode('setSlideNumber',presenter.slideNumber);
 			presenter.GotoFolie(presenter.slideNumber);
-                        var e = $.Event($.keynode('getEvents').change);
-                        $(document).trigger(e,[presenter.slideNumber-1,presenter.slideNumber]);
+                        var e = $.Event($.keynode('getEvents').presenter.slideChange);
+                        $(window).trigger(e,[presenter.slideNumber-1,presenter.slideNumber]);
+                       
 			}
 	},
+                
 	Prev : function () {
+                presenter.slideNumber = $.keynode('getSlideNumber');
 		if (presenter.slideNumber > 0) {
 			presenter.slideNumber -= 1;
+                        $.keynode('setSlideNumber',presenter.slideNumber);
 			presenter.GotoFolie(presenter.slideNumber);
-                        var e = $.Event($.keynode('getEvents').change);
-                        $(document).trigger(e,[presenter.slideNumber+1,presenter.slideNumber]);
+                        var e = $.Event($.keynode('getEvents').presenter.slideChange);
+                        $(window).trigger(e,[presenter.slideNumber+1,presenter.slideNumber]);
 		}
 	},
 	BindKeys : function () {
-            
-            $(document).keydown(function (e) {
-                options=$.keynode('getOptions');
+            $(document).unbind('keydown').keydown(function (e) {
+                
+                var options=KeyNode.options;
                 if (e.which === options.keys.next 
                     || $.inArray(e.which, options.keys.next) > -1) {
                         presenter.Next();
+                        
                         e.preventDefault();
                 }
                 else if (e.which === options.keys.previous 
@@ -53,29 +63,30 @@ var presenter = {
                         presenter.Prev();
                         e.preventDefault();
                 }
-                else if (e.which === options.keys.gotoRight 
-                    || $.inArray(e.which, options.keys.gotoRight) > -1) {
-                        presenter.ShowNext();
-                        e.preventDefault();
-                }
-                else if (e.which === options.keys.gotoLeft 
-                    || $.inArray(e.which, options.keys.gotoLeft) > -1) {
-                        presenter.ShowLast();
-                        e.preventDefault();
-                }
+//                else if (e.which === options.keys.gotoRight 
+//                    || $.inArray(e.which, options.keys.gotoRight) > -1) {
+//                        presenter.ShowNext();
+//                        e.preventDefault();
+//                }
+//                else if (e.which === options.keys.gotoLeft 
+//                    || $.inArray(e.which, options.keys.gotoLeft) > -1) {
+//                        presenter.ShowLast();
+//                        e.preventDefault();
+//                }
             });
-	
-            //@TODO: var time not time out
-            setTimeout(function(){
-            document.getElementById(KeyNode.options.selectors.after_frame.substr(1))
-                .contentWindow
-                .postMessage('setDiff:1',$(KeyNode.options.selectors.after_frame).attr('src'));
-            document.getElementById(KeyNode.options.selectors.current_frame.substr(1))
-                .contentWindow
-                .postMessage("getNumberSlides:a",$(KeyNode.options.selectors.current_frame).attr('src'));
 
-            },3000);
-
+            var after_Frame=document.getElementById(KeyNode.options.selectors.after_frame.substr(1)),
+                curr_frame=document.getElementById(KeyNode.options.selectors.current_frame.substr(1));
+                
+            if(after_Frame===null || curr_frame===null ){
+                setTimeout(function(){presenter.BindKeys();},500);
+            }else{
+                if(presenter.slideLength===-1){
+                    setTimeout(function(){presenter.BindKeys();},500);
+                }
+                after_Frame.contentWindow.postMessage('setDiff:1',$(KeyNode.options.selectors.after_frame).attr('src'));
+                curr_frame.contentWindow.postMessage("getNumberSlides:a",$(KeyNode.options.selectors.current_frame).attr('src'));
+            }
             $(KeyNode.options.selectors.click_blocker).css({
                     'height' : '100%',
                     'z-index' : '10'
@@ -85,22 +96,23 @@ var presenter = {
 		if (!$(KeyNode.options.selectors.current_container)[0]) {
 			setTimeout(presenter.initIframe, 500);
 		} else {
-			$(KeyNode.options.selectors.current_container)
-                            .append('<iframe src="' + login.presURL + '" width="100%" height="100%" id="'
+                    var url= presenter.$setup.getPresentationURL();
+                    var curr_container=KeyNode.options.selectors.current_container;
+                    var after_container=KeyNode.options.selectors.after_container;
+                    var click_blocker='<div class="'+KeyNode.options.selectors.click_blocker.substr(1)+'"> </div>';
+                    var curr_frame='<iframe src="' + url + '" width="100%" height="100%" id="'
                                 +KeyNode.options.selectors.current_frame.substr(1)
-                                +'" style="z-Index:0;border:none;"></iframe> ');
-			$(KeyNode.options.selectors.current_container)
-                            .append('<div class="'
-                                +KeyNode.options.selectors.click_blocker.substr(1)
-                                +'"> </div>');
-			$(KeyNode.options.selectors.after_container)
-                            .append('<iframe src="' + login.presURL + '" width="100%" height="100%" id="'
-                             +KeyNode.options.selectors.after_frame.substr(1)
-                            +'" style="z-Index:0;border:none;"></iframe> ');
-			$(KeyNode.options.selectors.after_container)
-                            .append('<div class="'
-                                +KeyNode.options.selectors.click_blocker.substr(1)
-                                +'"> </div>');
+                                +'" style="z-Index:0;border:none;"></iframe> ';
+                    var after_frame='<iframe src="' + url + '" width="100%" height="100%" id="'
+                           +KeyNode.options.selectors.after_frame.substr(1)
+                           +'" style="z-Index:0;border:none;"></iframe> ';
+
+			$(curr_container).html(curr_frame);
+			$(curr_container).append(click_blocker);
+			$(curr_container).html(curr_frame);
+			$(curr_container).append(click_blocker);
+			$(after_container).html(after_frame);
+			$(after_container).append(click_blocker);
 			presenter.BindKeys();
 		}
 	},
@@ -110,16 +122,18 @@ var presenter = {
 		presenter.initIframe();
 	},
 	GotoFolie : function (folie) {
+                //console.log(folie);
 		var data = {
-			name : login.canoURL,
+			name : presenter.$setup.getCanonicalURL(),
 			folie : folie
-		},
-			i = null;
-		for (i in mysocket.s) {
-			if (typeof mysocket.s[i] !== 'undefined') {
-				mysocket.s[i].emit('controlSync', data);
-			}
-		}
+		};
+                presenter.$socket.broadcast('controlSync', data);
+//			i = null;
+//		for (i in mysocket.s) {
+//			if (typeof mysocket.s[i] !== 'undefined') {
+//				mysocket.s[i].emit('controlSync', data);
+//			}
+//		}
 	}
 };
 presenter.initPresenterConsole();

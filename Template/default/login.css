@@ -1,3 +1,42 @@
+h1,h2{
+    color: #ffffff;
+}
+h3{
+   color: #aaa; 
+}
+body { 
+    padding-bottom: 70px; 
+}
+.animate {
+    
+  animation-name: rotateThis;
+  animation-duration: 2s;
+  animation-iteration-count: infinite;
+  animation-timing-function: linear;
+  -webkit-animation-name: rotateThis;
+  -webkit-animation-duration: 2s;
+  -webkit-animation-iteration-count: infinite;
+  -webkit-animation-timing-function: linear;
+}
+@-webkit-keyframes rotateThis{
+     from { -webkit-transform: scale( 1 ) rotate( 0deg );   }
+    to   { -webkit-transform: scale( 1 ) rotate( 360deg ); }
+}
+@keyframes rotateThis {
+  from { transform: scale( 1 ) rotate( 0deg );   }
+  to   { transform: scale( 1 ) rotate( 360deg ); }
+}
+.server-status{
+    text-align: center;
+    padding-top: 5px;
+}
+.server-status>.label{
+    font-size: 100%; 
+}
+.server-status>.label>.glyphicon{
+    top: 2px;
+}
+/*
 .div-rounded-small{
     border-radius:5px;
     -moz-border-radius:5px;
@@ -170,7 +209,7 @@
     padding-bottom:5px;
 }
 
-.tooltip {
+/*.tooltip {
     background-color:#000;
     border:1px solid #fff;	
     padding:10px 15px;	
@@ -181,4 +220,4 @@
     font-size:12px;
     -moz-box-shadow:0 0 10px #000;
     -webkit-box-shadow:0 0 10px #000;
-}
+}*/

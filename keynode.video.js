@@ -11,29 +11,28 @@ var VideoAddon = {
     },
     
     init : function () {
-        var socket = mysocket.s[0];
-        
+        var socket = $.keynode('getSocketHandler');
+        var setup = $.keynode('getSetup');
         // init strings:
         if (navigator.language.indexOf("de") > -1) {
             VideoAddon.strings = VideoAddon.lang.de;
         } else {
             VideoAddon.strings = VideoAddon.lang.en;
         }
-        
-        socket.on('videoEmbedTag', function(html) {
+        socket.bind('videoEmbedTag', function(html) {
             VideoContainer.updateEmbedCodeInput(html);
         });
         
-        socket.on('videoAuthToken', function(data) {
+        socket.bind('videoAuthToken', function(data) {
             console.log("Received video authorization token: "+data.token);
             VideoContainer.updateGoogleHangoutButton(data.token, data.url);
         });
-        socket.emit('generateVideoAuthToken', login.canoURL);
+        socket.broadcast('generateVideoAuthToken', setup.getCanonicalURL());
     },
     
     setVideoEmbedTag : function (html) {
-        var socket = mysocket.s[0];
-        socket.emit('setVideoEmbedTag', {name: login.canoURL, html: html});
+        var socket = $.keynode('getSocketHandler');
+        socket.broadcast('setVideoEmbedTag', {name: setup.getCanonicalURL(), html: html});
     }
 };
 

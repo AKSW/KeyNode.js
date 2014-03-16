@@ -1,14 +1,28 @@
 #slideData { display: none; }
 #PresenterWrapper { display: none; }
 
-div#center_container{
-	position:absolute;
-	width:3072px;
-	height: 768px;
-	left:50%;
-	top:50%;
-	margin-left:-1536px;
-	margin-top:-384px;
+html, body {
+ height: 100%;
+ width: 100%;    
+}
+body>.container{
+    max-width: 1024px;
+}
+.wrapper {
+ width: 100%;
+ display: inline-block;
+ position: relative;
+}
+.wrapper:after {
+   /* padding-top: 56.25%; /*16:9 ratio*/
+   /* padding-top: 75.00%; 800:600 ratio*/
+    padding-top: 50.00%; /*tested ratio*/
+    display: block;
+    content: '';
+}
+.main {
+    position: absolute;
+    top: 0; bottom: 0; right: 0; left: 0; /*fill parent*/
 }
 
 div.clickBlocker{
@@ -19,6 +33,17 @@ div.clickBlocker{
     height: 100%;
     z-index: 10; 
 }
+/*div#center_container{
+	position:absolute;
+	width:3072px;
+	height: 768px;
+	left:50%;
+	top:50%;
+	margin-left:-1536px;
+	margin-top:-384px;
+}
+
+
 
 #PresenterFooterWrapper{
 	clear: both;
@@ -133,7 +158,7 @@ div#slide_after {
     -webkit-transform: scale(0.667) translate(-25%, -25%);
     transform: scale(0.667) translate(-25%, -25%);
 }
-
+*/
 
 /* *****************
     MultiBar styles
