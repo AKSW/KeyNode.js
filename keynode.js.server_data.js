@@ -17,7 +17,7 @@ this.initPres = function () {
  *
  */
 this.createLocalPresFile = function () {
-     console.log(Server_settings.preTagServerData + ' Try to list local presentations.');
+    if(Server_settings.debug) console.log(Server_settings.preTagServerData + ' Try to list local presentations.');
     var foldes=GlobalthisThing.FHandler.readdirSync(Server_settings.webRoot);
     if(!foldes.contains(Server_settings.presentationFolders)) {
         console.log(Server_settings.preTagServerData + ' Error: no presentationfolder found. Try to create it.');
@@ -37,7 +37,7 @@ this.createLocalPresFile = function () {
             console.log(Server_settings.preTagServerData + ' error saving "presentations.json" .');
             return false;
         } else {
-            console.log(Server_settings.preTagServerData + ' "presentations.json" saved!');
+            if(Server_settings.debug) console.log(Server_settings.preTagServerData + ' "presentations.json" saved!');
             return true;
         }
     });
@@ -48,7 +48,8 @@ this.createLocalPresFile = function () {
  * add new Pres to The Presentations object
  *
  */
-this.addPres = function (name) {
+this.addPres = function (name , password) {
+    if (typeof password === typeof undefined) password=null;
     if (this.Presentations === null) {
         this.loadPresData();
     }
@@ -58,6 +59,7 @@ this.addPres = function (name) {
     this.initAdmin(name);
     this.initAdminCodes(name);
     this.setSlideNumber(name,0);
+    if(password!==null) this.setPassword(password);
     GlobalthisThing.savePresData();
     console.log(Server_settings.preTagServerData + ' New Presentation: ' + name);
 };
@@ -132,22 +134,7 @@ this.setSlideNumber = function (name,slide) {
 this.getSlideNumber = function (name) {
     return this.Presentations[name].slide;
 };
-/**
- * 
- * @param {type} name PresUrl
- * @param {type} notes Note as base64 string
- * @returns {undefined}
- */
-this.setNotes = function (name,notes) {
-    this.Presentations[name].notes=notes;
-    GlobalthisThing.savePresData();
-};
-this.getNotes = function (name) {
-    if(this.Presentations[name].notes)
-        return this.Presentations[name].notes;
-    else 
-        return "";
-};
+
 //Admins
 /**
  * Init the list of admins
@@ -156,8 +143,16 @@ this.getNotes = function (name) {
 this.initAdmin = function (name) {
     this.Presentations[name].admin = [];
     this.Presentations[name].presenterOnline=false;
+    this.Presentations[name].allowAnonymousAuth=true;
     GlobalthisThing.savePresData();
     return true;
+};
+/**
+ * Did the presentation allow Anonymous Auth?
+ *
+ */
+this.allowAnonymousAuth = function (name) {
+    return this.Presentations[name].allowAnonymousAuth ;
 };
 /**
  * Did the presentation have a registered admin?
@@ -204,6 +199,7 @@ this.getAdmins = function (name) {
  *
  */
 this.isAdmin = function (name,socket) {
+   if(this.allowAnonymousAuth(name)) return true; 
    for(var admin1 in this.Presentations[name].admin) {
         if(this.Presentations[name].admin[admin1] === socket.id)
             return true;
@@ -229,7 +225,6 @@ this.getCanoURLByAdminSocketId = function (socketId) {
  */
 this.initAdminCodes = function (name) {
     this.Presentations[name].adminCodes = [];
-    this.Presentations[name].adminCodes[0] = Server_settings.standardPassword;
 };
 
 this.setAdminEvents = function (name,socket,io) {
@@ -270,36 +265,34 @@ this.setAdminEvents = function (name,socket,io) {
  *
  */
 this.setAdminByKey = function (name, key, socket,io) {
-    if ((Server_settings.allowAnonymousAuth)) {
+    if ((Server_settings.allowAnonymousAuth)&&(key===null)&& GlobalthisThing.allowAnonymousAuth(name)) {
         GlobalthisThing.addAdmin(name,socket);
         GlobalthisThing.setAdminEvents(name,socket,io);
         GlobalthisThing.savePresData();
             socket.emit('identAsAdmin', {
                 "name" : name,
-                'ident' : 'ADMIN'
+                'ident' : 'ANONYM'
             });
         console.log(Server_settings.preTagServer + " Client " + socket.id + " ACCESS GRANTED");
         return true;
     }
     if(typeof key === typeof undefined) key="";
     var i = 0;
+    //sendKey
     var md5TestString=this.crypto.createHash('md5').update(key).digest("hex");
     var md5TestString_send=this.crypto.createHash('md5').update(md5TestString).digest("hex");
-    for (i in GlobalthisThing.Presentations[name].adminCodes) {
-        md5TestString=this.crypto.createHash('md5').update((' ' + GlobalthisThing.Presentations[name].adminCodes[i]).trim()).digest("hex");
-        var md5TestString2=this.crypto.createHash('md5').update(md5TestString).digest("hex");
-        if ( md5TestString2 === md5TestString_send) {
-            
-            GlobalthisThing.savePresData();
-            socket.emit('identAsAdmin', {
-                "name" : name,
-                'ident' : 'ADMIN'
-            });
-            
-            console.log(Server_settings.preTagServer + " Client " + socket.id + " ACCESS GRANTED");
-            
-        }
+    if ( GlobalthisThing.Presentations[name].adminCode === md5TestString_send) {
+
+        GlobalthisThing.savePresData();
+        socket.emit('identAsAdmin', {
+            "name" : name,
+            'ident' : 'ADMIN'
+        });
+
+        console.log(Server_settings.preTagServer + " Client " + socket.id + " ACCESS GRANTED");
+
     }
+    
     try {
         //try to get an MD5(MD5(password)) from the Canonical URL
         var request = require(Server_settings.RequestPackage);
@@ -346,6 +339,16 @@ this.setAdminByKey = function (name, key, socket,io) {
         console.log(err); 
     }
 };
+
+this.setPassword = function (data,socket) {
+    if(typeof data === 'undefined') return;
+    if(GlobalthisThing.isAdmin(data.name,socket)){
+        var md5TestString=this.crypto.createHash('md5').update((' ' + data.password).trim()).digest("hex");
+        var md5TestString2=this.crypto.createHash('md5').update(md5TestString).digest("hex");
+        GlobalthisThing.Presentations[data.name].adminCode = md5TestString2;
+        GlobalthisThing.Presentations[data.name].allowAnonymousAuth = false;
+    }
+}
 /**
  *	Reset the Password of a Presentation
  *	
@@ -354,13 +357,16 @@ this.setAdminByKey = function (name, key, socket,io) {
 this.resetPassword = function (data,socket) {
     if(typeof data === 'undefined') return;
     if ((Server_settings.localInstallation)) {
-        GlobalthisThing.Presentations[data.name].adminCodes = [Server_settings.standardPassword];
+        var tempPW= Server_settings.standardPassword;
+        var md5TestString=this.crypto.createHash('md5').update((' ' + tempPW).trim()).digest("hex");
+        var md5TestString2=this.crypto.createHash('md5').update(md5TestString).digest("hex");
+        GlobalthisThing.Presentations[data.name].adminCode = md5TestString2;
         GlobalthisThing.savePresData();
-        console.log(Server_settings.preTagServerData + ' password reset to: "' + GlobalthisThing.Presentations[data.name].adminCodes[0] + '"');
+        console.log(Server_settings.preTagServerData + ' password reset to: "' + tempPW + '"');
         socket.emit('resetedPassword', {
             "name" : data.name,
             "type" : 'localReset',
-            "new"  : GlobalthisThing.Presentations[data.name].adminCodes[0]
+            "new"  : tempPW
         });
     } else {
 		
@@ -376,14 +382,17 @@ this.resetPassword = function (data,socket) {
                     if (arrMatches) {
                         var Mail = arrMatches[1];
                         if (Mail !== '') {
-                            GlobalthisThing.Presentations[data.name].adminCodes = [Server_settings.standardPassword];
+                            var tempPW= Server_settings.standardPassword;
+                            var md5TestString=this.crypto.createHash('md5').update((' ' + tempPW).trim()).digest("hex");
+                            var md5TestString2=this.crypto.createHash('md5').update(md5TestString).digest("hex");
+                            GlobalthisThing.Presentations[data.name].adminCode = md5TestString2;
                             GlobalthisThing.savePresData();
                             var transport = nodemailer.createTransport(Server_settings.mailProto, Server_settings.smtp_options),
                             mailOptions = {
                                 from: "passwordreset@KeyNodeServer.com",
                                 to: Mail,
                                 subject: "Password reset for your presentation",
-                                text: "You have reset your password for : \n\r" + data.name + '\n\rYour new password: ' + GlobalthisThing.Presentations[data.name].adminCodes[0] + '\n\r\n\rYour NodeServer'
+                                text: "You have reset your password for : \n\r" + data.name + '\n\rYour new password: ' + tempPW + '\n\r\n\rYour NodeServer'
                             };
                             transport.sendMail(mailOptions);
                             socket.emit('resetedPassword', {

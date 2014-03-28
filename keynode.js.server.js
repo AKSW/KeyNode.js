@@ -13,9 +13,16 @@ var io = require(Server_settings.socketIoPackage).listen(fileServer.getHTTPServe
 
 console.log(Server_settings.preTagInfo + ' server is listening on port ' + Server_settings.Server_Port + '.');
 Server_data.loadPresData();
-if(Server_settings.localInstallation){
+
+/*
+ * look very 10 sec for new Folders in Presentation-Folder
+ */
+Server_data.createLocalPresFile();
+setInterval(function(){
     Server_data.createLocalPresFile();
-    }
+},30000);
+    
+    
 if(Server_settings.allowAnonymousAuth){
     console.log(Server_settings.preTagServer + ' WARNING! anonymous mode enabled.');
     }    
@@ -34,11 +41,18 @@ io.configure(function () {
 
 io.sockets.on('connection', function (socket) {
 	var Client = socket;
-	Client.on('SetAdmin', function (Json1) {
+	Client.on('SetAdmin', function (Json1) {//ident
 		Server_data.setAdminByKey(Json1.name, Json1.admin, Client, io);
 	});
 	Client.on('resetPassword', function (data) {
 		Server_data.resetPassword(data, socket);
+	});
+	Client.on('setPassword', function (data) {
+		Server_data.setPassword(data, socket);
+	});
+        Client.on('newPresentation', function (data) {
+		Server_data.addPres(data.name,data.password);
+                console.log(Server_settings.preTagPres + ' NEW presentation: "' + name + '"');
 	});
 	Client.on('ConnectToPres', function (name) {
 		if (!Server_data.getPres(name)) {
