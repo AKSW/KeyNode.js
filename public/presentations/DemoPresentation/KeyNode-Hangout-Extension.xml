@@ -1,0 +1,102 @@
+﻿<?xml version="1.0" encoding="UTF-8" ?>
+<!--
+	Google Hangout extension for KeyNode.js
+	This extension tells the server about the Hangout's YouTube Live Id if the Hangout
+	is a Hangout On Air.
+	Usage: https://plus.google.com/hangouts/_?gid=60297079067&gd=SERVER:PORT/PATH?token=TOKEN&liveid=
+	       (The extension will call 'http://SERVER:PORT/PATH?token=TOKEN&liveid=YOUTUBE_LIVE_ID')
+	
+	@author Andy Wermke
+-->
+<Module>
+        <ModulePrefs title="Hangout Starter">
+                <Require feature="rpc" />
+                <Require feature="views" />
+                <Require feature="locked-domain" />
+        </ModulePrefs>
+        <Content type="html"><![CDATA[     
+
+<html>
+<style type="text/css">
+	#info {
+		padding: 6pt 10pt;
+		font: 10pt Arial, sans-serif;
+		text-shadow: 0 0 0.05em #ccc;
+	}
+	#info > .success { color: green }
+	#info > .error { color: red }
+</style>
+<body>
+
+	<!-- Standard boilerplate to start hangouts.  Without these, your Hangout will not start. -->
+	<script src="https://hangoutsapi.talkgadget.google.com/talkgadget/apps/gadgets/js/rpc.js"></script>
+	<script src="https://talkgadget.google.com/hangouts/api/hangout.js?v=1.2"></script>
+
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.8.0/jquery.min.js"></script>
+
+	<div id="info"></div>
+
+	<script type="text/javascript">
+		var log = {
+			clear : function () {
+				$('#info').empty();
+			},
+			info : function (message) {
+				$('#info').append(
+					$('<div></div>').addClass('info').text(message)
+				);
+			},
+			success : function (message) {
+				$('#info').append(
+					$('<div></div>').addClass('success').text(message)
+				);
+			},
+			error : function (message) {
+				$('#info').append(
+					$('<div></div>').addClass('error').text(message)
+				);
+			}
+		};
+		
+		function startApp () {
+			var appData = decodeURIComponent( gadgets.views.getParams()['appData'] ),
+				url = "http://"+appData,
+				server = appData.replace(/\/.*/, '');
+			
+			if( ! gapi.hangout.onair.isOnAirHangout() ) {
+				log.info("This is not a Hangout On Air!");
+			}
+			
+			gapi.hangout.onair.onYouTubeLiveIdReady.add(function (evt) {
+				log.clear();
+				log.success("YouTube Live ID: "+evt.youTubeLiveId);
+				console.log("Calling back: "+url+evt.youTubeLiveId);
+				
+				// do AJAX request to submit YouTube Live Id:
+				$.get(url+evt.youTubeLiveId, function() {
+					log.success("Sent Live Id to server: "+server);
+				})
+				.error(function() {
+					log.error("Unable to communicate with server: "+server);
+				});
+			});
+		}
+		
+		function init() {
+		  gapi.hangout.onApiReady.add(
+			  function(eventObj) {
+				startApp();
+			  });
+		}
+
+		// Add API listener immediately.  If you need an
+		// OAuth 2.0 access token, your startup will need to
+		// be different.
+		init();
+	</script>
+
+
+</body>
+]]>
+</Content>
+</Module>

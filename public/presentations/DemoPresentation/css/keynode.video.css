@@ -1,0 +1,48 @@
+
+/* keynode.video.css - Stylesheet for the KeyNode.js video support */
+
+
+#video-container {
+    position: fixed;
+    bottom: 0;
+    right: 45pt;
+    z-index: 10;
+}
+
+#video-container > h2 {
+    display: block;
+    width: 60pt;
+    height: 18pt;
+    margin: 0;
+    margin-left: auto;
+    padding: 2pt 8pt;
+    
+    background: #555;
+    border: 1px solid #999;
+    border-bottom: none;
+    -moz-border-radius: 4pt 4pt 0 0;
+    -webkit-border-radius: 4pt 4pt 0 0;
+    border-radius: 4pt 4pt 0 0;
+    color: white;
+    cursor: pointer;
+    font-weight: normal;
+    font-size: 14pt;
+    text-align: center;
+}
+
+#video-container > h2:hover {
+    text-shadow: 0 0 0.05em #ccc;
+}
+
+
+#video-container > .video {
+    min-width: 90pt;
+    padding: 3pt;
+    
+    background: #888;
+    -moz-border-radius: 4pt 0 0 0;
+    -webkit-border-radius: 4pt 0 0 0;
+    border-radius: 4pt 0 0 0;
+    color: white;
+}
+
