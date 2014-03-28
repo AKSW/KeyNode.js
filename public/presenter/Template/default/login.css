@@ -1,0 +1,223 @@
+h1,h2{
+    color: #ffffff;
+}
+h3{
+   color: #aaa; 
+}
+body { 
+    padding-bottom: 70px; 
+}
+.animate {
+    
+  animation-name: rotateThis;
+  animation-duration: 2s;
+  animation-iteration-count: infinite;
+  animation-timing-function: linear;
+  -webkit-animation-name: rotateThis;
+  -webkit-animation-duration: 2s;
+  -webkit-animation-iteration-count: infinite;
+  -webkit-animation-timing-function: linear;
+}
+@-webkit-keyframes rotateThis{
+     from { -webkit-transform: scale( 1 ) rotate( 0deg );   }
+    to   { -webkit-transform: scale( 1 ) rotate( 360deg ); }
+}
+@keyframes rotateThis {
+  from { transform: scale( 1 ) rotate( 0deg );   }
+  to   { transform: scale( 1 ) rotate( 360deg ); }
+}
+.server-status{
+    text-align: center;
+    padding-top: 5px;
+}
+.server-status>.label{
+    font-size: 100%; 
+}
+.server-status>.label>.glyphicon{
+    top: 2px;
+}
+/*
+.div-rounded-small{
+    border-radius:5px;
+    -moz-border-radius:5px;
+    -khtml-border-radius:5px;
+}
+.div-rounded-big{
+    border-radius:10px;
+    -moz-border-radius:10px;
+    -khtml-border-radius:10px;
+}
+
+#KeynodeCenterBox input[type="text"], #KeynodeCenterBox input[type="password"]{
+    padding:3px;
+    height: 20px;
+    -webkit-box-shadow: inset 0px 4px 8px 2px rgba(0,0,0,0.2) ;
+    -moz-box-shadow: inset 0px 4px 8px 2px rgba(0,0,0,0.2);
+    box-shadow: inset 0px 4px 8px 2px rgba(0,0,0,0.2); 
+}
+#KeynodeCenterBox input[type="button"]{
+    -webkit-box-shadow: inset 0px 4px 8px 2px rgba(0,0,0,0.1) ;
+    -moz-box-shadow: inset 0px 4px 8px 2px rgba(0,0,0,0.1);
+    box-shadow: inset 0px 4px 8px 2px rgba(0,0,0,0.1); 
+    height: 30px;
+    width: 35px; 
+}
+.full-width-button{
+    width: 400px !important;
+}
+#KeynodeCenterBox{
+    font-size:12px;
+    font-family:Verdana;
+    position:absolute;
+    width:400px;
+    margin-left:-215px;
+    padding:15px;
+    left:50%;
+    border:thin solid black;
+    background:white; 
+    color:black;
+    background-color: rgba(255, 255, 255, 0.2);
+
+}
+
+#KeynodeCenterBox>h1{
+    font-size:24px;
+    color:#FFF;
+    text-shadow: 1px 1px 3px #222;
+}
+#CanonicalURL {
+    margin-top:20px;
+}
+#CanonicalURL .myInput{
+    width:350px;
+}
+
+
+#Password {
+    margin-top:5px; 
+    display:none;
+}
+#Password .myPasswordInput{
+    padding:3px;
+    width:316px;
+    height: 20px;
+}
+#Password .myResetButton{
+    height: 30px;
+    width: 55px !important;
+}
+
+#presentationURL {
+    margin-top:20px; 
+    display:none;
+}
+#presentationURL .myURLInput{
+    padding:3px;
+    width:350px;
+    height: 20px;
+}
+
+#NodeServerURL {
+    margin-top:20px; 
+    display:none;
+}
+#NodeServerURL .myURLInput{
+    padding:3px;
+    width:350px;
+    height: 20px;
+}
+
+
+#NodeServerURL  #NodeServerURLsaved{
+    margin-top:20px;
+    background-color:rgba(255, 255, 255, 0.2);
+    padding: 5px;
+    width:388px;
+}
+#NodeServerURLsaved .myRemButton{
+    position:relative;
+    right: auto;
+    height: 20px;
+    width: 20px;
+    border-style:none;
+    float:right;
+    background: rgba(255, 255, 255, 0.2);
+}
+#NodeServerURLsaved #serverValue{
+    display:block;
+    text-align:left;
+    padding-top:3px;
+    height: 17px;
+}
+
+#presenterStartButton2{
+    margin-top: 20px;
+    padding: 3px;
+    width: 200px; 
+    height: 35px;
+}
+
+#presenterStartButton {
+    margin-top:20px;
+    padding:3px;
+    width:400px; 
+    height: 35px;
+    display:none;
+}
+
+#LoadingBG{
+    display:none;
+    position:absolute;
+    height:100%;
+    z-index:10;
+    width:100%;
+    background: rgba(0, 0, 0, 0.5);
+}
+
+#LoadingContainer{
+    display:none;
+    z-index:11;
+    position:absolute;
+    width:200px;
+    top:50%;
+    height:20px;
+    margin-top:-75px;
+    margin-left:-100px;
+    left:50%;
+    background: rgba(255, 255, 255, 1);
+    padding: 15px;
+    text-align:center;
+    font-weight: bold;
+    color: #F00;
+}
+
+#LoadingContainer #img{
+    background:url(./images/loading.gif);
+    height: 32px;
+    border:0px;
+    width: 32px;
+    display:block;
+    float:left;
+    margin-top:-8px;
+}
+
+.errorMessage{
+    height: 22px;
+    padding: 5px;
+    color: #F00;
+    font-weight: bold;
+    padding-bottom:5px;
+}
+
+/*.tooltip {
+    background-color:#000;
+    border:1px solid #fff;	
+    padding:10px 15px;	
+    width:200px;	
+    display:none;	
+    color:#fff;	
+    text-align:left;	
+    font-size:12px;
+    -moz-box-shadow:0 0 10px #000;
+    -webkit-box-shadow:0 0 10px #000;
+}*/

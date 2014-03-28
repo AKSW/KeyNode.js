@@ -1,0 +1,55 @@
+
+#SlideChooser {
+    position: absolute;
+    bottom: 35pt;
+    left: 50%;
+    margin-left: -30%;
+    width: 60%;
+    height: 120px;
+    overflow: auto;
+}
+
+#SlideChooser > .broad {
+    height: 100px;
+    overflow: hidden;
+}
+
+#SlideChooser > .broad > .slide-container {
+    position: relative;
+    width: 140px;
+    height: 100px;
+    display: block;
+    float: left;
+    margin-right: 5pt;
+    border: 2px solid #555;
+    border-radius: 3pt;
+    box-shadow: 0 0 5pt #333;
+}
+
+#SlideChooser > .broad > .slide-container:last-child {
+    margin-right: 0;
+}
+
+#SlideChooser > .broad > .slide-container > iframe {
+    width: 800%;
+    height: 800%;
+    border: none;
+    -webkit-transform: scale(0.125) translate(-350%, -350%);
+    -moz-transform: scale(0.125) translate(-350%, -350%);
+    -ms-transform: scale(0.125) translate(-350%, -350%);
+    -o-transform: scale(0.125) translate(-350%, -350%);
+    transform: scale(0.125) translate(-350%, -350%);
+    z-index: 0;
+}
+
+#SlideChooser > .broad > .slide-container > .click-blocker {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 10;
+    cursor: pointer;
+}
+
+
