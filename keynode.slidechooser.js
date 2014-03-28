@@ -1,7 +1,7 @@
 
 var SlideChooserAddon = {
     $slideChooser : null,
-    
+    $setup : $.keynode('getSetup'),
     lang : {
         de : {
             slidePreviewTitle: "Folie $1"
@@ -42,7 +42,7 @@ var SlideChooserAddon = {
         
         
         for(var slideNo=0; slideNo<presenter.slideLength; slideNo++) {
-            var $iframe    = $('<iframe />').attr('src', login.canoURL+'#slidechooser-slide-'+slideNo);
+            var $iframe    = $('<iframe />').attr('src', this.$setup.getPresentationURL()+'#slidechooser-slide-'+slideNo);
             var $blocker   = $('<div class="click-blocker"></div>');
             var $container = $('<div class="slide-container"></div>');
             $broad.append( $container.append($iframe, $blocker) );
@@ -77,7 +77,7 @@ var SlideChooserAddon = {
         presenter.slideNumber = slideNo;
         presenter.GotoFolie(slideNo);
         
-        var e = $.Event($.keynode('getEvents').change);
+        var e = $.Event($.keynode('getEvents').presenter.slideChange);
         $(document).trigger(e, [prevSlideNo, slideNo]);
     }
 };

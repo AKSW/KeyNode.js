@@ -3,30 +3,8 @@ var presenter = {
         $setup : $.keynode('getSetup'),
         $socket : $.keynode('getSocketHandler'),
 	slideLength:-1,
-//	ShowNext : function () {
-////		if ($(KeyNode.options.selectors.slide_container).css('left') === '0px') {
-////			$(KeyNode.options.selectors.slide_container).stop().animate({
-////				'left' : '-1024px'
-////			}, 200);
-////		} else if ($(KeyNode.options.selectors.slide_container).css('left') === '1024px') {
-////		//	$('#slide_container').stop().animate({
-////		//		'left' : '0'
-////		//	}, 200);
-////		}
-//	},
-//	ShowLast : function () {
-////		if ($(KeyNode.options.selectors.slide_container).css('left') === '-1024px') {
-////			$(KeyNode.options.selectors.slide_container).stop().animate({
-////				'left' : '0px'
-////			}, 200);
-////		} else if ($(KeyNode.options.selectors.slide_container).css('left') === '0px') {
-////		//	$('#slide_container').stop().animate({
-////		//		'left' : '1024px'
-////		//	}, 200);
-////		}
-//	},
 	Next : function () {
-            console.log($.keynode('getSlideNumber'));
+//            console.log($.keynode('getSlideNumber'));
                 presenter.slideNumber = $.keynode('getSlideNumber');
 		if ((presenter.slideLength!==-1)&&(presenter.slideNumber < presenter.slideLength)) {
 			presenter.slideNumber += 1;
@@ -63,16 +41,7 @@ var presenter = {
                         presenter.Prev();
                         e.preventDefault();
                 }
-//                else if (e.which === options.keys.gotoRight 
-//                    || $.inArray(e.which, options.keys.gotoRight) > -1) {
-//                        presenter.ShowNext();
-//                        e.preventDefault();
-//                }
-//                else if (e.which === options.keys.gotoLeft 
-//                    || $.inArray(e.which, options.keys.gotoLeft) > -1) {
-//                        presenter.ShowLast();
-//                        e.preventDefault();
-//                }
+
             });
 
             var after_Frame=document.getElementById(KeyNode.options.selectors.after_frame.substr(1)),
@@ -128,12 +97,7 @@ var presenter = {
 			folie : folie
 		};
                 presenter.$socket.broadcast('controlSync', data);
-//			i = null;
-//		for (i in mysocket.s) {
-//			if (typeof mysocket.s[i] !== 'undefined') {
-//				mysocket.s[i].emit('controlSync', data);
-//			}
-//		}
+
 	}
 };
 presenter.initPresenterConsole();

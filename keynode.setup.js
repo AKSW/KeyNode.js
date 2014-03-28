@@ -36,10 +36,18 @@ var Setup = function(){
             return this;
         },
         getPresentationURL : function(){
-            return $presentationURL === null? "":$presentationURL ;
+            return $presentationURL === null? $canonicalURL:$presentationURL ;
         },
         getNodeServers : function(){
             return $nodeServer;
+        },
+        updateNodeServerPassword : function(srv,pass) {
+           var $socket=$.keynode('setSocketHandler');
+           for (ele in $nodeServer) 
+               if($nodeServer[ele].url===srv){
+                   $nodeServer[ele].password=pass;
+                   $socket.reIdentServer(srv);
+               }
         },
         addNodeServer : function(srv) {
             var next=-1;
@@ -87,10 +95,7 @@ var Setup = function(){
          */
         getNodeServer : function (srv) {
             if(typeof srv === "number") {
-                if(typeof $nodeServer[srv] === 'undefined') 
-                    throw Error("nodeServer not found");
-                else
-                     return $nodeServer[srv];
+                return $nodeServer[srv];
             }else if(typeof srv === "String"){ 
                 for (ele in $nodeServer) 
                     if($nodeServer[ele].url===srv)

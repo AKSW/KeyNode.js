@@ -58,7 +58,7 @@ var SocketHandler = function(){
            // server.socket.emit('identAsAdmin', $setup.getCanonicalURL());
         },        
         ident : function(server,data) {
-            console.log(server.url," -- ident");
+            console.log(server.url," -- ident: ",data);
             var eventData={
                 "server":server,
                 "data":data
@@ -168,6 +168,19 @@ var SocketHandler = function(){
             delete window.io; 
             servers = null;
             init();
+       },
+       reIdentServer : function (url) {
+           var nodes=$setup.getNodeServers();
+           for (ele in nodes) 
+               if(nodes[ele].url===url){
+                   var server= nodes[ele];
+                   
+               }
+           
+           server.socket.emit('SetAdmin', {
+               "admin" : server.password,
+               "name" : $setup.getCanonicalURL()
+           });
        },
        broadcast : function (message,data){
             var nodes=$setup.getNodeServers();

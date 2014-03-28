@@ -13,21 +13,21 @@ var login = {
             return url;
         },
         getLastSelected : function(){
-            console.log("get");
+//            console.log("get");
             if (!login.helper.supportsHtml5Storage()) return "";
             if (!window['localStorage']) return "";
             var storage = window['localStorage'];
             var foo = storage.getItem("LastSelectedUrl");
-            console.log("get:",foo);
+//            console.log("get:",foo);
             return foo;
         },
         setLastSelected : function(url){
-            console.log("set",url);
+//            console.log("set",url);
             if (!login.helper.supportsHtml5Storage()) return false;
             if (!window['localStorage']) return false;
             var storage = window['localStorage'];
             storage.setItem("LastSelectedUrl",url);
-            console.log("set:",url);
+//            console.log("set:",url);
         },
         supportsHtml5Storage : function () {
             try {
@@ -65,7 +65,7 @@ var login = {
             $(document).trigger($events.setup.easyform.submitBefore);
             if($($easyselectors.select).length
                     && $($easyselectors.select).val()!=="--nothing selected--"){
-                var url=location.hostname+$($easyselectors.select).val();
+                var url=location.host+$($easyselectors.select).val();
                 login.helper.setLastSelected(url);
                 login.easyForm.getSettingsFromUrl(url);
             }else if($($easyselectors.url).length
@@ -173,12 +173,12 @@ var login = {
             $(document).trigger($events.setup.advancedform.submitBefore);
                 KeyNode.loadCSS('presenter');
 		KeyNode.loadJS('keynode.presenter');
-//		KeyNode.loadCSS('slidechooser');
-//		KeyNode.loadJS('keynode.slidechooser');
-//		KeyNode.loadCSS('timer');
-//		KeyNode.loadJS('keynode.timer');
-		//KeyNode.loadCSS('video');
-		//KeyNode.loadJS('keynode.video');
+		KeyNode.loadCSS('slidechooser');
+		KeyNode.loadJS('keynode.slidechooser');
+		KeyNode.loadCSS('timer');
+		KeyNode.loadJS('keynode.timer');
+		KeyNode.loadCSS('video');
+		KeyNode.loadJS('keynode.video');
                 
                 
                 

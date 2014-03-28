@@ -31,6 +31,7 @@ var VideoAddon = {
     },
     
     setVideoEmbedTag : function (html) {
+        var setup = $.keynode('getSetup');
         var socket = $.keynode('getSocketHandler');
         socket.broadcast('setVideoEmbedTag', {name: setup.getCanonicalURL(), html: html});
     }
@@ -73,7 +74,13 @@ var VideoContainer = {
     },
     
     updateGoogleHangoutButton : function (token, url) {
-        var server = mysocket.NodeServer[0].replace(/^[a-z]+:\/\//, ''),
+        var setup = $.keynode('getSetup');
+        var i=0;
+        while(typeof setup.getNodeServer(i)!==typeof undefined){
+            i++;
+            
+        }
+        var server = setup.getNodeServer(0).url.replace(/^[a-z]+:\/\//, ''),
             $options = $(VideoContainer.videoOptionsTab.getContent());
         
         var gd = encodeURIComponent(server+url+'?token='+token+'&liveid=');

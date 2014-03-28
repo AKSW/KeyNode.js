@@ -34,8 +34,6 @@ var KeyNode = {
         
         setup:{
             easyform:{
-                localPresentationsLoaded    : 'SetupEasyLocalReady', //loaded local presentations
-                localPresentationsError     : 'SetupEasyLocalError', //error while loading local presentations
                 
                 submit                      : 'SetupEasySubmit',
                 submitBefore                : 'SetupEasySubmitBefore',

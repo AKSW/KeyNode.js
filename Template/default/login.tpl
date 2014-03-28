@@ -104,21 +104,6 @@
                                                     </span>
                                                 </div>
                                             </div>
-                                           <!-- <div class="col-md-6">   
-                                                <div class="input-group"
-                                                     data-toggle="tooltip" 
-                                                     data-container="body" 
-                                                     title="add an public server">
-                                                    <select class="form-control">
-                                                        <option>--nothing selected--</option>
-                                                        <option>1</option>
-                                                    </select> 
-                                                    
-                                                    <span class="input-group-btn">
-                                                        <button class="btn btn-default" type="button">add</button>
-                                                    </span>
-                                                </div>
-                                            </div>-->
                                         </div>
                                         <!-- </addNewServer> -->
                                         <hr>
@@ -138,7 +123,7 @@
                                                 <input class="serverUrl form-control" type="text" value="server1.org:3214/" >
                                                 </div>
                                             </div>
-                                            <div class="col-sm-5">
+                                            <div class="col-sm-4">
                                                 <div class=" input-group">
                                                     <input class="passwordInput form-control" type="password" value="password" placeholder="please insert password here">
                                                     <span class="input-group-addon"
@@ -150,14 +135,25 @@
                                                     </span>
                                                 </div>
                                             </div>
-                                            <div class="col-sm-1"> 
-                                              
-                                                     
-                                            
-                                                <button class="removeServer btn btn-default"
-                                                        data-toggle="tooltip" 
-                                                        data-container="body" 
-                                                        title="Remove server"><i class="glyphicon glyphicon-trash"></i></button>
+                                            <div class="col-sm-2"> 
+                                                
+                                                <div class="btn-group dropup">
+                                                    <button type="button" class="removeServer btn btn-default"
+                                                            data-toggle="tooltip" 
+                                                            data-container="body" 
+                                                            title="Remove server"><i class="glyphicon glyphicon-trash"></i></button>
+                                                    <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
+                                                        <span class="caret"></span>
+                                                        <span class="sr-only">Toggle Dropdown</span>
+                                                    </button>
+                                                    <ul class="dropdown-menu" role="menu">
+                                                        <li><a href="#" class="getNewPassword">Reset password</a></li>
+                                                        <li><a href="#" class="setPassword">Set new password</a></li>    
+                                                        <li><a href="#" class="retestPassword">Retest password</a></li>       
+                                                    </ul>
+                                                </div>
+                                                    
+                                                    
                                             </div>
                                         </div>
           
@@ -199,49 +195,6 @@
     
 </div>
 
-
-
-<!--<div id="KeynodeCenterBox" class="div-rounded-big">
-    <h1 id="title"></h1>
-    <div id="CanonicalURL" class="tooltipEnable" title="Thats your Canonical URL">
-        <input id="CanonicalURLinput"   type="text"     class="myInput div-rounded-small"   value="http://aksw.github.com/KeyNode.js/" placeholder="Type your Canonical URL here"> 
-        <input id="CanonicalURLsubmit"  type="button"   class="myButton div-rounded-small"  value="Ok">
-    </div>
-        
-        
-    <div id="presentationURL" class="tooltipEnable" title="Thats the URL to your Presentation used by the Presenter">
-        <input id="presentationURLinput"    type="text"     class="myURLInput div-rounded-small"  placeholder="Type your AlternativeURL here"> 	
-        <input id="presentationURLsubmit"   type="button"   class="myButton div-rounded-small" value="Ok">		
-    </div>
-        
-    <div id="NodeServerURL" >
-        <input id="NodeURLinput"    type="text"     class="myURLInput tooltipEnable div-rounded-small" title="Type here an Alternative NodeServer beginning with 'http://'"  placeholder="Type your NodeServer here beginning with 'http://'"> 
-        <input id="NodeURLsubmit"   type="button"   class="myButton div-rounded-small" value="Ok">
-            
-    </div>
-        
-        
-    <input id="presenterStartButton"    type="button"   class="tooltipEnable myButton full-width-button div-rounded-small"  value="Test Inputs" class="tooltipEnable div-rounded-small" title="Start the presenter" > 
-        
-        
-        
-        
-</div>
-<div id="NodeServerURLsaved" style="display:none;" class="tooltipEnable div-rounded-small" title="This is one of your NodeServers">
-    <input id="NodeServerURLsavedRemove" class="myRemButton" type="button" value="X">
-    <div id="serverValue">NodeServer-1: http://something.net/:1337</div>	
-    <div id="Password">
-        <input id="Passwordinput" type="password" class="myPasswordInput tooltipEnable div-rounded-small" title="Thats your Password" placeholder="Type your Password here"> 
-        <input id="PasswordReset"  type="button" style="display:none;" class="myResetButton div-rounded-small" value="Reset">
-    </div>
-</div>
-<div id="LoadingBG" > </div>
-<div id="LoadingContainer" class="div-rounded-small">
-    Please Wait
-<div id="img" >
-    
-    </div>
-</div>-->
 <script>
     KeyNode.loadJS('Template/default/Bootstrap/bootstrap.min',function(){
         $("[data-toggle='tooltip']").tooltip();
@@ -263,7 +216,23 @@
             var value= "http://"+ele.val();
             login.advancedForm.removeNodeServer(value);            
         });
-        
+        $( "#NodeServer" ).delegate( ".getNewPassword", "click", function() {
+            var ele=$( this ).parents('.server').find(".serverUrl");
+            var value= "http://"+ele.val(); 
+            var setup=$.keynode('getSetup');
+            var server=setup.getNodeServer(value);
+            server.socket
+                .emit('resetPassword',{
+                    "name":setup.getCanonicalURL()                
+                });
+                
+        });
+        $(document).bind('NodeserverPassReset', function(data1) {
+            if(data1.data.type==="mailReset") alert('Reset for Server '+data1.server +'successful.\n Password was send to your Email.')
+            else if(data1.data.type==="localReset") alert('Reset for Server '+data1.server +'successful.\n Your new Password is:"'+data.new+'"')
+            else if(data1.data.type==="fail-noMail") alert('Reset for Server '+data1.server +'failed.\n There is no mailadress located in the slide.')
+
+        });
         
         $( "#NodeServer" ).delegate( ".displayPassword", "click", function() {
             var ele=$( this ).parent().parent().find("input:first");
@@ -407,12 +376,11 @@
         }); 
         $(document).bind('NodeserverIdent', function(e,eventData) {
             var server= eventData.server;
-            var data= eventData.data;
+            var data= eventData.data; 
+            var serverWrapper = $('#NodeServer')
+                .find('input[value="'+server.url.substr(7)+'"]')
+                .parents('.server');
             if(data.ident==="ADMIN"){
-                var serverWrapper = $('#NodeServer')
-                        .find('input[value="'+server.url.substr(7)+'"]')
-                        .parents('.server');
-
                 serverWrapper.find('.passwordInput')
                         .attr('disabled','disabled')
                         .parents('.input-group')
@@ -421,6 +389,15 @@
                 serverWrapper.find('.server-status')
                         .html('<span class="label label-success"><i class="glyphicon glyphicon-ok"><i></span>')
                         .attr('data-original-title','fully identified')
+                        .tooltip();
+            }else if(data.ident==="ANONYM"){
+                serverWrapper.find('.server-status')
+                        .html('<span class="label label-success"><i class="glyphicon glyphicon-eye-open"><i></span>')
+                        .attr('data-original-title','anonym identified')
+                        .tooltip();
+            
+                serverWrapper.find('.input-group')
+                        .attr('data-original-title','connected and anonym identified, put right password here to fully authenticate')
                         .tooltip();
             }
         }); 
