@@ -186,7 +186,7 @@ var presState ={
              */
             presState.stateDiv.node.html(to1+1);
             var to=to1;
-            presState.content.node.unbind('click').click(function(e){
+            presState.elem.unbind('click').click(function(e){
                 try{
                     $.deck('go', to);
                 }catch(e){}
