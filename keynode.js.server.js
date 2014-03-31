@@ -26,8 +26,15 @@ setInterval(function(){
 if(Server_settings.allowAnonymousAuth){
     console.log(Server_settings.preTagServer + ' WARNING! anonymous mode enabled.');
     }    
+if(typeof io== typeof undefined) console.log(Server_settings.preTagServer + ' ERROR! Did you forget to create an config file?');
 io.configure(function () {
-	//	io.set('transports', ['websocket', 'flashsocket', 'xhr-polling']);
+	io.set('transports', [
+    'websocket'
+  , 'flashsocket'
+  , 'htmlfile'
+  , 'xhr-polling'
+  , 'jsonp-polling'
+]);
 	if (!Server_settings.socketIOdebug) {
 		io.set('log level', 1);
 		io.enable('log');
