@@ -20,13 +20,7 @@ FileServer.prototype = {
             this.port = port;
         this.httpServer = require(ServerSettings.httpPackage || "http").createServer();
         
-        this.httpServer.on('request', function(req, res) {
-            if(req.url==="/presenter/")
-                req.url = "keynode.js.presenter/index.html";
-            else
-                req.url = req.url.replace(/\/presenter\//g, "/keynode.js.presenter/");
-
-                        
+        this.httpServer.on('request', function(req, res) {                        
             var uri = url.parse(req.url, true),
                 
                 handler = that.fileHandlers[uri.pathname];
