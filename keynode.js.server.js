@@ -10,7 +10,6 @@ var extensionVideo = require('./extensions/video');
  */
 var fileServer = extensionFileServer.createServer(Server_settings.Server_Port);
 var io = require(Server_settings.socketIoPackage).listen(fileServer.getHTTPServer());
-console.log(Server_settings.preTagInfo + 'IO: ' + io + '.');
 
 console.log(Server_settings.preTagInfo + ' server is listening on port ' + Server_settings.Server_Port + '.');
 Server_data.loadPresData();
