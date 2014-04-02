@@ -40,10 +40,13 @@ var myTimer = null,
     function connectServers () {
         
         var nodes=NodeServer;
-        for (server in nodes){
-            nodes[server].socket=io.connect(nodes[server].url);
+        for (var server in nodes) {
+            var protocol = nodes[server].url.substring(0, nodes[server].url.indexOf(":"));
+            var rest = nodes[server].url.substring(nodes[server].url.indexOf(":") + 1);
+            var port = (rest.indexOf(":") !== -1) ? rest.substring(rest.indexOf(":") + 1) : (protocol === "https") ? 443 : 80;
+            nodes[server].socket = io.connect(nodes[server].url, {"port": port});
             bindEvents(nodes[server]);
-        } 
+        }
         $(document).trigger($events.bindSocketEvents,server);
     }
     function findServer () {
@@ -61,7 +64,7 @@ var myTimer = null,
     var listener = {
         connect : function(server){
             server.state=1;
-//            console.log(server.url," -- Connect"); 
+            console.log(server.url," -- Connect"); 
             $lastActiveServer=server;
             $(document).trigger($events.setConnected,server);
             //ident for Pres
@@ -69,12 +72,11 @@ var myTimer = null,
         },
         disconnect : function(server){
             server.state=0;
-//            console.log(server.url," -- Disconnect");
+            console.log(server.url," -- Disconnect");
             
             $(document).trigger($events.setDisconnected,server);
         },
-        ready : function(server) {
-//            console.log(server.url," -- Ready");
+        ready : function(server) {            console.log(server.url," -- Ready");
             $(document).trigger($events.setOnline,server);
         },        
         presenterOnline : function(server) {
@@ -87,7 +89,7 @@ var myTimer = null,
             $(document).trigger($events.setOffline,server);
         },
         GoTo : function(server,data) {
-//            console.log(server.url," -- GoTo");
+            console.log(server.url," -- GoTo");
             $.deck('go', (data + diff));
             currSlide = (data + diff);
             $(document).trigger($events.watcherChange,data);
@@ -95,7 +97,7 @@ var myTimer = null,
     };
     function bindEvents (server1) {
         var server=server1;
-//        console.log(server.url," -- BINDING");
+        console.log(server.url," -- BINDING");
         
         server.socket
             .removeAllListeners('connect')
