@@ -4,7 +4,6 @@ var presenter = {
         $socket : $.keynode('getSocketHandler'),
 	slideLength:-1,
 	Next : function () {
-//            console.log($.keynode('getSlideNumber'));
                 presenter.slideNumber = $.keynode('getSlideNumber');
 		if ((presenter.slideLength!==-1)&&(presenter.slideNumber < presenter.slideLength)) {
 			presenter.slideNumber += 1;
@@ -53,8 +52,8 @@ var presenter = {
                 if(presenter.slideLength===-1){
                     setTimeout(function(){presenter.BindKeys();},500);
                 }
-                after_Frame.contentWindow.postMessage('setDiff:1',$(KeyNode.options.selectors.after_frame).attr('src'));
-                curr_frame.contentWindow.postMessage("getNumberSlides:a",$(KeyNode.options.selectors.current_frame).attr('src'));
+                after_Frame.contentWindow.postMessage('setDiff:1',"*");
+                curr_frame.contentWindow.postMessage("getNumberSlides:a","*");
             }
             $(KeyNode.options.selectors.click_blocker).css({
                     'height' : '100%',
@@ -87,8 +86,10 @@ var presenter = {
 	},
 	initPresenterConsole : function () {
 		$('body').find('*').hide();
-		KeyNode.loadTmpl('presenter');
-		presenter.initIframe();
+		KeyNode.loadTmpl('presenter',function(){
+                    presenter.initIframe();
+                });
+		
 	},
 	GotoFolie : function (folie) {
                 //console.log(folie);

@@ -42,7 +42,9 @@ var SlideChooserAddon = {
         
         
         for(var slideNo=0; slideNo<presenter.slideLength; slideNo++) {
-            var $iframe    = $('<iframe />').attr('src', this.$setup.getPresentationURL()+'#slidechooser-slide-'+slideNo);
+            if(SlideChooserAddon.$setup===null)
+                SlideChooserAddon.$setup=$.keynode('getSetup');
+            var $iframe    = $('<iframe />').attr('src', SlideChooserAddon.$setup.getPresentationURL()+'#slidechooser-slide-'+slideNo);
             var $blocker   = $('<div class="click-blocker"></div>');
             var $container = $('<div class="slide-container"></div>');
             $broad.append( $container.append($iframe, $blocker) );

@@ -3,3 +3,13 @@ body{
     /*overflow:hidden;*/
     background:url(./images/BG.png); 
 }
+.dropdown-menu a.disabled {
+  color: #999999;
+}
+.dropdown-menu a.disabled:hover,
+.dropdown-menu a.disabled:focus {
+  color: #999999;
+  text-decoration: none;
+  background-color: transparent;
+  cursor: not-allowed;
+}
