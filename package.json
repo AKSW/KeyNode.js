@@ -25,6 +25,7 @@
         "node-static": ">=0.7.2",
         "socket.io" : "=0.9.x",
         "then-fs"   : ">=1.0.3",
-        "crypto-browserify" : ">=1.0.9"
+        "crypto-browserify" : ">=1.0.9",
+        "nodemailer": ">=0.6.1"
     }
 }

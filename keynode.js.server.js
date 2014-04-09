@@ -68,7 +68,6 @@ io.sockets.on('connection', function(socket) {
             Client.emit('presenterOnline');
             var slide = Server_data.getSlideNumber(name);
             Client.emit('GoTo', slide);
-
         }
 
     });
