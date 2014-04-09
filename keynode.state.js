@@ -170,8 +170,6 @@ var presState = {
     setPresented: function(server) {
         this.servers[server.url] = this.const.PRESENTED;
         this.revalidateDisplay();
-        console.log("setPresented" + server.url);
-
     },
     showCSS: {
         'height': 'auto',
