@@ -43,7 +43,7 @@
         
     </div>
     
-    <div class="row" >
+    <div class="row" style="padding: 15px;" id="buttonWrapper">
         <div class="hidden-sm hidden-md hidden-lg col-xs-6">
             <div class="panel panel-default">
                 <div class="panel-body wrapper" >
@@ -74,16 +74,9 @@
 </div>
 <div id="slideData"></div> 
 <script>
-    $( "#NodeServer" ).delegate( "#nextBTN", "click", function() {
-            try{
-                presenter.Next();
-            }catch(e){
-            }
-        });
-    $( "#NodeServer" ).delegate( "#prevBTN", "click", function() {
-            try{
-                presenter.Prev();
-            }catch(e){
-            };
-        });
+    $( "#buttonWrapper" ).delegate( "#nextBTN", "click", function() { try{ presenter.Next(); }catch(e){ }; return false;});
+    $( "#buttonWrapper" ).delegate( "#nextBTN", "tap", function() { try{ presenter.Next(); }catch(e){ }; return false;});
+    $( "#buttonWrapper" ).delegate( "#prevBTN", "click", function() { try{ presenter.Prev(); }catch(e){ }; return false;});
+    $( "#buttonWrapper" ).delegate( "#prevBTN", "tap", function() { try{ presenter.Prev(); }catch(e){ }; return false;});
+    
     </script>

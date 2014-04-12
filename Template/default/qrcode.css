@@ -1,0 +1,28 @@
+/* 
+    Document   : qrcode
+    Created on : 12.04.2014, 12:14:35
+    Author     : Alrik Hausdorf <alrik@gurkware.de>
+    Description:
+        Purpose of the stylesheet follows.
+*/
+#qrcodeTabWrapper{
+    padding-left: 5px;
+    padding-right: 5px;
+}
+#qrcodeTabWrapper>h2{
+    width: auto;
+}
+#qrcodeWrapper{
+    width: auto;
+    height: auto;
+    position: absolute;
+    top:50%;
+    left: 50%;
+    margin-top: -128px;
+    margin-left: -128px;
+    z-index: 10;
+    padding: 3px;
+}
+#qrcode{
+    
+}

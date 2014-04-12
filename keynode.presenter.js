@@ -12,7 +12,10 @@ var presenter = {
                         var e = $.Event($.keynode('getEvents').presenter.slideChange);
                         $(window).trigger(e,[presenter.slideNumber-1,presenter.slideNumber]);
                        
-			}
+			}else{
+                            var curr_frame=document.getElementById(KeyNode.options.selectors.current_frame.substr(1))
+                            curr_frame.contentWindow.postMessage("getNumberSlides:a","*");
+                        }
 	},
                 
 	Prev : function () {

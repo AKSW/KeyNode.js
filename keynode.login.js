@@ -195,13 +195,13 @@ var login = {
             $(document).trigger($events.setup.advancedform.submitBefore);
             KeyNode.loadCSS('presenter');
             KeyNode.loadJS('keynode.presenter');
-            KeyNode.loadCSS('slidechooser');
-            KeyNode.loadJS('keynode.slidechooser');
-            KeyNode.loadCSS('timer');
-            KeyNode.loadJS('keynode.timer');
-            KeyNode.loadCSS('video');
-            KeyNode.loadJS('keynode.video');
+            //not performant
+//            KeyNode.loadCSS('slidechooser');
+//            KeyNode.loadJS('keynode.slidechooser');
 
+            KeyNode.loadJS('keynode.timer');
+            KeyNode.loadJS('keynode.video');
+            KeyNode.loadJS('keynode.qrcode');
             $(document).trigger($events.setup.advancedform.submit);
 
         },

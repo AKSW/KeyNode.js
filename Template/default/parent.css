@@ -1,6 +1,7 @@
 @import "./Bootstrap/bootstrap.min.css";
 body{
     /*overflow:hidden;*/
+    padding-bottom: 51px;
     background:url(./images/BG.png); 
 }
 .dropdown-menu a.disabled {

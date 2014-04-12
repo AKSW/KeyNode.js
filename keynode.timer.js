@@ -15,7 +15,7 @@ var TimerAddon = {
         .mouseleave(function() { $timer.animate({opacity: minOpacity}, 200) })
         .click(TimerAddon.startOrPause)
         .dblclick(TimerAddon.resetTimer);
-        
+        KeyNode.loadCSS('timer');
         TimerAddon.updateTime();
         PresenterUI.MultiBar.add($timer, 10);
     },
