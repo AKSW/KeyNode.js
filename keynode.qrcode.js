@@ -11,8 +11,8 @@ var QRCodeDiplay = {
         qrcode.click(QRCodeDiplay.toggleDisplay);
         PresenterUI.MultiBar.add(qrcode, 11);
         $('#qrcodeWrapper').click(QRCodeDiplay.hide);
+        QRCodeDiplay.generateCode();
         QRCodeDiplay.show();
-        
     },
     generateCode: function() {
         QRCodeDiplay.$qrcode = new QRCode(document.getElementById("qrcode"), {
@@ -33,7 +33,6 @@ var QRCodeDiplay = {
             QRCodeDiplay.show();
     },
     show: function() {
-        QRCodeDiplay.generateCode();
         $('#qrcodeWrapper').show('fast');
     },
     hide: function() {
