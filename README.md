@@ -1,31 +1,28 @@
-# KeyNode.js - Node.js Server
+## How to Install/Start
+Bash/CMD:
 
-Broadcast the events sent by the presenter to each client watching the presentation.
+    #1. clone Keynode.JS Server:
+    git clone https://github.com/AKSW/KeyNode.js.git -b server keynode.js.server
+    cd keynode.js.server
+    
+    #2. install Required axtensions by running:
+    npm install
+    
+    #3.a) copy configuration file (Bash)
+    cp keynode.js.server_settings.js_sample keynode.js.server_settings.js
+    #3.b) copy configuration file (Windows)
+    copy keynode.js.server_settings.js_sample "keynode.js.server_settings.js"
+    
+    #4. start Server:
+    node keynode.js.server
 
-## Start the Server
+## Open Presenter
 
-Start it with:
+Go to <yourDomain.de>/presenter 
 
-	`node ./server/keynode.js.server.js`
+or for local installation [localhost/presenter](http://localhost/presenter)
 
-	
-## How to set up the Server
 
-All configurations are located in `keynode.js.server_settings.js`
+## Configuration of the Server
 
-- `preTag<type>` - this is written before each \<type\> of the server
-
-- `standardPassword` - the default password for the presentations
-
-- `Server_Port` - the port the server listens on
-
-- `allow_new_presentations` - whether the server should accept new presentations or not
-
-- `debug` - if it runs in debug mode (more logging)
-
-## Requirements
-
-- `fs` file functions for node
-
-- `nodemailer` Mailerfunctions (only for public use)	 
-- `request` requestfunctions (only for public use)	 
+[@ Github WIKI](https://github.com/AKSW/KeyNode.js/wiki/server)

@@ -3,62 +3,46 @@
  * Config-file for Server
  */
 
-this.cryptoPackage = "crypto";
-this.fsPackage = "fs";
-this.httpPackage = "http";
-this.socketIoPackage = "socket.io";
-this.urlPackage = "url";
-this.nodeStatic = "node-static";
+/* Package-Configuration */
+this.cryptoPackage              = "crypto";
+this.fsPackage                  = "fs";
+this.httpPackage                = "http";
+this.socketIoPackage            = "socket.io";
+this.urlPackage                 = "url";
+this.nodeStatic                 = "node-static";
+this.NodeMailerPackage          = "nodemailer";
+this.RequestPackage             = "request";
+
+/* General-Settings */
+this.localInstallation          = true;             //if true, the passwort reset would be send to the Presenter
+this.allowAnonymousAuth         = true;             //if true, all Presentations could be controlled by everyone, until a password is set
+//this.standardPassword         = 'rootKannAlles';  //global standard password
+//this.standardPassword         = (Math.floor(Math.random() * 4257671236709));//random global standard password
+this.standardPassword           = false;            //every presentation gets a new random password
+this.Server_Port                = 80;               //Port, for the Server to listen on
+this.allow_new_presentations    = true;             //accept new presentations
 
 
+/* Tag-Configuration */
+this.preTagInfo                 = '\x1B[32m\x1B[1m[Info]\x1B[0m';
+this.preTagSettings             = '\x1B[32m\x1B[1m[Settings]\x1B[0m';
+this.preTagServerData           = '\x1B[32m\x1B[1m[Server_data]\x1B[0m';
+this.preTagServer               = '\x1B[32m\x1B[1m[Server]\x1B[0m';
+this.preTagPres                 = '\x1B[32m\x1B[1m[Presentation]\x1B[0m';
 
-/* is this an local Installation --> the passwort reset show the new password in the Console */
-this.localInstallation = true;
-this.allowAnonymousAuth = true;
+/*Web-Server-Settings */
+this.webRoot                    = "public";         //browsable Webfolder
+this.presentationFolders        = "presentations";  //Webfolder for Local Presentations (webRoot+"/"+presentationFolders)
 
-
-
-/*Web Server Settings*/
-this.webRoot = "../";
-/* Foldername for Local Installation (webRoot+"/"+presentationFolders)*/
-this.presentationFolders = "presentations";
-
-/* set Pretags for console logs */
-this.preTagInfo = '\x1B[32m\x1B[1m[Info]\x1B[0m';
-this.preTagSettings = '\x1B[32m\x1B[1m[Settings]\x1B[0m';
-this.preTagServerData = '\x1B[32m\x1B[1m[Server_data]\x1B[0m';
-this.preTagServer = '\x1B[32m\x1B[1m[Server]\x1B[0m';
-this.preTagPres = '\x1B[32m\x1B[1m[Presentation]\x1B[0m';
-
-//this.standardPassword = 'rootKannAlles';
-this.standardPassword = (Math.floor(Math.random() * 4257671236709));
-
-this.Server_Port = 80;
-
-this.allow_new_presentations = true;
-
-this.debug = false;
-this.socketIOdebug = false;
+/*Debug-Settings*/
+this.debug                      = false;            //General
+this.socketIOdebug              = false;            //just for Socket.IO
 
 
-/**
-*	Use the Nodemailer to send you the Passwort for your presentation
-*
-*
-*/
-
+/* Mailer-Settings */
 this.useMail = false;
-
-this.NodeMailerPackage = "nodemailer";
-this.RequestPackage = "request";
-
-/**
-*
-* for use of an SMTP
-*/
 this.mailProto = "SMTP";
-
-/* options find @ https://github.com/andris9/nodemailer */
+/* more options @ https://github.com/andris9/nodemailer */
 this.smtp_options = {
 	host: "domain.de",
 	secureConnection: true,
@@ -68,9 +52,7 @@ this.smtp_options = {
 		pass: ""
 	}
 };
-/**
-	use of sendmail
-*/
+/* sendmail */
 /*
 this.mailProto = "Sendmail";
 this.smtp_options = "/usr/bin/sendmail";
