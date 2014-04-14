@@ -11,6 +11,7 @@ var VideoAddon = {
     },
     
     init : function () {
+        KeyNode.loadCSS('video');
         var socket = $.keynode('getSocketHandler');
         var setup = $.keynode('getSetup');
         // init strings:
