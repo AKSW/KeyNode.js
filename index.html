@@ -9,7 +9,8 @@
         <meta name="author" content="Alrik Hausdorf">
         <meta name="viewport" content="width=1024, user-scalable=no">
 
-        <title>KeyNode.JS - How it Works</title>
+        <meta name="description" content="A presenter for modern HTML presentations">
+        <title>KeyNode.JS - What it is & How it Works</title>
 
         <!-- Core and extension CSS files -->
         <link rel="stylesheet" href="deck.js/core/deck.core.css">
@@ -41,33 +42,32 @@
     <body class="deck-container">
 
         <div class="slide" id="begin0">
-            <h1>KeyNode.JS <br>-<br>How it Works</h1>
+            <h1>KeyNode.JS<small> What it is and how it Works</small></h1>
             <figure>
                 <p></p>
                 <figcaption>by Alrik Hausdorf</figcaption>
             </figure>
-            <div class="notes" style="position:absolute; top:50px; left:50px; height: 40px; width: 150px;">Das bin ich! ;)</div>
         </div>
 
         <div class="slide" id="begin1">
-            <h2>KeyNode.JS - How it Works</h2>
+            <h2>KeyNode.JS</h2>
 
             <h3>The parts of this presentation:</h3>
             <ol>
                 <li>
-                    <a href="#General">What ist KeyNode.JS?</a>
+                    <a href="#General">General features of KeyNode.JS</a>
                 </li>
                 <li>
-                    <a href="#start0">How to get started?</a>
+                    <a href="#start0">Getting started</a>
                 </li>
                 <li>
-                    <a href="#presenter0">How do i use the presenter?</a>
+                    <a href="#presenter0">The presenter</a>
                 </li>
                 <li>
-                    <a href="#server0">How do i use the server?</a>
+                    <a href="#server0">The server</a>
                 </li>
                 <li>
-                    <a href="#technic">How does it work?</a>
+                    <a href="#technic">Technic behind</a>
                 </li>
             </ol>
 
@@ -76,68 +76,99 @@
         </div>
 
         <div class="slide" id="General">
-            <h2>General</h2>
+            <h2>General features</h2>
             <ul>
-                <li>KeyNode.Js gives you the chance to synchronise your presentations and add to deck.js the things every presenter should have.</li>
-                <li>It is written in <a href="wikipedia.org/wiki/JavaScript" target="_blank">Javascript</a> and works with every <a href="http://imakewebthings.com/deck.js" target="_blank">Deck.js</a> presentation.</li>
+                <li>Synchronise your deck.js presentation</li>
+                <li><strong>AND</strong> adds a presenterview to your deck.js presentation</li>
+            </ul>
+            It is written in <a href="wikipedia.org/wiki/JavaScript" target="_blank">Javascript</a> and works with every <a href="http://imakewebthings.com/deck.js" target="_blank">Deck.js</a> presentation.
         </div>
 
         <div class="slide" id="start0">
-            <h2>How to get started?</h2>
-            <ul>
-                <li><a href="#start1">What do you need?</a></li>
-                <li><a href="#start2">Changes at your deck.js presentation</a></li>
-                <li><a href="#start3">How to start the presenter?</a></li>
-            </ul>
+            <h2>Getting started</h2>
+            <ol>
+                <li><a href="#start1">Requirements</a></li>
+                <li><a href="#start2">[optional but recommended] Run local Keynode.JS server</a></li>
+                <li><a href="#start3">Configuration</a></li>
+                <li><a href="#start4">Start the presenter</a></li>
+            </ol>
         </div>
         <div class="slide" id="start1">
-            <h2>What do you need?</h2>
-            <ul>
+            <h2>Requirements</h2>
+            <ol>
                 <li>A running deck.js presentation</li>
-                <li>the watcher.js downloaded or linked from Github:<br>
-                    <a href="https://raw.github.com/AKSW/KeyNode.js/master/watcher/keynode.watch.js">https://raw.github.com/AKSW/KeyNode.js/master/watcher/keynode.watch.js</a>
-                </li>
-                <li>the presenter folder downloaded from Github:<br>
-                    <a href="https://github.com/AKSW/KeyNode.js/tree/master/presenter" target="_blank">https://github.com/AKSW/KeyNode.js/tree/master/presenter</a>
-                </li>
-                <li>A NodeServer running local or online <br>
-                    also located at <a href="https://github.com/AKSW/KeyNode.js">https://github.com/AKSW/KeyNode.js</a></li>
-            </ul>
+                <li>a running node.JS and npm installation</li>                
+            </ol>
         </div>
         <div class="slide" id="start2">
-            <h2>Changes at your deck.js presentation</h2>
-            <ul>
-                <li>Paste the link to the keynode.watcher.js into the head of your presentation before the deck was initialiated<br>
-                    example:
-                    <pre class="brush: js">
-		&lt;script src="../watcher/keynode.watch.js"&gt;&lt;/script&gt;</pre>
-                </li>
-                <li>add an canonical URL to your head in the following form:<br>
-                    <pre class="brush: xml">
-		&lt;link rel="http://ns.aksw.org/keynode/canonical" href="[your canonical url e.g. http://myserver.com/mypresentation.html]" /&gt;</pre>
-                </li>
-                <li>add an NodeServer-URL to your head in the following form:<br>
-                    <pre class="brush: xml">
-		&lt;link rel="http://ns.aksw.org/keynode/server" href="[e.g.http://localhost:4123]" /&gt;</pre>
-                </li>
-                <li>add your email address to your head in the following form:<br>
-                    <pre class="brush: xml">
-		&lt;link rel="http://ns.aksw.org/keynode/mailto" href="[e.g.mailto:ich@meinserver.net]" /&gt;</pre>
-                </li>
-            </ul>
+            <h2>Run local Keynode.JS server </h2>
+            open Bash/cmd and do the following:
+            <pre>
+#1. clone Keynode.JS Server:
+git clone https://github.com/AKSW/KeyNode.js.git -b server keynode.js.server
+cd keynode.js.server
+
+#2. install Required axtensions by running:
+npm install
+
+#3.a) copy configuration file (Bash)
+cp keynode.js.server_settings.js_sample keynode.js.server_settings.js
+#3.b) copy configuration file (Windows)
+copy keynode.js.server_settings.js_sample "keynode.js.server_settings.js"
+
+#4. start Server:
+node keynode.js.server
+            </pre>
+            Setting Dokumentation of the Server: <a href="https://github.com/AKSW/KeyNode.js/wiki/server">here</a>
         </div>
         <div class="slide" id="start3">
-            <h2>How to start the presenter? (1)</h2>
-            <ol>
-                <li>go to the presenter-folder and open the index.html with your browser (it works best with Google Chrome)<img src="images/presenter1.PNG"></li>
+            <h2>Configurate your deck.js presentation</h2>
+            With a Keynode.js Server: e.g. 
+            <pre>[Keynode.JS-server]="http://keynodeserver.aksw.org"</pre>
+            <ul>
+                <li>Add a link to the JS-files into your presentation before the deck was initialiated
 
-                <li>paste your canonical URL into the textfield</li>
-                <li>hit [Enter] or hit [Ok]</li>
-            </ol>
+                    <pre>&lt;script src="[Keynode.JS-server]/watcher/keynode.state.js"&gt;&lt;/script&gt;
+&lt;script src="[Keynode.JS-server]/watcher/keynode.video.js"&gt;&lt;/script&gt;
+&lt;script src="[Keynode.JS-server]/watcher/keynode.watch.js"&gt;&lt;/script&gt;</pre>
+                </li>
+                <li>add following settings to the head of your presentation:<br>
+                    <pre>
+//Canonical URL = Identification for the Presentation:
+&lt;link 
+    rel="http://ns.aksw.org/keynode/canonical" 
+    href="[your canonical url e.g. http://myserver.com/mypresentation.html]" /&gt;
+
+//Keynode.JS Server URL
+&lt;link 
+    rel="http://ns.aksw.org/keynode/server" 
+    href="[e.g.http://localhost:4123]" /&gt;  
+  
+//opt.: insert md5(md5(&lt;yourPassword&gt;)) here, to authenticate against this password
+&lt;meta 
+    name="password" 
+    content="65e769bcfba3cc2a78d7ea32c59b7e09"&gt;
+
+//opt.: You E-Mail for passwordresets
+&lt;link 
+    rel="http://ns.aksw.org/keynode/mailto"    
+    href="[e.g.mailto:me@myserver.net]" /&gt;</pre>
+                </li>
+            </ul>
 
         </div>
         <div class="slide" id="start4">
-            <h2>How to start the presenter? (2)</h2>
+            <h2>Start the Presenter:</h2>
+            just open URL with webbrowser:
+            <ul>
+                <li>local Server: <pre><a href="http://localhost/presenter/" target="_blank">http://localhost/presenter/</a></pre></li>
+                <li>public Server: <pre>http://keynodeserver.aksw.org/presenter/</pre></li>
+            </ul>
+            <img src="images/presenter.png" alt="startView">
+        </div>
+
+        <div class="slide" id="presenter0">
+            <h2>How to use the presenter? </h2>
             <img src="./images/presenter2.PNG">
             <ol>
                 <li>if the presenter gets the content form the canonical URL, it fills the values found there otherwise you have to do the following steps</li>
