@@ -173,27 +173,35 @@ var SocketHandler = function() {
                 servers[servers.length] = nodes[server];
             }
         }
-        console.log("try to get it from:" + servers[i].url);
-        $.ajax({
-            timeout: 500,
-            url: servers[i].url + '/socket.io/socket.io.js',
-            dataType: "script"
-        }).done(function() {
-            $serverSocketIO = servers[i];
-            $(document).trigger($events.setup.advancedform.socketIOReady, servers[i]);
-            callback();
-        }).fail(function() {
-            $(document).trigger($events.setup.advancedform.socketIOError, servers[i]);
-            i = i + 1;
-            if (typeof (servers[i]) === typeof(undefined)) {
-                window.setTimeout(function() {
-                    getSocketIO(callback, 0);
-                }, timeRetryGetSocketIO);
+        if(servers.length===0){
+            window.setTimeout(function() {
+                servers=null;
+                getSocketIO(callback, 0);
+            }, timeRetryGetSocketIO);
+        }else{
+            console.log("try to get it from:" + servers[i].url);
+            $.ajax({
+                timeout: 500,
+                url: servers[i].url + '/socket.io/socket.io.js',
+                dataType: "script"
+            }).done(function() {
+                $serverSocketIO = servers[i];
+                $(document).trigger($events.setup.advancedform.socketIOReady, servers[i]);
+                callback();
+            }).fail(function() {
+                $(document).trigger($events.setup.advancedform.socketIOError, servers[i]);
+                i = i + 1;
+                if (typeof (servers[i]) === typeof(undefined)) {
+                    window.setTimeout(function() {
+                        servers=null;
+                        getSocketIO(callback, 0);
+                    }, timeRetryGetSocketIO);
 
-            } else {
-                getSocketIO(callback, i);
-            }
-        });
+                } else {
+                    getSocketIO(callback, i);
+                }
+            });
+        }
     }
     ;
     /**
