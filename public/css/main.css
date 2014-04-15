@@ -1,0 +1,23 @@
+/* 
+    Document   : main
+    Created on : 15.04.2014, 15:58:09
+    Author     : Alrik Hausdorf <alrik@gurkware.de>
+    Description:
+        Purpose of the stylesheet follows.
+*/
+body{
+    /*overflow:hidden;*/
+    padding-bottom: 51px;
+    background:url(../images/BG.png); 
+}
+h1,h2{
+    color: #ffffff;
+}
+h3{
+   color: #aaa; 
+}
+.whiteText{
+    color: #ffffff;
+}
+
+
