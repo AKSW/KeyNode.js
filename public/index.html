@@ -1,13 +1,91 @@
-<!--
-Copyright (c) 2012-2014, Gurkware Solutions GbR  All rights reserved. 
--->
 <!DOCTYPE html>
 <html>
     <head>
-        <title></title>
-        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <meta charset="utf-8" />
+        <title>This server runs KeyNode.JS </title>
+        <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link type="text/css" href="css/bootstrap.min.css" rel="stylesheet" />
+        <link type="text/css" href="css/main.css" rel="stylesheet" />
+
+
+
     </head>
-    <body>
-        <div>TODO write content</div>
+
+
+    <body id='body'>
+        <div class="container">
+            <div class="col-md-8 col-md-offset-2 col-sm-12">
+                <div class="row">
+                    <h2 id="title">
+                        KeyNode.JS
+
+                    </h2>
+
+                </div>
+                <div class="row whiteText" style="text-align: center; margin-top: 20px;">
+                    KeyNode.JS is a Javascript based Presenterview for <a href="">Deck.js</a>, it supports syncronizing your presentation and gives you the functions every regular Presenter should have.
+                </div>
+                <div class="row" style="text-align: center; margin-top: 60px;">
+                    <div class="col-xs-12">
+                        <a class="btn btn-primary btn-lg col-xs-12"  href="presenter/">Open Presenter</a>
+                    </div>
+                </div>
+                <div class="row" style=" margin-top: 40px;">
+                    <h3>If you want to know more, look here:</h3>
+                </div> 
+                <div class="row" style="text-align: center; margin-top: 20px;">
+                    <div class="col-xs-12">
+                        <a class="btn btn-default btn-lg col-xs-12"  href="https://github.com/AKSW/KeyNode.js">KeyNode.JS on Github</a>
+                    </div>
+                </div> 
+                <div class="row" style="text-align: center; margin-top: 20px;">
+                    <div class="col-sm-6 col-xs-12" >
+                        <a class="btn btn-default btn-lg col-xs-12"  href="https://github.com/AKSW/KeyNode.js/wiki">Dokumentation</a>
+                    </div>
+                    <div class="col-sm-6 col-xs-12">
+                        <a class="btn btn-default btn-lg col-xs-12"  href="https://github.com/AKSW/KeyNode.js/issues">Issues</a>
+                    </div>
+                </div>
+
+
+
+            </div>
+        </div>
+        <div class="navbar navbar-fixed-bottom navbar-default">
+            <div class="navbar-left">
+                <div class=" navbar-text ">
+                    <a href="https://github.com/AKSW/KeyNode.js/wiki" class="hidden-xs" target="newTab">Dokumentation of Keynode.JS @ GitHub</a>
+                </div>
+            </div>
+            <div class="navbar-right">
+                <div class="navbar-text" 
+                     data-toggle="tooltip"
+                     data-direction="top"
+                     data-container="body" 
+                     title="Written by Alrik Hausdorf">
+                    KeyNode.JS &copy; <a href="http://aksw.org/Projects/KeynodeJS" >AKSW.org</a>
+                </div>
+            </div>
+
+        </div>
+
+
+
+
+        <!--	jQuery from CDN (code.jquery.com) -->
+        <script type="text/javascript" src="http://code.jquery.com/jquery-2.1.0.js"></script>
+        <script type="text/javascript">
+            window.jQuery || document.write("<script src='js/jquery-2.1.0.min.js'>" + "<" + "/script>");
+        </script>   
+        <script src="js/bootstrap.min.js"></script>
+        <script>
+            /* 
+             * Global Settings 
+             */
+            $("[data-toggle='tooltip']").tooltip();
+
+
+        </script>
     </body>
 </html>
