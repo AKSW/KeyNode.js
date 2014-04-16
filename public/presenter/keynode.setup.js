@@ -97,8 +97,9 @@ var Setup = function() {
                 else
                     $nodeServer[srv] = null;
             } else if (typeof srv === "string") {
-                for (ele in $nodeServer)
-                    $nodeServer[ele] = ($nodeServer[ele].url === srv) ? null : $nodeServer[ele];
+                for (ele in $nodeServer){
+                    if($nodeServer[ele].url === srv) $nodeServer.splice(ele,1) ;
+                }
 
             }
             return this;
