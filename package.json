@@ -10,6 +10,7 @@
         
     },
     "version"       : "1.0.0",
+    "license"       : "GPL-3.0+",
     "bugs"          : 
     {
         "url"       : "https://github.com/AKSW/KeyNode.js/issues"
@@ -17,7 +18,7 @@
     "repository"    :
     { 
         "type"      : "git",
-        "url"       : "https://github.com/AKSW/KeyNode.js.git#server"
+        "url"       : "https://github.com/AKSW/KeyNode.js.git"
     },
     "dependencies"  : 
     {
