@@ -104,8 +104,7 @@ var SocketHandler = function() {
         },
         goto: function(server, data) {
 //            console.log(server.url, " -- goto", data);
-
-            $.keynode('setSlideNumber', data);
+            $setup.setSlideNumber(data);
             try {
                 presenter.slideNumber = data;
             } catch (e) {

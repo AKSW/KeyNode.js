@@ -33,7 +33,7 @@ var Setup = function() {
      */
     var $canonicalURL = null;
     var $presentationURL = null;
-
+    var $slideNumber = 0;
 
     var $nodeServer = [];
 
@@ -46,6 +46,14 @@ var Setup = function() {
         },
         getCanonicalURL: function() {
             return $canonicalURL === null ? "" : $canonicalURL;
+        },
+        setSlideNumber: function(arg) {
+            if (typeof arg === "number")
+                $slideNumber = arg;
+            return this;
+        },
+        getSlideNumber: function() {
+            return $slideNumber;
         },
         setPresentationURL: function(presentationURL) {
             if (typeof presentationURL === "string")

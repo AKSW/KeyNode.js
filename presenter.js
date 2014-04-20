@@ -129,14 +129,6 @@ var KeyNode = {
                 setup = new Setup();
             return setup;
         },
-        setSlideNumber: function(arg) {
-            if (typeof arg === "number")
-                slideNumber = arg;
-            return this;
-        },
-        getSlideNumber: function() {
-            return slideNumber;
-        },
         setSocketHandler: function(arg) {
             if (typeof arg === "object")
                 socketHandler = arg;
