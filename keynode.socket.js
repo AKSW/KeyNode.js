@@ -195,7 +195,7 @@ var SocketHandler = function() {
                 getSocketIO(callback, 0);
             }, timeRetryGetSocketIO);
         }else{
-            console.log("try to get it from:" + servers[i].url);
+//            console.log("try to get Socket.IO from:" + servers[i].url);
             $.ajax({
                 timeout: 500,
                 url: servers[i].url + '/socket.io/socket.io.js',
