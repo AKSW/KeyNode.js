@@ -222,10 +222,6 @@ var login = {
             //not performant
 //            KeyNode.loadCSS('slidechooser');
 //            KeyNode.loadJS('keynode.slidechooser');
-
-            KeyNode.loadJS('keynode.timer');
-            KeyNode.loadJS('keynode.video');
-            KeyNode.loadJS('keynode.qrcode');
             $(document).trigger($events.setup.advancedform.submit);
 
         },

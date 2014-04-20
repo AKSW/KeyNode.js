@@ -26,7 +26,7 @@
 var presenter = {
 	
         $setup : $.keynode('getSetup'),
-        slideNumber : $setup.getSlideNumber(),
+        slideNumber : 0,
         $socket : $.keynode('getSocketHandler'),
 	slideLength:-1,
 	Next : function () {
@@ -115,8 +115,13 @@ var presenter = {
 	},
 	initPresenterConsole : function () {
 		$('body').find('*').hide();
+                console.log('init');
 		KeyNode.loadTmpl('presenter',function(){
+                    presenter.slideNumber = presenter.$setup.getSlideNumber();
                     presenter.initIframe();
+                    KeyNode.loadJS('keynode.timer');
+                    KeyNode.loadJS('keynode.video');
+                    KeyNode.loadJS('keynode.qrcode');
                 });
 		
 	},
