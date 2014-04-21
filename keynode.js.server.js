@@ -47,9 +47,10 @@ setInterval(function() {
     Server_data.createLocalPresFile();
 }, 30000);
 
-
-if (Server_settings.allowAnonymousAuth) {
-    console.log(Server_settings.preTagServer + ' WARNING! anonymous mode enabled.');
+if (Server_settings.debug) {
+    if (Server_settings.allowAnonymousAuth) {
+        console.log(Server_settings.preTagServer + ' Anonymous mode enabled.');
+    }
 }
 io.set('transports', ['websocket', 'flashsocket', 'htmlfile', 'xhr-polling', 'jsonp-polling']);
 if (!Server_settings.socketIOdebug) {
