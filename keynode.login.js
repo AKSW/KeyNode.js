@@ -224,7 +224,7 @@ var login = {
 //            KeyNode.loadJS('keynode.slidechooser');
             $(document).trigger($events.setup.advancedform.submit);
 
-        },
+        }
     },
     receivePostMessage: function(event) {
         if (event.data.indexOf('getDiff') !== -1) {
