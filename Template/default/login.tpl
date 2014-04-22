@@ -430,22 +430,34 @@
                                     $(document).bind('SetupAdvancedSocketIoError', function(e, server) {
                                         $('#NodeServer')
                                                 .parent()
+                                                .find('.panel-heading .removeMe')
+                                                .remove();
+
+                                        $('#NodeServer')
+                                                .parent()
                                                 .removeClass('panel-default')
                                                 .removeClass('panel-success')
                                                 .addClass('panel-warning')
                                                 .find('.panel-heading')
+                                                .prepend('<i class="removeMe glyphicon glyphicon-refresh animate"></i> ')
                                                 .attr('data-original-title', 'At least one Server should be available.')
                                                 .tooltip();
                                     });
                                     $(document).bind('SetupAdvancedSocketIoReady', function(e, server) {
                                         $('#NodeServer')
                                                 .parent()
+                                                .find('.panel-heading .removeMe')
+                                                .remove();
+                                        $('#NodeServer')
+                                                .parent()
                                                 .removeClass('panel-default')
                                                 .removeClass('panel-warning')
                                                 .addClass('panel-success')
                                                 .find('.panel-heading')
+                                                .prepend('<i class="removeMe glyphicon glyphicon-ok"></i> ')
                                                 .attr('data-original-title', 'SocketIO lib was loaded from ' + server.url)
                                                 .tooltip();
+                                        
                                     });
                                     /*
                                      * Keynode.JS SocketEvent Handler / Binding
