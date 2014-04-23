@@ -79,12 +79,12 @@ var Setup = function() {
             for (ele in $nodeServer) {
                 if (typeof srv === "string") {
                     if ($nodeServer[ele].url === srv)
-                        return;
+                        return false;
                 }
                 if (typeof srv === "object") {
                     if ($nodeServer[ele].url === srv.url) {
                         if ($nodeServer[ele].password === srv.password) {
-                            return;
+                            return false;
                         } else {
                             updateNodeServerPassword(srv.url, srv.password);
                         }
@@ -157,11 +157,14 @@ var Setup = function() {
             if ($nodeServer.length <= 0)
                 return false;
             for (ele in $nodeServer) {
-                if ($nodeServer[ele].state === $socket.connectionStates.AUTH_SUCCESS)
+                if ($nodeServer[ele].state === $socket.connectionStates.AUTH_SUCCESS){
                     return true;
-                if ($nodeServer[ele].state === $socket.connectionStates.AUTH_ANONYM)
+                }
+                if ($nodeServer[ele].state === $socket.connectionStates.AUTH_ANONYM){
                     return true;
+                }   
             }
+            return false;
         },
         /**
          * get Base64 String of this Setup
