@@ -129,14 +129,6 @@ var KeyNode = {
                 setup = new Setup();
             return setup;
         },
-        setSlideNumber: function(arg) {
-            if (typeof arg === "number")
-                slideNumber = arg;
-            return this;
-        },
-        getSlideNumber: function() {
-            return slideNumber;
-        },
         setSocketHandler: function(arg) {
             if (typeof arg === "object")
                 socketHandler = arg;
@@ -183,23 +175,6 @@ var KeyNode = {
         message: {
             id: '#message',
             timeout_time: 2000,
-        },
-        strings: {
-            retry_canceled: 'Retry canceled.(Socket.io loaded)',
-            try_connect: 'try 2 connect to: ', /* serverURl added after */
-            ident_accepted: 'U r admin of: ', /* CanoURL added after */
-            connected_server: 'Connected to servernumber: ', /* servernumber added after */
-            error_pw_wrong: 'Password wrong?',
-            retry_in: 'Retry in ', /*seconds and 'sec' added after*/
-            error_no_load_from_cano: 'Can not load your presentation from the canonical url.',
-            error_one_at_least: 'Please add at least one Nodeserver.',
-            socket_pw_reseted_console: 'The password was reset. Please look in the console of the server.',
-            socket_pw_reseted_mail: 'The new Password was send to your mail address.',
-            socket_pw_reset_fail_nomail: 'No Mailadress found.',
-            start_pres: 'start presenter',
-            test_inputs: 'test inputs',
-            retest_inputs: 'retest inputs',
-            node_not_empty: 'please add something like http://server.de:port ',
         },
         keys: {
             // enter, space, page down,  down arrow, left arrow,

@@ -56,6 +56,7 @@ var SocketHandler = function() {
     function connectServers() {
         var nodes = $setup.getNodeServers();
         for (var server in nodes) {
+//            console.log(nodes[server].url,'SOCKET-connectServers');
             var protocol = nodes[server].url.substring(0, nodes[server].url.indexOf(":"));
             var rest = nodes[server].url.substring(nodes[server].url.indexOf(":") + 1);
             var port = (rest.indexOf(":") !== -1) ? rest.substring(rest.indexOf(":") + 1) : (protocol === "https") ? 443 : 80;
@@ -104,8 +105,7 @@ var SocketHandler = function() {
         },
         goto: function(server, data) {
 //            console.log(server.url, " -- goto", data);
-
-            $.keynode('setSlideNumber', data);
+            $setup.setSlideNumber(data);
             try {
                 presenter.slideNumber = data;
             } catch (e) {
@@ -129,48 +129,53 @@ var SocketHandler = function() {
         }
     };
     function bindEvents(server1) {
-        var server = server1;
-//        console.log(server.url, " -- BINDING");
-        $(document).trigger($events.nodeServer.binding, server);
-        server.socket
+//        console.log(server1.url, " -- BINDING");
+        $(document).trigger($events.nodeServer.binding, server1);
+        server1.socket
                 .removeAllListeners('connect')
                 .on('connect',
                 function() {
-                    listener.connect(server);
+                    listener.connect(getServerFromSocket(this));
                 })
                 .removeAllListeners('Ready')
                 .on('Ready',
                 function() {
-                    listener.ready(server);
+                    listener.ready(getServerFromSocket(this));
                 })
                 .removeAllListeners('GoTo')
                 .on('GoTo',
                 function(data) {
-                    listener.goto(server, data);
+                    listener.goto(getServerFromSocket(this), data);
                 })
                 .removeAllListeners('disconnect')
                 .on('disconnect',
                 function() {
-                    listener.disconnect(server);
+                    listener.disconnect(getServerFromSocket(this));
                 })
                 .removeAllListeners('identAsAdmin')
                 .on('identAsAdmin',
                 function(data) {
-                    listener.ident(server, data);
+                    listener.ident(getServerFromSocket(this), data);
                 })
                 .removeAllListeners('setPassword')
                 .on('setPassword',
                 function(data) {
-                    listener.passwordSet(server, data);
+                    listener.passwordSet(getServerFromSocket(this), data);
                 })
                 .removeAllListeners('resetedPassword')
                 .on('resetedPassword',
                 function(data) {
-                    listener.passwordReset(server, data);
+                    listener.passwordReset(getServerFromSocket(this), data);
                 });
-
     }
     ;
+    function getServerFromSocket(socket){
+        var url= socket.socket.options.host;
+        if(socket.socket.options.port!==443 && socket.socket.options.port!==80)url+=":"+socket.socket.options.port;
+        if(socket.socket.options.port===443)url="https://"+url;
+        else url="http://"+url;
+        return $setup.getNodeServer(url);
+    };
     /**
      * try to get Socket IO from one of the Servers
      * @param {function|undefined} i wich iterator step
@@ -196,7 +201,7 @@ var SocketHandler = function() {
                 getSocketIO(callback, 0);
             }, timeRetryGetSocketIO);
         }else{
-            console.log("try to get it from:" + servers[i].url);
+//            console.log(i,"try to get Socket.IO from:" , servers[i].url);
             $.ajax({
                 timeout: 500,
                 url: servers[i].url + '/socket.io/socket.io.js',

@@ -44,8 +44,8 @@ var SocketHandler = function($deck) {
     var $serverSocketIO = null;
     var $lastActiveServer = null;
 
-    var timeRetryGetSocketIO = 10000;
-    var timeoutGetSocketIO = 500;
+    var timeRetryGetSocketIO = 500;
+    var timeoutGetSocketIO = 500;   
 
     var servers = null;
     /**

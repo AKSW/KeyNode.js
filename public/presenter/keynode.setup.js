@@ -33,7 +33,7 @@ var Setup = function() {
      */
     var $canonicalURL = null;
     var $presentationURL = null;
-
+    var $slideNumber = 0;
 
     var $nodeServer = [];
 
@@ -46,6 +46,14 @@ var Setup = function() {
         },
         getCanonicalURL: function() {
             return $canonicalURL === null ? "" : $canonicalURL;
+        },
+        setSlideNumber: function(arg) {
+            if (typeof arg === "number")
+                $slideNumber = arg;
+            return this;
+        },
+        getSlideNumber: function() {
+            return $slideNumber;
         },
         setPresentationURL: function(presentationURL) {
             if (typeof presentationURL === "string")
@@ -61,7 +69,7 @@ var Setup = function() {
         updateNodeServerPassword: function(srv, pass) {
             var $socket = $.keynode('getSocketHandler');
             for (ele in $nodeServer)
-                if ($nodeServer[ele].url === srv) {
+                if (ele === srv || $nodeServer[ele].url === srv) {
                     $nodeServer[ele].password = pass;
                     $socket.reIdentServer(srv);
                 }
@@ -71,12 +79,12 @@ var Setup = function() {
             for (ele in $nodeServer) {
                 if (typeof srv === "string") {
                     if ($nodeServer[ele].url === srv)
-                        return;
+                        return false;
                 }
                 if (typeof srv === "object") {
                     if ($nodeServer[ele].url === srv.url) {
                         if ($nodeServer[ele].password === srv.password) {
-                            return;
+                            return false;
                         } else {
                             updateNodeServerPassword(srv.url, srv.password);
                         }
@@ -85,7 +93,7 @@ var Setup = function() {
                 next = (ele > next) ? ele : next;
             }
             next++;
-            
+
             if (typeof srv === "string")
                 $nodeServer[next] = {
                     'url': srv,
@@ -114,8 +122,9 @@ var Setup = function() {
                 else
                     $nodeServer[srv] = null;
             } else if (typeof srv === "string") {
-                for (ele in $nodeServer){
-                    if($nodeServer[ele].url === srv) $nodeServer.splice(ele,1) ;
+                for (ele in $nodeServer) {
+                    if ($nodeServer[ele].url === srv)
+                        $nodeServer.splice(ele, 1);
                 }
 
             }
@@ -141,14 +150,21 @@ var Setup = function() {
          * tests if setup got enough information for Presentation
          * @returns Boolean 
          */
-        isReady: function(){
+        isReady: function() {
             var $socket = $.keynode('getSocketHandler');
-            if($canonicalURL===null) return false;
-            if($nodeServer.length<=0) return false;
-             for (ele in $nodeServer){
-                 if($nodeServer[ele].state===$socket.connectionStates.AUTH_SUCCESS) return true;
-                 if($nodeServer[ele].state===$socket.connectionStates.AUTH_ANONYM) return true;
-             }
+            if ($canonicalURL === null)
+                return false;
+            if ($nodeServer.length <= 0)
+                return false;
+            for (ele in $nodeServer) {
+                if ($nodeServer[ele].state === $socket.connectionStates.AUTH_SUCCESS){
+                    return true;
+                }
+                if ($nodeServer[ele].state === $socket.connectionStates.AUTH_ANONYM){
+                    return true;
+                }   
+            }
+            return false;
         },
         /**
          * get Base64 String of this Setup
@@ -175,14 +191,14 @@ var Setup = function() {
          * @returns Base64 String 
          */
         setSetupString: function(string) {
-            
+
             var obj = JSON.parse(Base64.decode(string));
             $canonicalURL = obj.c || null;
             $presentationURL = obj.p || null;
-            $nodeServer=[];
+            $nodeServer = [];
             if (obj.ns) {
                 for (ele in obj.ns)
-                   this.addNodeServer(obj.ns[ele]); 
+                    this.addNodeServer(obj.ns[ele]);
             }
             return;
         }

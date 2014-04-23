@@ -32,7 +32,7 @@
             <div class="col-sm-12 hidden-xs" style="visibility: hidden;">
                 <div class="panel panel-default">
                     <div class="panel-heading">
-                        <h3 class="panel-title clearfix">Notes
+                        <h3 class="panel-title clearfix">notes
                             <div class="pull-right">
                                 <button class="btn btn-xs" style="margin-top: -4px;margin-bottom: -3px;">save</button>
                             </div>

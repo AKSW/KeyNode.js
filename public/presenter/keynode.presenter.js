@@ -24,15 +24,16 @@
  * @author Alrik Hausdorf <admin@morulia.de>
  */
 var presenter = {
-	slideNumber : $.keynode('getSlideNumber'),
+	
         $setup : $.keynode('getSetup'),
+        slideNumber : 0,
         $socket : $.keynode('getSocketHandler'),
 	slideLength:-1,
 	Next : function () {
-                presenter.slideNumber = $.keynode('getSlideNumber');
+                presenter.slideNumber = presenter.$setup.getSlideNumber();
 		if ((presenter.slideLength!==-1)&&(presenter.slideNumber < presenter.slideLength)) {
 			presenter.slideNumber += 1;
-                        $.keynode('setSlideNumber',presenter.slideNumber);
+                        presenter.$setup.setSlideNumber(presenter.slideNumber);
 			presenter.GotoFolie(presenter.slideNumber);
                         var e = $.Event($.keynode('getEvents').presenter.slideChange);
                         $(window).trigger(e,[presenter.slideNumber-1,presenter.slideNumber]);
@@ -44,10 +45,10 @@ var presenter = {
 	},
                 
 	Prev : function () {
-                presenter.slideNumber = $.keynode('getSlideNumber');
+                presenter.slideNumber = presenter.$setup.getSlideNumber();
 		if (presenter.slideNumber > 0) {
 			presenter.slideNumber -= 1;
-                        $.keynode('setSlideNumber',presenter.slideNumber);
+                        presenter.$setup.setSlideNumber(presenter.slideNumber);
 			presenter.GotoFolie(presenter.slideNumber);
                         var e = $.Event($.keynode('getEvents').presenter.slideChange);
                         $(window).trigger(e,[presenter.slideNumber+1,presenter.slideNumber]);
@@ -114,8 +115,13 @@ var presenter = {
 	},
 	initPresenterConsole : function () {
 		$('body').find('*').hide();
+                console.log('init');
 		KeyNode.loadTmpl('presenter',function(){
+                    presenter.slideNumber = presenter.$setup.getSlideNumber();
                     presenter.initIframe();
+                    KeyNode.loadJS('keynode.timer');
+                    KeyNode.loadJS('keynode.video');
+                    KeyNode.loadJS('keynode.qrcode');
                 });
 		
 	},

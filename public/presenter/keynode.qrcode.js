@@ -25,19 +25,19 @@
  * Uses: https://github.com/davidshimjs/qrcodejs
  */
 
-var QRCodeDiplay = {
+var QRCodeDisplay = {
     $qrcode: null,
     init: function() {
         $('body').append('<div class="panel panel-default" id="qrcodeWrapper"><div class="panel-heading">To open the Presenter with your<br> Smartphone or Tablet just scan this Code:</div><div class="panel-body" id="qrcode"></div></div>');
         var qrcode = $('<div id="qrcodeTabWrapper" class="multibar-tab"><h2>QR-Code</h2></div>');
-        qrcode.click(QRCodeDiplay.toggleDisplay);
+        qrcode.click(QRCodeDisplay.toggleDisplay);
         PresenterUI.MultiBar.add(qrcode, 11);
-        $('#qrcodeWrapper').click(QRCodeDiplay.hide);
-        QRCodeDiplay.generateCode();
-        QRCodeDiplay.show();
+        $('#qrcodeWrapper').click(QRCodeDisplay.hide);
+        QRCodeDisplay.generateCode();
+        QRCodeDisplay.show();
     },
     generateCode: function() {
-        QRCodeDiplay.$qrcode = new QRCode(document.getElementById("qrcode"), {
+        QRCodeDisplay.$qrcode = new QRCode(document.getElementById("qrcode"), {
             width: 256,
             height: 256,
             colorDark: "#000000",
@@ -45,14 +45,14 @@ var QRCodeDiplay = {
             correctLevel: QRCode.CorrectLevel.H
         }),
         
-        QRCodeDiplay.$qrcode.clear(); // clear the code.
-        QRCodeDiplay.$qrcode.makeCode(window.location.href);
+        QRCodeDisplay.$qrcode.clear(); // clear the code.
+        QRCodeDisplay.$qrcode.makeCode(window.location.href);
     },
     toggleDisplay: function() {
         if ($('#qrcodeWrapper').is(':visible'))
-            QRCodeDiplay.hide();
+            QRCodeDisplay.hide();
         else
-            QRCodeDiplay.show();
+            QRCodeDisplay.show();
     },
     show: function() {
         $('#qrcodeWrapper').show('fast');
@@ -65,5 +65,5 @@ var QRCodeDiplay = {
 
 KeyNode.loadJS('js/qrcode.min', function() {
     KeyNode.loadCSS('qrcode');
-    QRCodeDiplay.init();
+    QRCodeDisplay.init();
 });

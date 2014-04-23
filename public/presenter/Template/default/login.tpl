@@ -116,7 +116,7 @@
                                                      data-container="body" 
                                                      title="add an custom server">
                                                     <span class="input-group-addon">http://</span>
-                                                    <input type="text" class="form-control">
+                                                    <input type="text" class="addNodeServerInput form-control">
                                                     <span class="input-group-btn">
                                                         <button class="btn btn-default addNodeServer" type="button">add</button>
                                                     </span>
@@ -207,7 +207,7 @@
              data-direction="top"
              data-container="body" 
              title="Written by Alrik Hausdorf">
-            KeyNode.JS &copy; <a href="http://aksw.org/Projects/KeynodeJS" >AKSW.org</a>
+            KeyNode.JS &copy; <a href="http://aksw.org/Projects/KeynodeJS">Alrik Hausdorf</a>
         </div>
     </div>
 
@@ -215,6 +215,14 @@
 
 <script>
                                 KeyNode.loadJS('Template/default/Bootstrap/bootstrap.min', function() {
+
+                                    function trimURL(url) {
+                                        if ((url.indexOf("http://") !== -1))
+                                            url = url.substr(7);
+                                        else if (url.indexOf("https://") !== -1)
+                                            url = url.substr(8);
+                                        return url;
+                                    }
                                     /* 
                                      * Global Settings 
                                      */
@@ -238,7 +246,7 @@
                                      */
                                     $("#NodeServer").delegate(".removeServer", "click", function() {
                                         var ele = $(this).parents('.server').find(".serverUrl");
-                                        var value = "http://" + ele.val();
+                                        var value = ele.parent().find('.input-group-addon').html() + ele.val();
                                         login.advancedForm.removeNodeServer(value);
                                     });
 
@@ -247,7 +255,7 @@
                                      */
                                     $("#NodeServer").delegate(".getNewPassword", "click", function() {
                                         var ele = $(this).parents('.server').find(".serverUrl");
-                                        var value = "http://" + ele.val();
+                                        var value = ele.parent().find('.input-group-addon').html() + ele.val();
                                         var setup = $.keynode('getSetup');
                                         var server = setup.getNodeServer(value);
                                         server.socket
@@ -260,7 +268,7 @@
                                      */
                                     $("#NodeServer").delegate(".retestPassword", "click", function() {
                                         var ele = $(this).parents('.server').find(".serverUrl");
-                                        var value = "http://" + ele.val();
+                                        var value = ele.parent().find('.input-group-addon').html() + ele.val();
                                         var setup = $.keynode('getSetup');
                                         setup.updateNodeServerPassword(value, $(this).parents('.server').find(".passwordInput").val());
                                         var $socket = $.keynode('getSocketHandler');
@@ -274,7 +282,7 @@
                                         var ele = $(this).parents('.server').find(".serverUrl");
                                         if ($(this).parents('.server').find('.setPassword').hasClass('disabled'))
                                             return;
-                                        var url = "http://" + ele.val();
+                                        var url = ele.parent().find('.input-group-addon').html() + ele.val();
                                         var setup = $.keynode('getSetup');
                                         var newPass = prompt("Please enter the new Password for Server " + url + ".", "");
                                         if (newPass !== null) {
@@ -314,6 +322,21 @@
                                         if (val === "")
                                             return;
                                         login.advancedForm.addNodeServer(val);
+                                    });
+                                    $("#advancedForm").delegate(".addNodeServerInput", "keydown", function(e) {
+                                        if (e.which === 13) {
+                                            var val = $(this).parents('.input-group').find('input').val();
+                                            if (val === "") {
+                                                e.preventDefault();
+                                                return false;
+                                            }
+
+                                            login.advancedForm.addNodeServer(val);
+                                            e.preventDefault();
+                                            return false;
+                                        }
+
+
                                     });
 
                                     /*
@@ -356,6 +379,15 @@
                                             $('.easySelectError').fadeOut('slow').remove();
                                         }, 6000);
                                     });
+                                    $(document).bind('SetupAdvancedNodeserverError', function(e, error) {
+                                        $('#advancedForm').prepend('<div class=" advancedNodeserverError col-sm-12" style="margin-top: 15px;"><div class=" alert alert-warning alert-dismissable" >' +
+                                                '<button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>' +
+                                                '<strong>Error!</strong> ' + error +
+                                                '</div><div>');
+                                        window.setTimeout(function() {
+                                            $('.advancedNodeserverError').fadeOut('slow').remove();
+                                        }, 6000);
+                                    });
                                     $(document).bind('SetupAdvancedSubmitError', function(e, error) {
                                         $('#advancedForm').prepend('<div class=" advancedSubmitError col-sm-12" style="margin-top: 15px;"><div class=" alert alert-warning alert-dismissable" >' +
                                                 '<button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>' +
@@ -369,21 +401,18 @@
                                      * Keynode.JS Event Handler #Setup-Form-Advanced / CanonicalURL
                                      */
                                     $(document).bind('SetupAdvancedCanonicalReady', function(e, value) {
-                                        if (value.indexOf("http://") !== -1)
-                                            value = value.substring(7, value.length);
-                                        else if (value.indexOf("https://") !== -1)
-                                            value = value.substring(8, value.length);
-                                        $('#inputCanonicalUrl').attr('value', value);
+
+                                        if (value.indexOf("https://") !== -1)
+                                            $('#inputCanonicalUrl').parent().find('.input-group-addon').html('https://');
+                                        $('#inputCanonicalUrl').attr('value', trimURL(value));
                                     });
                                     /*
                                      * Keynode.JS Event Handler #Setup-Form-Advanced / PresentationURL
                                      */
                                     $(document).bind('SetupAdvancedPresentationurlReady', function(e, value) {
-                                        if (value.indexOf("http://") !== -1)
-                                            value = value.substring(7, value.length);
-                                        else if (value.indexOf("https://") !== -1)
-                                            value = value.substring(8, value.length);
-                                        $('#inputDeckUrl').attr('value', value);
+                                        if (value.indexOf("https://") !== -1)
+                                            $('#inputDeckUrl').parent().find('.input-group-addon').html('https://')
+                                        $('#inputDeckUrl').attr('value', trimURL(value));
                                     });
                                     /*
                                      * Keynode.JS Event Handler #Setup-Form-Advanced / NodeServer
@@ -394,15 +423,21 @@
                                         var container = $('#server_wrapper').clone();
                                         var server = setup.getNodeServer(id);
                                         //set URL
+                                        var ssl = false;
                                         var url = server.url;
-                                        if (url.indexOf("http://") !== -1)
+                                        if (url.indexOf("http://") !== -1) {
                                             url = url.substring(7, url.length);
-                                        else if (url.indexOf("https://") !== -1)
+                                        } else if (url.indexOf("https://") !== -1) {
+                                            ssl = true;
                                             url = url.substring(8, url.length);
-                                        container.attr('id', 'server_' + id)
+                                        }
+                                        container.attr('id', 'server_' + url)
                                                 .removeClass('hidden')
                                                 .addClass('server')
-                                                .find('.serverUrl').attr("value", url);
+                                                .find('.serverUrl').attr("value", url)
+                                                .parent()
+                                                .find('.input-group-addon')
+                                                .html((ssl === true) ? "https://" : "http://");
                                         //set password
                                         var pw = server.password;
                                         if (typeof pw === 'undefined')
@@ -416,9 +451,8 @@
                                     $(document).bind('SetupAdvancedNodeserverRemove', function(e, server) {
 
                                         //set URL
-                                        var url = server;
                                         var wrapper = $('#NodeServer')
-                                                .find('input[value="' + url.substr(7) + '"]')
+                                                .find('input[value="' + trimURL(server) + '"]')
                                                 .parents('.server');
                                         wrapper.find('.removeServer').tooltip('destroy');
                                         wrapper.fadeOut('fast').remove();
@@ -430,29 +464,41 @@
                                     $(document).bind('SetupAdvancedSocketIoError', function(e, server) {
                                         $('#NodeServer')
                                                 .parent()
+                                                .find('.panel-heading .removeMe')
+                                                .remove();
+
+                                        $('#NodeServer')
+                                                .parent()
                                                 .removeClass('panel-default')
                                                 .removeClass('panel-success')
                                                 .addClass('panel-warning')
                                                 .find('.panel-heading')
+                                                .prepend('<i class="removeMe glyphicon glyphicon-refresh animate"></i> ')
                                                 .attr('data-original-title', 'At least one Server should be available.')
                                                 .tooltip();
                                     });
                                     $(document).bind('SetupAdvancedSocketIoReady', function(e, server) {
                                         $('#NodeServer')
                                                 .parent()
+                                                .find('.panel-heading .removeMe')
+                                                .remove();
+                                        $('#NodeServer')
+                                                .parent()
                                                 .removeClass('panel-default')
                                                 .removeClass('panel-warning')
                                                 .addClass('panel-success')
                                                 .find('.panel-heading')
+                                                .prepend('<i class="removeMe glyphicon glyphicon-ok"></i> ')
                                                 .attr('data-original-title', 'SocketIO lib was loaded from ' + server.url)
                                                 .tooltip();
+
                                     });
                                     /*
                                      * Keynode.JS SocketEvent Handler / Binding
                                      */
                                     $(document).bind('NodeserverBinding', function(e, server) {
                                         $('#NodeServer')
-                                                .find('input[value="' + server.url.substr(7) + '"]')
+                                                .find('input[value="' + trimURL(server.url) + '"]')
                                                 .parents('.server')
                                                 .find('.server-status').html('<span class="label label-danger"><i class="glyphicon glyphicon-ban-circle"><i></span>')
                                                 .attr('data-original-title', 'Server Offline')
@@ -474,9 +520,9 @@
                                      * Keynode.JS SocketEvent Handler / PasswordReset
                                      */
                                     $(document).bind('NodeserverPassReset', function(e, data1) {
-
+                                    
                                         var serverWrapper = $('#NodeServer')
-                                                .find('input[value="' + data1.server.url.substr(7) + '"]')
+                                                .find('input[value="' + trimURL(data1.server.url) + '"]')
                                                 .parents('.server');
                                         if (data1.data.type === "mailReset")
                                             alert('Reset for Server "' + data1.server.url + '" successful.\nPassword was send to your Email.');
@@ -507,7 +553,7 @@
                                      */
                                     $(document).bind('NodeserverConnected', function(e, server) {
                                         $('#NodeServer')
-                                                .find('input[value="' + server.url.substr(7) + '"]')
+                                                .find('input[value="' + trimURL(server.url) + '"]')
                                                 .parents('.server')
                                                 .find('.server-status').html('<span class="label label-warning"><i class="glyphicon glyphicon-link"><i></span>')
                                                 .attr('data-original-title', 'connected')
@@ -519,7 +565,7 @@
                                      */
                                     $(document).bind('NodeserverDiconnected', function(e, server) {
                                         $('#NodeServer')
-                                                .find('input[value="' + server.url.substr(7) + '"]')
+                                                .find('input[value="' + trimURL(server.url) + '"]')
                                                 .parents('.server')
                                                 .find('.server-status').html('<span class="label label-error"><i class="glyphicon glyphicon-ban-circle"><i></span>')
                                                 .attr('data-original-title', 'disconnected')
@@ -532,7 +578,7 @@
                                         var server = eventData.server;
                                         var data = eventData.data;
                                         var serverWrapper = $('#NodeServer')
-                                                .find('input[value="' + server.url.substr(7) + '"]')
+                                                .find('input[value="' + trimURL(server.url) + '"]')
                                                 .parents('.server');
                                         if (data.ident === "ADMIN") {
                                             serverWrapper.find('.setPassword')
@@ -560,7 +606,7 @@
                                         } else {
 
                                             if (data.error) {
-                                                serverWrapper.prepend('<div class=" removeMe col-sm-12" style="margin-top: 15px;"><div class="   alert alert-success alert-dismissable" >' +
+                                                serverWrapper.prepend('<div class=" removeMe col-sm-12" style="margin-top: 15px;"><div class="   alert alert-warning alert-dismissable" >' +
                                                         '<button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>' +
                                                         '<strong> Error!</strong><br>"' + data.error + '"' +
                                                         '</div></div>');
@@ -584,12 +630,13 @@
                                      */
                                     $(document).bind('NodeserverReady', function(e, server) {
                                         $('#NodeServer')
-                                                .find('input[value="' + server.url.substr(7) + '"]')
+                                                .find('input[value="' + trimURL(server.url) + '"]')
                                                 .parents('.server')
                                                 .find('.server-status').html('<span class="label label-warning"><i class="glyphicon glyphicon-ok-circle"><i></span>')
                                                 .attr('data-original-title', 'Connected to Slide')
                                                 .tooltip();
                                     });
+
                                     /*
                                      * hash test
                                      */

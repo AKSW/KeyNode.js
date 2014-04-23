@@ -34,7 +34,7 @@ var login = {
     hashPreTag: ":!/",
     helper: {
         urlCode: function(url) {
-            if (url.indexOf("http://") === -1)
+            if ((url.indexOf("http://") === -1) &&(url.indexOf("https://") === -1) )
                 url = "http://" + url;
             return url;
         },
@@ -88,7 +88,7 @@ var login = {
                     $easyselectors = KeyNode.options.selectors.easy;
             $(document).trigger($events.setup.easyform.submitBefore);
             if ($($easyselectors.select).length
-                    && $($easyselectors.select).val() !== "--nothing selected--") {
+                    && $($easyselectors.select).val().indexOf("--") !== 0) {
                 var url = location.host + $($easyselectors.select).val();
                 login.helper.setLastSelected(url);
                 login.easyForm.getSettingsFromUrl(url);
@@ -141,10 +141,16 @@ var login = {
             var url = login.helper.urlCode(srv);
             this.serverSettings = $.keynode('getSetup');
             var id = this.serverSettings.addNodeServer(url);
-
-            if (this.socketHandler === null)
+            if(id===false){
+                  $(document).trigger($events.setup.advancedform.nodeServerError, "Nodeserver already added.");
+                  return;
+            }
+            if (this.socketHandler === null){
                 this.socketHandler = new SocketHandler();
-            $(document).trigger($events.setup.advancedform.nodeServerNew, id);
+                $.keynode('setSocketHandler', this.socketHandler);
+            }
+            this.socketHandler.reinit();
+          $(document).trigger($events.setup.advancedform.nodeServerNew, id);
         },
         startWithHash: function(hash) {
             this.serverSettings = new Setup();
@@ -222,13 +228,9 @@ var login = {
             //not performant
 //            KeyNode.loadCSS('slidechooser');
 //            KeyNode.loadJS('keynode.slidechooser');
-
-            KeyNode.loadJS('keynode.timer');
-            KeyNode.loadJS('keynode.video');
-            KeyNode.loadJS('keynode.qrcode');
             $(document).trigger($events.setup.advancedform.submit);
 
-        },
+        }
     },
     receivePostMessage: function(event) {
         if (event.data.indexOf('getDiff') !== -1) {
