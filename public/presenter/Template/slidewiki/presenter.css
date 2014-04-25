@@ -1,0 +1,243 @@
+/*
+ *  Copyright (C) 2011 Alrik Hausdorf
+ *  
+ *  This file is part of KeyNode.JS.
+ * 
+ *  KeyNode.JS is free software: you can redistribute it and/or modify
+ *  it under the terms of the GNU General Public License as published by
+ *  the Free Software Foundation, either version 3 of the License, or
+ *  (at your option) any later version.
+ *  
+ *  KeyNode.JS is distributed in the hope that it will be useful,
+ *  but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ *  GNU General Public License for more details.
+ *
+ *  You should have received a copy of the GNU General Public License
+ *  along with KeyNode.JS.  If not, see <http://www.gnu.org/licenses/>.
+ * 
+ */
+#slideData { display: none; }
+#PresenterWrapper { display: none; }
+
+html, body {
+    height: 100%;
+    width: 100%; 
+    overflow: hidden;
+}
+body>.container{
+    max-width: 1024px;
+}
+.wrapper {
+    width: 100%;
+    display: inline-block;
+    position: relative;
+}
+.wrapper:after {
+    /* padding-top: 56.25%;  /*16:9 ratio*/
+    padding-top: 75.00%;    /*800:600 ratio*/
+    /* padding-top: 50.00%;  /*tested ratio*/
+    display: block;
+    content: '';
+}
+.main {
+    position: absolute;
+    top: 0; bottom: 0; right: 0; left: 0; /*fill parent*/
+}
+
+div.clickBlocker{
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 10; 
+}
+/*div#center_container{
+        position:absolute;
+        width:3072px;
+        height: 768px;
+        left:50%;
+        top:50%;
+        margin-left:-1536px;
+        margin-top:-384px;
+}
+
+
+
+#PresenterFooterWrapper{
+        clear: both;
+        height: 18px;
+        margin: 18px;
+        text-align: center;
+        -webkit-border-radius: 10px;
+    -moz-border-radius: 10px;
+    border-radius: 10px;
+        background: #555;
+        -webkit-box-shadow: 1px 1px 3px #222;
+    -moz-box-shadow: 1px 1px 4px #222;
+    box-shadow: 1px 1px 4px #222;
+}
+div#slide_container {
+        position: absolute;
+        left: 0px;
+        width: 3092px;
+}
+
+
+div#slide_current_cont {
+    position: absolute;
+    left: 1034px;
+        border-radius: 10px;
+        box-shadow: 0px 0px 15px #000;
+        width: 1004px;
+        height: 600px;
+        background-color: #555;
+        margin-bottom: 18px;
+        padding: 10px 10px 10px 10px;
+        z-Index: 15;
+}
+
+div#slide_before_cont {
+    position: absolute;
+    left: 0px;
+        border-radius: 10px;
+        box-shadow: 0px 0px 15px #000;
+        width: 1004px;
+        height: 600px;
+        background-color: #555;
+        margin-bottom: 18px;
+        padding: 10px;
+        z-Index: 15;
+}
+
+div#slide_after_cont {
+    position:absolute;
+    left:2068px;
+        border-radius: 10px;
+        box-shadow: 0px 0px 15px #000;
+        width: 1004px;
+        height: 600px;
+        background-color: #555;
+        padding: 10px 10px 10px 10px;
+        z-Index:15;
+
+}
+.slide_header{
+        font-family: Verdana, sans-serif;
+        text-align: center;
+        background-color: #555;
+        padding-top: 5px;
+        position: absolute;
+        border-radius: 10px;
+        box-shadow: 0px 0px 15px #000;
+        width: 300px;
+        left: 1536px;
+        height: 100px;
+        margin-left: -150px;
+        top: -30px;
+        overflow: hidden;
+        z-Index: 14;
+}
+div#slide_before_header {
+        left: 512px;
+}
+div#slide_after_header {
+        left: 2570px;
+}
+
+div#slide_current_header {
+        left: 1536px;
+}
+div#slide_current {
+        width: 100%;
+        height: 100%;
+        background-color: #fff;
+        overflow: hidden;
+}
+
+div#slide_before {
+        width: 100%;
+        height: 100%;
+        background-color: #fff;
+        overflow: hidden;
+}
+
+div#slide_after {
+        width: 100%;
+        height: 100%;
+        background-color: #fff;
+        overflow: hidden;
+}
+
+
+#CurrentFrame, #AfterFrame {
+    width: 150%;
+    height: 150%;
+    -moz-transform: scale(0.667) translate(-25%, -25%);
+    -webkit-transform: scale(0.667) translate(-25%, -25%);
+    transform: scale(0.667) translate(-25%, -25%);
+}
+*/
+
+/* *****************
+    MultiBar styles
+   ***************** */
+
+#multibar {
+    position: fixed;
+    bottom: 0;
+    right: 45pt;
+    z-index: 30;
+}
+
+#multibar > * {
+    float: left;
+}
+
+.multibar-tab {
+    -moz-box-shadow: 0 0 15px #000;
+    -webkit-box-shadow: 0 0 15px #000;
+    box-shadow: 0 0 15px #000;
+}
+
+.multibar-tab > h2 {
+    display: block;
+    width: 60pt;
+    height: 18pt;
+    margin: 0;
+    margin-left: auto;
+    padding: 2pt 8pt;
+
+    background: #555;
+    border: 1px solid #999;
+    border-bottom: none;
+    -moz-border-radius: 4pt 4pt 0 0;
+    -webkit-border-radius: 4pt 4pt 0 0;
+    border-radius: 4pt 4pt 0 0;
+    color: white;
+    cursor: pointer;
+    font-family: ​Calibri,​Arial,sans-serif;
+    font-weight: normal;
+    font-size: 14pt;
+    text-align: center;
+}
+
+.multibar-tab > h2:hover {
+    text-shadow: 0 0 0.05em #ccc;
+}
+
+
+.multibar-tab > .content {
+    min-width: 30pt;
+    height: 78px;
+    padding: 3pt 8pt;
+
+    background: #888;
+    -moz-border-radius: 4pt 0 0 0;
+    -webkit-border-radius: 4pt 0 0 0;
+    border-radius: 4pt 0 0 0;
+    color: white;
+}
+
+

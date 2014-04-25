@@ -21,12 +21,12 @@
         <div class="row">
             <h2 id="title">
                 KeyNode.JS
-                <small>Synchronize presentations everywhere.</small>
+                <small>SlideWiki-version</small>
             </h2>  
         </div>
         <div class="row">
             <div class="panel-group" id="blocks">
-                <div class="panel panel-default">
+                <div class="panel panel-default" style="display: none;">
                     <div class="panel-heading">
                         <a data-toggle="collapse" data-parent="#blocks" href="#easyForm">
                             <h4 class="panel-title">
@@ -35,7 +35,7 @@
                             </h4>
                         </a>
                     </div>
-                    <div id="easyForm" class="panel-collapse collapse in">
+                    <div id="easyForm" class="panel-collapse collapse">
                         <div class="panel-body">
                             <!-- <EasyForm> -->
                             <form role="form">
@@ -59,13 +59,13 @@
                 </div>
                 <div class="panel panel-default">
                     <div class="panel-heading">
-                        <a data-toggle="collapse" data-parent="#blocks" href="#advancedForm">
+                        
                             <h4 class="panel-title">
-                                advanced settings 
+                                settings 
                             </h4>
-                        </a>
+                       
                     </div>
-                    <div id="advancedForm" class="panel-collapse collapse">
+                    <div id="advancedForm" class="panel">
                         <div class="panel-body">
                             <!-- <AdvancedForm> -->
                             <form class="form-horizontal" role="form" onsubmit="return false;">
@@ -178,7 +178,7 @@
                                         <!-- </Server> -->
                                     </div>
                                 </div>
-                                <button class="form-control btn btn-default" id="advancedsubmit">start presentation</button>
+                                <button class="form-control btn btn-default btn-lg btn-success" style="height: auto;" id="advancedsubmit"><i class="glyphicon glyphicon-arrow-right"> </i> Start presentation</button>
                             </form>
                             <!-- </AdvancedForm> -->                        
                         </div>
@@ -214,8 +214,8 @@
 </div>
 
 <script>
-                                KeyNode.loadJS('Template/default/Bootstrap/bootstrap.min', function() {
-
+                                KeyNode.loadJS('Template/slidewiki/Bootstrap/bootstrap.min', function() {
+                                    
                                     function trimURL(url) {
                                         if ((url.indexOf("http://") !== -1))
                                             url = url.substr(7);
@@ -657,7 +657,28 @@
                                         var hash = window.location.hash.substr(login.hashPreTag.length + 1);
                                         login.advancedForm.startWithHash(hash);
 
-                                    }
+                                    };
+                                    KeyNode.loadJS('keynode.notes',function(){
+                                        $(document).bind('presenterReady', function(e) {
+                                        var setup = $.keynode('getSetup');
+                                            var url= setup.getCanonicalURL();
+                                            console.log(url);
+                                            var deck=url.substr((url.lastIndexOf("/")+1),url.length);
+                                            console.log(deck);
+                                            var host=url.substr(0,(url.lastIndexOf("/playKeynode")));
+                                            url=host+"/?url=ajax/getNotes&id="+deck;
+                                            console.log(url);
+                                           //http://slidewiki2.morulia.de/SlideWiki/playKeynode/deck/483 
+                                            //http://slidewiki2.morulia.de/SlideWiki/?url=ajax/getNotes&id=483
+                                            NotesDisplay.setUrl(url);
+                                           
+                                           
+                                        });
+                                    
+                                    
+                                    
+                                    
+                                    });
 
                                 });
 </script>

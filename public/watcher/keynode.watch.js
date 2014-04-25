@@ -268,7 +268,8 @@ var SocketHandler = function($deck) {
             temp = event.data.substring(event.data.indexOf(':') + 1);
             diff = parseInt(temp);
             if ((diff !== -1) && (diff !== 1))
-                alert(temp);
+                console.log(temp);
+            event.source.postMessage(("setDiff:" + diff), event.origin);
         } else if (event.data.indexOf('getSettings') !== -1) {
             var tmpPasswords = "";
             if (NodeServerPasswords !== null)

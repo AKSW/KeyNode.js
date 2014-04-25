@@ -233,12 +233,10 @@ var login = {
         }
     },
     receivePostMessage: function(event) {
-        if (event.data.indexOf('getDiff') !== -1) {
-            event.source.postMessage("getDiff:" + diff, event.origin);
-        } else
         if (event.data.indexOf('setDiff') !== -1) {
-            temp = event.data.substring(event.data.indexOf(':') + 1);
+            temp = parseInt(event.data.substring(event.data.indexOf(':') + 1));
             diff = temp;
+            presenter.diff=temp;
         } else
         if (event.data.indexOf('getSettings') !== -1) {
             temp = event.data.substring(event.data.indexOf(':') + 1);
