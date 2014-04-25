@@ -271,8 +271,6 @@
                                         var value = ele.parent().find('.input-group-addon').html() + ele.val();
                                         var setup = $.keynode('getSetup');
                                         setup.updateNodeServerPassword(value, $(this).parents('.server').find(".passwordInput").val());
-                                        var $socket = $.keynode('getSocketHandler');
-                                        $socket.reIdentServer(value);
                                     });
 
                                     /*
