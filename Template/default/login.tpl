@@ -253,7 +253,7 @@
                                     /*
                                      * UI Events / getNewPassword
                                      */
-                                    $("#NodeServer").delegate(".getNewPassword", "click", function() {
+                                    $("#NodeServer").delegate(".getNewPassword", "click", function(e) {
                                         var ele = $(this).parents('.server').find(".serverUrl");
                                         var value = ele.parent().find('.input-group-addon').html() + ele.val();
                                         var setup = $.keynode('getSetup');
@@ -262,28 +262,34 @@
                                                 .emit('resetPassword', {
                                             "name": setup.getCanonicalURL()
                                         });
+                                        $(this).parents('.open').removeClass('open');
+                                        e.preventDefault();
+                                        return false;
                                     });
                                     /*
                                      * UI Events / retestPassword
                                      */
-                                    $("#NodeServer").delegate(".retestPassword", "click", function() {
+                                    $("#NodeServer").delegate(".retestPassword", "click", function(e) {
                                         var ele = $(this).parents('.server').find(".serverUrl");
                                         var value = ele.parent().find('.input-group-addon').html() + ele.val();
                                         var setup = $.keynode('getSetup');
                                         setup.updateNodeServerPassword(value, $(this).parents('.server').find(".passwordInput").val());
+                                        $(this).parents('.open').removeClass('open');
+                                        e.preventDefault();
+                                        return false;
                                     });
 
                                     /*
                                      * UI Events / setPassword
                                      */
-                                    $("#NodeServer").delegate(".setPassword", "click", function() {
+                                    $("#NodeServer").delegate(".setPassword", "click", function(e) {
                                         var ele = $(this).parents('.server').find(".serverUrl");
                                         if ($(this).parents('.server').find('.setPassword').hasClass('disabled'))
                                             return;
                                         var url = ele.parent().find('.input-group-addon').html() + ele.val();
                                         var setup = $.keynode('getSetup');
                                         var newPass = prompt("Please enter the new Password for Server " + url + ".", "");
-                                        if (newPass !== null) {
+                                        if (newPass !== null && newPass !== "") {
                                             $(this).parents('.server').find(".passwordInput").val(newPass);
                                             var server = setup.getNodeServer(url);
                                             server.socket.emit('setPassword', {
@@ -291,6 +297,9 @@
                                                 "name": setup.getCanonicalURL()
                                             });
                                         }
+                                        $(this).parents('.open').removeClass('open');
+                                        e.preventDefault();
+                                        return false;
                                     });
                                     /*
                                      * UI Events / displayPassword
@@ -508,9 +517,15 @@
                                      */
                                     $(document).bind('NodeserverPassSet', function(e, data1) {
                                         var $socket = $.keynode('getSocketHandler');
-                                        if (data1.data.type === "success")
-                                            $socket.reIdentServer(data1.server.url);
-                                        else
+                                        var setup = $.keynode('getSetup');
+                                        var pw = $('#NodeServer')
+                                                .find('input[value="' + trimURL(data1.server.url) + '"]')
+                                                .parents('.server')
+                                                .find('.passwordInput')
+                                                .val();
+                                        if (data1.data.type === "success"){
+                                            setup.updateNodeServerPassword(data1.server.url,pw)
+                                        }else
                                             console.log('Error Setting Password');
                                     });
 
