@@ -1,0 +1,19 @@
+
+/* video.css - Stylesheet for the KeyNode.js video support */
+
+
+#video-options-tab > .content > .option {
+    margin-top: 5pt;
+}
+
+#video-options-tab > .content > .option:first-child { margin-top: 0 }
+
+#video-options-tab > .content > .option > label {
+    display: block;
+    font-family: ​Calibri,​Arial,sans-serif;
+}
+
+#video-options-tab > .content > .option > input[type="button"] {
+    margin-left: 10pt;
+}
+
