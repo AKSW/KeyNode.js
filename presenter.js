@@ -40,13 +40,13 @@ var KeyNode = {
 
     },
     loadCSS: function(path) {
-        $('head').append('<link rel="stylesheet" href="' + './Template/' + KeyNode.options.template.src + '/' + path + '.css" />');
+        $('head').append('<link rel="stylesheet" href="' + './Template/' + KeyNode.options.template + '/' + path + '.css" />');
     },
     loadTmpl: function(path, callback) {
         if (typeof callback !== 'function')
             callback = function() {
             };
-        $.get('./Template/' + KeyNode.options.template.src + '/' + path + '.tpl', function(data) {
+        $.get('./Template/' + KeyNode.options.template + '/' + path + '.tpl', function(data) {
             $('body').append(data);
             callback();
         }, 'html');
@@ -106,9 +106,9 @@ var KeyNode = {
     methods = {
         init: function(opts) {
             $d.trigger(events.presenter.init);
-
+            
             options = $.extend(true, {}, $[keynode].defaults, opts);
-
+            
             KeyNode.init();
             $d.trigger(events.presenter.ready);
 
@@ -144,16 +144,17 @@ var KeyNode = {
             return methods[method].apply(this, Array.prototype.slice.call(arguments, 1));
         }
         else {
-            return methods.init(arg);
+            if(typeof(method)==="object")
+                return methods.init(method);
+            else
+                return methods.init(arg);
         }
     };
 
 
 
     $[keynode].defaults = {
-        template: {
-            src: 'default',
-        },
+        template: 'default', 
         selectors: {
             easy: {
                 wrapper: '#easyForm', //for test if it exist
