@@ -204,13 +204,15 @@ var SocketHandler = function() {
 //            console.log(i,"try to get Socket.IO from:" , servers[i].url);
             $.ajax({
                 timeout: 500,
+                cache:false,
                 url: servers[i].url + '/socket.io/socket.io.js',
                 dataType: "script"
             }).done(function() {
                 $serverSocketIO = servers[i];
                 $(document).trigger($events.setup.advancedform.socketIOReady, servers[i]);
                 callback();
-            }).fail(function() {
+            }).fail(function(jqXHR, textStatus, errorThrown) {
+//                console.log(jqXHR, textStatus, errorThrown);
                 $(document).trigger($events.setup.advancedform.socketIOError, servers[i]);
                 i = i + 1;
                 if (typeof (servers[i]) === typeof(undefined)) {
