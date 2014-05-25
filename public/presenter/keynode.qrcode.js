@@ -22,7 +22,6 @@
  * QRCodeDisplay Class for Presenter
  * @version 1.0
  * @author Alrik Hausdorf <admin@morulia.de>
- * Uses: https://github.com/davidshimjs/qrcodejs
  */
 
 var QRCodeDisplay = {
@@ -37,7 +36,8 @@ var QRCodeDisplay = {
         QRCodeDisplay.show();
     },
     generateCode: function() {
-        QRCodeDisplay.$qrcode = new QRCode(document.getElementById("qrcode"), {
+        $('#qrcode').qrcode(window.location.href);
+        /*QRCodeDisplay.$qrcode = new QRCode(document.getElementById("qrcode"), {
             width: 256,
             height: 256,
             colorDark: "#000000",
@@ -47,6 +47,7 @@ var QRCodeDisplay = {
         
         QRCodeDisplay.$qrcode.clear(); // clear the code.
         QRCodeDisplay.$qrcode.makeCode(window.location.href);
+        */
     },
     toggleDisplay: function() {
         if ($('#qrcodeWrapper').is(':visible'))
